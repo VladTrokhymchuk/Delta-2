@@ -308,6 +308,16 @@ import '@styles/modules/modal.scss';
 
 Класи-двійники `.h1`–`.h4` — коли візуальний рівень не збігається з семантичним (тег обираємо за структурою документа, вигляд — класом).
 
+### UI-кіт: жива звірка з макетом
+
+[src/static/ui-kit.html](src/static/ui-kit.html) → `build/ui-kit.html`, відкривається без WordPress:
+**http://hotel-delta.local/wp-content/themes/Delta-2/build/ui-kit.html**
+
+Сторінка підключає ту саму зібрану `main.min.css`, що й сайт, і показує палітру, типографічну сходинку та стани кнопок і полів. Змінив токен у `partials/` — перевір тут, перш ніж верстати секцію.
+
+**Кнопки:** `.bttn` (Primary), `.bttn--secondary` (рамка Warm Gold), `.bttn--ghost` (лише текст), `.bttn--accent` (CTA), `.bttn--light` (на темному), `[disabled]` → Sage.
+**Поля:** default / `:focus` / `.field--error` (або `.wpcf7-not-valid` від CF7), підпис — `.field__label`.
+
 ---
 
 ## Підключення у WordPress-темі

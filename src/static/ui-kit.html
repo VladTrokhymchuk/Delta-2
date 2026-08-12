@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hotel Delta — UI Kit</title>
+
+	<!--
+		Жива звірка з Figma. Копіюється з src/static/ у build/, тож відкривається за
+		адресою /wp-content/themes/Delta-2/build/ui-kit.html — без WordPress.
+		Підключає ту саму зібрану main.min.css, що й сайт: якщо тут вигляд правильний,
+		значить токени в src/styles/partials/ відповідають макету.
+	-->
+	<link rel="stylesheet" href="css/main.min.css">
+	<style>
+		body { padding: 4rem 0; background: #fff; }
+		.kit__section { margin-bottom: 6rem; }
+		.kit__panel { padding: 2.4rem; background: var(--bg-alt); border-radius: .8rem; }
+		.kit__grid { display: grid; gap: 2.4rem; grid-template-columns: 1fr; }
+		@media (min-width: 768px) { .kit__grid { grid-template-columns: 1fr 1fr; } }
+		.kit__row { display: grid; grid-template-columns: 14rem auto; align-items: center; gap: 1.6rem; margin-bottom: 1.6rem; }
+		.kit__row span { color: var(--text-muted); }
+		.kit__swatches { display: grid; gap: 1.6rem; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
+		.kit__swatch b { display: block; height: 8rem; border-radius: .4rem; border: 1px solid var(--border); }
+		.kit__swatch em { display: block; margin-top: .8rem; font-style: normal; font-weight: 700; font-size: 1.4rem; }
+		.kit__swatch code { font-size: 1.2rem; color: var(--text-muted); }
+		.kit__field { margin-bottom: 2rem; }
+	</style>
+</head>
+<body>
+<div class="container">
+
+	<!-- 1. Color Architecture -->
+	<section class="kit__section">
+		<p class="overline">Brand palette</p>
+		<h2>1. Color Architecture</h2>
+		<hr>
+		<div class="kit__swatches">
+			<div class="kit__swatch"><b style="background:var(--primary)"></b><em>Forest Green</em><code>--primary · #163324</code></div>
+			<div class="kit__swatch"><b style="background:var(--secondary)"></b><em>Warm Gold</em><code>--secondary · #CCA86E</code></div>
+			<div class="kit__swatch"><b style="background:var(--accent)"></b><em>Amber / Copper</em><code>--accent · #B0733C</code></div>
+			<div class="kit__swatch"><b style="background:var(--bg-alt)"></b><em>Warm Linen</em><code>--bg-alt · #F4EFE6</code></div>
+			<div class="kit__swatch"><b style="background:var(--text)"></b><em>Charcoal Green</em><code>--text · #222B25</code></div>
+			<div class="kit__swatch"><b style="background:var(--success)"></b><em>Success</em><code>--success · #2E7D32</code></div>
+			<div class="kit__swatch"><b style="background:var(--warning)"></b><em>Warning</em><code>--warning · #EF6C00</code></div>
+			<div class="kit__swatch"><b style="background:var(--error)"></b><em>Error</em><code>--error · #C62828</code></div>
+			<div class="kit__swatch"><b style="background:var(--info)"></b><em>Info</em><code>--info · #00695C</code></div>
+			<div class="kit__swatch"><b style="background:var(--disabled)"></b><em>Disabled (Sage)</em><code>--disabled · #A2ADA7</code></div>
+		</div>
+	</section>
+
+	<!-- 2. Typography Ladder -->
+	<section class="kit__section">
+		<p class="overline">Specimens</p>
+		<h2>2. Typography Ladder</h2>
+		<hr>
+		<h1>H1 Spectral SemiBold</h1>
+		<p><code>Spectral 600 · 40px · leading 1.2</code></p>
+		<h2>H2 Spectral Medium</h2>
+		<p><code>Spectral 500 · 32px · leading 1.2</code></p>
+		<h3>H3 Spectral Medium</h3>
+		<p><code>Spectral 500 · 24px · leading 1.3</code></p>
+		<h4>H4 Manrope Bold (Subheading)</h4>
+		<p><code>Manrope 700 · 16px · leading 1.4</code></p>
+		<p>Body Text — Manrope Regular. Опис номерів, історія готелю, умови проживання та тарифи.</p>
+		<p><code>Manrope 400 · 14px · leading 1.5</code></p>
+		<p class="overline">Overline text ladder specimen</p>
+		<p><code>Manrope 600 · 12px · tracking 2px</code></p>
+	</section>
+
+	<!-- 3. Form & Action States -->
+	<section class="kit__section">
+		<p class="overline">UI kit elements</p>
+		<h2>3. Form &amp; Action States</h2>
+		<hr>
+
+		<div class="kit__grid">
+			<!-- Кнопки -->
+			<div class="kit__panel">
+				<p class="field__label">Button styles</p>
+
+				<div class="kit__row"><span>Primary (default)</span>
+					<div><button class="bttn" type="button">Book Experience</button></div>
+				</div>
+				<div class="kit__row"><span>Secondary (hover)</span>
+					<div><button class="bttn bttn--secondary" type="button">Explore Gallery</button></div>
+				</div>
+				<div class="kit__row"><span>Ghost (active)</span>
+					<div><button class="bttn bttn--ghost" type="button">View Map</button></div>
+				</div>
+				<div class="kit__row"><span>Primary (disabled)</span>
+					<div><button class="bttn" type="button" disabled>Fully Booked</button></div>
+				</div>
+				<div class="kit__row"><span>CTA (accent)</span>
+					<div><button class="bttn bttn--accent" type="button">Забронювати</button></div>
+				</div>
+			</div>
+
+			<!-- Поля -->
+			<div class="kit__panel">
+				<p class="field__label">Input states</p>
+
+				<div class="kit__field">
+					<label class="field__label" for="f-name">Full name — default</label>
+					<input id="f-name" type="text" placeholder="e.g., Oleksandr Kovalenko">
+				</div>
+
+				<div class="kit__field">
+					<label class="field__label" for="f-date">Arrival date — focused</label>
+					<input id="f-date" type="text" value="14 жовтня 2025" autofocus>
+				</div>
+
+				<div class="kit__field field--error">
+					<label class="field__label" for="f-mail">Email address — error</label>
+					<input id="f-mail" type="text" value="invalid-email">
+					<span class="wpcf7-not-valid-tip">Введіть коректну адресу пошти.</span>
+				</div>
+
+				<div class="kit__field">
+					<label class="field__label" for="f-msg">Message — textarea</label>
+					<textarea id="f-msg" placeholder="Побажання до заїзду"></textarea>
+				</div>
+			</div>
+		</div>
+	</section>
+
+</div>
+</body>
+</html>

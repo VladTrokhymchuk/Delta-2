@@ -1,31 +1,69 @@
 @use '../core' as *;
 
 // ============================================================
-// Форми — базовий каркас (поля + Contact Form 7).
-// Оформлення доводимо за макетом Figma.
+// ПОЛЯ ФОРМ — Figma «3. Form & Action States» (INPUT STATES).
+//
+//   default  → тепла рамка --border, плейсхолдер --text-muted
+//   focused  → золота рамка Warm Gold + контур для помітності
+//   error    → червона рамка --error + іконка в полі
+//
+// Класи станів навішує Contact Form 7 (.wpcf7-not-valid), тож ті самі
+// стилі працюють і на «голих» полях, і всередині CF7-форми.
 // ============================================================
 
+// --- Підпис поля («FULL NAME — DEFAULT» у макеті) ---------------------------
+.field__label,
+.wpcf7 form label {
+  display: block;
+  margin-bottom: rem(6);
+  font-family: $font-body;
+  font-weight: 600;
+  font-size: rem(12);
+  line-height: 1.2;
+  letter-spacing: rem(1);
+  text-transform: uppercase;
+  color: var(--text);
+  text-align: left;
+}
+
+// --- Поле --------------------------------------------------------------------
 input,
 textarea,
 select {
   width: 100%;
-  padding: rem(14) rem(16);
-  font-family: inherit;
-  font-size: rem(16);
-  line-height: 120%;
+  padding: rem(12) rem(14);
+  font-family: $font-body;
+  font-weight: 400;
+  font-size: rem(14);
+  line-height: 1.5;
   color: var(--text);
-  background-color: transparent;
+  background-color: var(--white);
   border: 1px solid var(--border);
-  border-radius: rem(8);
-  transition: border-color 0.15s ease-in-out;
+  border-radius: $radius;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
   &::placeholder {
     color: var(--text-muted);
+    opacity: 1; // Firefox приглушує плейсхолдер додатково
   }
 
-  &:hover,
+  &:hover {
+    border-color: var(--border-dark);
+  }
+
+  // Фокус: золота рамка з макета + другий контур, бо саме золото на білому
+  // дає 2.2:1 і як єдиний індикатор не проходить WCAG 2.2 (див. $focus-ring).
   &:focus {
-    border-color: var(--text);
+    outline: none;
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 2px rgba($gold-deep, 0.45);
+  }
+
+  &[disabled],
+  &[readonly] {
+    background-color: var(--bg-alt);
+    color: var(--text-muted);
+    cursor: not-allowed;
   }
 }
 
@@ -34,7 +72,33 @@ textarea {
   resize: vertical;
 }
 
-// --- Contact Form 7 ---------------------------------------------------------
+// --- Стан помилки ------------------------------------------------------------
+// Іконка — інлайновий SVG (field-error-icon), тож без зовнішнього файлу.
+// Для textarea тримаємо іконку зверху, щоб не наїжджала на текст.
+.field--error input,
+.field--error textarea,
+.field--error select,
+input.wpcf7-not-valid,
+textarea.wpcf7-not-valid,
+select.wpcf7-not-valid {
+  border-color: var(--error);
+  padding-right: rem(42);
+  background-image: url(field-error-icon(color('error')));
+  background-repeat: no-repeat;
+  background-position: right rem(14) center;
+
+  &:focus {
+    border-color: var(--error);
+    box-shadow: 0 0 0 2px rgba(color('error'), 0.25);
+  }
+}
+
+.field--error textarea,
+textarea.wpcf7-not-valid {
+  background-position: right rem(14) top rem(12);
+}
+
+// --- Contact Form 7 ----------------------------------------------------------
 .wpcf7 {
   &-spinner { display: none !important; }
 
@@ -42,25 +106,26 @@ textarea {
 
   &-not-valid-tip {
     display: block;
-    margin-top: rem(4);
-    font-size: rem(14);
+    margin-top: rem(6);
+    font-family: $font-body;
+    font-size: rem(12);
+    line-height: 1.4;
     color: var(--error) !important;
-  }
-
-  &-form-control.wpcf7-not-valid {
-    border-color: var(--error);
+    text-transform: none;
+    letter-spacing: 0;
   }
 
   &-response-output {
     display: block;
     width: 100%;
     margin: rem(16) 0 0;
-    padding: rem(16);
-    font-size: rem(16);
+    padding: rem(14) rem(16);
+    font-size: rem(14);
+    line-height: 1.5;
     text-align: center;
     background: var(--bg-alt);
     border: 0;
-    border-radius: rem(8);
+    border-radius: $radius;
   }
 
   &-form-control-wrap { display: block; }
@@ -69,6 +134,7 @@ textarea {
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0 100rem var(--bg) inset !important;
+    -webkit-box-shadow: 0 0 0 100rem var(--white) inset !important;
+    -webkit-text-fill-color: color('text');
   }
 }

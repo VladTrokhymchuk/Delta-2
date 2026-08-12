@@ -1,13 +1,16 @@
 @use '../core' as *;
 
 // ============================================================
-// Кнопки. Розміри/радіус/типографіку доводимо за макетом, кольори —
-// з бренд-палітри (_vars.scss).
+// КНОПКИ — Figma «3. Form & Action States» (BUTTON STYLES).
 //
-//   .bttn            — головна кнопка: Forest Green
-//   .bttn--accent    — CTA: Amber/Copper (дрібний текст → accent-dark, контраст)
-//   .bttn--outline   — вторинна: рамка Warm Gold
-//   .bttn--light     — на темному фоні (секції з --bg-dark)
+// Макет показує по одному стану на варіант:
+//   Primary (default)   → .bttn                — Forest Green, білий текст
+//   Secondary (hover)   → .bttn--secondary     — біла, рамка Warm Gold
+//   Ghost (active)      → .bttn--ghost         — без фону, золотий текст
+//   Primary (disabled)  → .bttn[disabled]      — приглушений Sage
+//
+// Решта станів виведена з палітри за тим самим принципом (hover — на крок
+// темніше, active — ще на крок), тож поводиться передбачувано.
 // ============================================================
 
 .bttn {
@@ -15,15 +18,15 @@
   align-items: center;
   justify-content: center;
   gap: rem(8);
-  padding: rem(14) rem(24);
+  padding: rem(12) rem(20);
   font-family: $font-body;
-  font-weight: 600;
-  font-size: rem(16);
-  line-height: 100%;
+  font-weight: 700;
+  font-size: rem(14);
+  line-height: 1.2;
   text-align: center;
   cursor: pointer;
   border: 1px solid transparent;
-  border-radius: rem(8);
+  border-radius: $radius;
   background-color: var(--primary);
   color: var(--text-inverse);
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
@@ -32,38 +35,83 @@
     background-color: var(--primary-dark);
   }
 
+  &:active {
+    background-color: var(--primary-dark);
+    transform: translateY(1px);
+  }
+
+  // Спільний індикатор фокуса для всіх варіантів (клавіатурна навігація).
   &:focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid $focus-ring;
     outline-offset: 2px;
   }
 
-  &[disabled] {
-    opacity: 0.5;
+  // --- Disabled ------------------------------------------------------------
+  // Приглушений фон, а не opacity: напівпрозорість на кольоровій секції дала б
+  // непередбачуваний контраст. Курсор not-allowed, події вимкнені.
+  &[disabled],
+  &.is-disabled {
+    background-color: var(--disabled);
+    border-color: transparent;
+    color: var(--text-inverse);
+    cursor: not-allowed;
     pointer-events: none;
   }
 
-  // --- CTA -----------------------------------------------------------------
-  // Базовий Copper дає з білим текстом лише 3.9:1, тому фон — accent-dark (5.0:1),
-  // а чистий Copper лишаємо для hover і великих декоративних елементів.
-  &--accent {
-    background-color: var(--accent-dark);
-
-    &:hover {
-      background-color: var(--accent);
-    }
-  }
-
-  // --- Вторинна (рамка Warm Gold) -----------------------------------------
-  &--outline {
-    background-color: transparent;
-    border-color: var(--border-accent);
+  // --- Secondary: рамка Warm Gold -----------------------------------------
+  // У макеті показаний hover: біле тло + золота рамка. У спокої рамка
+  // нейтральна — при наведенні «загорається» золотом.
+  &--secondary {
+    background-color: var(--white);
+    border-color: var(--border);
     color: var(--primary);
 
-    &:hover {
-      background-color: var(--secondary);
+    &:hover,
+    &:active {
+      background-color: var(--white);
       border-color: var(--secondary);
       color: var(--primary);
     }
+
+    &[disabled],
+    &.is-disabled {
+      background-color: var(--white);
+      border-color: var(--border);
+      color: var(--disabled);
+    }
+  }
+
+  // --- Ghost: лише текст ---------------------------------------------------
+  // У макеті показаний active — золотий текст. У спокої темно-зелений,
+  // щоб не конкурувати з CTA; золотим стає при взаємодії.
+  &--ghost {
+    padding-inline: 0;
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--primary);
+
+    &:hover,
+    &:active {
+      background-color: transparent;
+      color: var(--secondary-deep);
+      transform: none;
+    }
+
+    &[disabled],
+    &.is-disabled {
+      background-color: transparent;
+      color: var(--disabled);
+    }
+  }
+
+  // --- CTA: Amber/Copper ---------------------------------------------------
+  // Не з цього екрана UI-кіта, а з палітри («special focus tags, primary CTAs»).
+  // Фон — accent-dark: чистий Copper із білим текстом дає лише 3.9:1.
+  &--accent {
+    background-color: var(--accent-dark);
+
+    &:hover,
+    &:active { background-color: var(--accent); }
   }
 
   // --- На темному фоні -----------------------------------------------------
@@ -71,8 +119,7 @@
     background-color: var(--white);
     color: var(--primary);
 
-    &:hover {
-      background-color: var(--bg-alt);
-    }
+    &:hover,
+    &:active { background-color: var(--bg-alt); }
   }
 }

@@ -34,7 +34,10 @@ Slug — lowercase-kebab, стабільний (не перейменовува�
 Токени дизайну вже заведені в `src/styles/partials/` — у секціях їх не перевизначають:
 - **кольори** (`_vars.scss`): `--primary` Forest Green, `--secondary` Warm Gold, `--accent` Copper, `--bg-alt` Linen, `--text` Charcoal + семантичні. Немає потрібного кольору — додай ключ у `$colors`, а не інлайновий хекс;
 - **типографіка** (`_typography.scss`): H1–H3 Spectral, H4/body/кнопки Manrope, `.overline` для надзаголовків. Розміри в секції задавай лише там, де макет реально відходить від сходинки; для «візуально H2, семантично H3» використовуй класи `.h1`–`.h4`;
-- **шрифти** (`_fonts.scss`): Spectral 500/600, Manrope 400/600/700, self-hosted. Знадобилась інша вага — доклади `.woff2` у `src/fonts/`, не підключай CDN.
+- **шрифти** (`_fonts.scss`): Spectral 500/600, Manrope 400/600/700, self-hosted. Знадобилась інша вага — доклади `.woff2` у `src/fonts/`, не підключай CDN;
+- **кнопки й поля** (`_bttn.scss`, `_forms.scss`): `.bttn` + модифікатори `--secondary` / `--ghost` / `--accent` / `--light`, поля зі станами focus/error. У секції не перевизначай їх — бери готові класи.
+
+Усе це видно на живій сторінці UI-кіта: `build/ui-kit.html` (джерело — `src/static/ui-kit.html`). Додав новий спільний елемент — додай його туди, щоб style guide не відставав.
 
 ### 2. ACF layout (через acf-json)
 Додай новий layout у Flexible Content `page_sections`. Дотримуйся [[acf-fields]]:
