@@ -1,0 +1,220 @@
+{
+    "key": "group_theme_settings",
+    "title": "Налаштування теми",
+    "fields": [
+        {
+            "key": "field_theme_tab_header",
+            "label": "Шапка",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_header_logo",
+            "label": "Логотип",
+            "name": "header_logo",
+            "type": "image",
+            "instructions": "Порожньо — використовується build\/img\/logo.png із теми. Рекомендовано PNG\/SVG, мінімум 96×96.",
+            "required": 0,
+            "return_format": "array",
+            "library": "all",
+            "preview_size": "thumbnail",
+            "min_width": "",
+            "min_height": "",
+            "max_size": ""
+        },
+        {
+            "key": "field_header_brand",
+            "label": "Назва біля логотипа",
+            "name": "header_brand",
+            "type": "text",
+            "instructions": "Порожньо — береться назва сайту. Виводиться великими літерами.",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Готелі Дельта",
+            "maxlength": ""
+        },
+        {
+            "key": "field_header_tagline",
+            "label": "Підпис під назвою",
+            "name": "header_tagline",
+            "type": "text",
+            "instructions": "Дрібний золотий рядок під назвою. Порожньо — «Premium hospitality».",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Premium hospitality",
+            "maxlength": ""
+        },
+        {
+            "key": "field_header_button",
+            "label": "Кнопка в шапці",
+            "name": "header_button",
+            "type": "link",
+            "instructions": "Порожньо — «Забронювати номер» без посилання.",
+            "required": 0,
+            "return_format": "array"
+        },
+        {
+            "key": "field_theme_tab_footer",
+            "label": "Підвал",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_footer_about",
+            "label": "Опис під назвою",
+            "name": "footer_about",
+            "type": "textarea",
+            "instructions": "Два-три рядки про готель. Порожньо — блок не виводиться.",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Класична елегантність та преміальний відпочинок у самому серці заповідної природи України.",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_footer_nav_title",
+            "label": "Заголовок колонки меню",
+            "name": "footer_nav_title",
+            "type": "text",
+            "instructions": "Порожньо — «Навігація». Самі пункти — Зовнішній вигляд → Меню, локація «Меню в підвалі».",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Навігація",
+            "maxlength": ""
+        },
+        {
+            "key": "field_footer_socials_title",
+            "label": "Заголовок колонки соцмереж",
+            "name": "footer_socials_title",
+            "type": "text",
+            "instructions": "Порожньо — «Соціальні мережі».",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Соціальні мережі",
+            "maxlength": ""
+        },
+        {
+            "key": "field_footer_copyright",
+            "label": "Копірайт",
+            "name": "footer_copyright",
+            "type": "text",
+            "instructions": "Можна вживати %year% — підставиться поточний рік. Порожньо — «© {рік} {назва сайту}. Усі права захищено.»",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "© %year% Готель Дельта. Усі права захищено.",
+            "maxlength": ""
+        },
+        {
+            "key": "field_footer_slogan",
+            "label": "Слоган (золотий курсив)",
+            "name": "footer_slogan",
+            "type": "text",
+            "instructions": "Рядок праворуч у нижній смузі. Порожньо — не виводиться.",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Класична елегантність. Відновлена тиша.",
+            "maxlength": ""
+        },
+        {
+            "key": "field_theme_tab_contacts",
+            "label": "Контакти",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_footer_phone",
+            "label": "Телефон",
+            "name": "footer_phone",
+            "type": "text",
+            "instructions": "Використовується у підвалі та в карті контенту llms.txt.",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "+380 44 000 00 00",
+            "maxlength": ""
+        },
+        {
+            "key": "field_footer_email",
+            "label": "Email",
+            "name": "footer_email",
+            "type": "email",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_footer_address",
+            "label": "Адреса",
+            "name": "footer_address",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_footer_socials",
+            "label": "Соцмережі",
+            "name": "footer_socials",
+            "type": "repeater",
+            "instructions": "Виводяться колонкою в підвалі: назва — текст посилання.",
+            "required": 0,
+            "layout": "table",
+            "button_label": "Додати мережу",
+            "min": 0,
+            "max": 0,
+            "sub_fields": [
+                {
+                    "key": "field_footer_social_network",
+                    "label": "Назва",
+                    "name": "network",
+                    "type": "text",
+                    "required": 0,
+                    "placeholder": "Instagram",
+                    "parent_repeater": "field_footer_socials"
+                },
+                {
+                    "key": "field_footer_social_url",
+                    "label": "Посилання",
+                    "name": "url",
+                    "type": "url",
+                    "required": 0,
+                    "parent_repeater": "field_footer_socials"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Глобальні дані сайту: шапка та контакти.",
+    "show_in_rest": 0,
+    "modified": 1786665600
+}

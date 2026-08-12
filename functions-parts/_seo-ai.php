@@ -150,15 +150,27 @@ function delta_llms_section($label, $posts) {
 }
 
 /**
+ * Чи запис позначений noindex у SEO-плагіні.
+ * На проєкті стоїть Rank Math (мета `rank_math_robots` — масив), але лишаємо
+ * і перевірку Yoast, щоб зміна плагіна не зламала фільтрацію мовчки.
+ */
+function delta_llms_is_noindex($post_id) {
+    $rank_math = get_post_meta($post_id, 'rank_math_robots', true);
+    if (is_array($rank_math) && in_array('noindex', $rank_math, true)) return true;
+
+    return get_post_meta($post_id, '_yoast_wpseo_meta-robots-noindex', true) === '1';
+}
+
+/**
  * Чи ховати запис із карти:
  *  - дефолтна WP Sample Page;
- *  - Yoast-noindex;
+ *  - noindex у SEO-плагіні;
  *  - порожня сторінка конструктора («в розробці») — немає жодної секції
  *    page_sections І немає власного шаблону.
  */
 function delta_llms_skip($post) {
     if ($post->post_name === 'sample-page') return true;
-    if (get_post_meta($post->ID, '_yoast_wpseo_meta-robots-noindex', true) === '1') return true;
+    if (delta_llms_is_noindex($post->ID)) return true;
 
     if ($post->post_type === 'page'
         && !get_page_template_slug($post->ID)

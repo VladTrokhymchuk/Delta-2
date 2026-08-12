@@ -1,0 +1,152 @@
+@use '../core' as *;
+
+// ============================================================
+// ПІДВАЛ (Figma: темна секція Forest Green).
+//
+// Десктоп: бренд-колонка зліва, дві колонки посилань справа,
+// під ними — розділювач і смуга з копірайтом та слоганом.
+// Мобільний фрейм у макеті відсутній — колонки просто стають
+// одна під одною.
+//
+// Колонка «Навігація» = WP-меню, решта контенту — ACF Options.
+// ============================================================
+
+.footer {
+	background-color: var(--bg-dark);
+	color: var(--text-inverse);
+	padding: rem(48) 0 rem(24);
+
+	@include minw($sm-pc) {
+		padding: rem(72) 0 rem(28);
+	}
+
+	&__inner {
+		display: grid;
+		gap: rem(40);
+
+		@include minw($sm-pc) {
+			grid-template-columns: minmax(0, 1fr) auto;
+			align-items: start;
+			gap: rem(48) rem(64);
+		}
+	}
+
+	// --- Бренд ---------------------------------------------------------------
+	&__brand {
+		display: flex;
+		align-items: center;
+		gap: rem(12);
+	}
+
+	&__logo {
+		width: rem(40);
+		height: rem(40);
+		object-fit: contain;
+	}
+
+	&__brand-name {
+		font-family: $font-heading;
+		font-weight: 600;
+		font-size: rem(20);
+		line-height: 1.1;
+		letter-spacing: rem(0.5);
+		text-transform: uppercase;
+		color: var(--text-inverse);
+	}
+
+	&__about {
+		max-width: rem(360);
+		margin-top: rem(20);
+		font-size: rem(14);
+		line-height: 1.6;
+		color: rgba($white, 0.72);
+	}
+
+	// --- Колонки посилань ----------------------------------------------------
+	&__cols {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(rem(140), auto));
+		gap: rem(32);
+
+		@include minw($sm-pc) {
+			gap: rem(64);
+		}
+	}
+
+	&__col-title {
+		margin-bottom: rem(20);
+		font-family: $font-body;
+		font-weight: 600;
+		font-size: rem(12);
+		line-height: 1.2;
+		letter-spacing: rem(1.5);
+		text-transform: uppercase;
+		// На темному фоні працює чистий Warm Gold (6.1:1), а не $gold-deep.
+		color: var(--secondary);
+	}
+
+	&__menu {
+		display: flex;
+		flex-direction: column;
+		gap: rem(14);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		li { list-style: none; }
+
+		a {
+			font-family: $font-body;
+			font-weight: 400;
+			font-size: rem(15);
+			line-height: 1.2;
+			color: rgba($white, 0.88);
+			white-space: nowrap;
+
+			&:hover { color: var(--secondary); }
+
+			&:focus-visible {
+				outline: 2px solid var(--secondary);
+				outline-offset: 3px;
+			}
+		}
+	}
+
+	// --- Нижня смуга ---------------------------------------------------------
+	&__bottom {
+		display: flex;
+		flex-direction: column;
+		gap: rem(12);
+		padding-top: rem(24);
+		border-top: 1px solid rgba($white, 0.16);
+
+		@include minw($sm-pc) {
+			grid-column: 1 / -1;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			gap: rem(24);
+			margin-top: rem(24);
+			padding-top: rem(28);
+		}
+	}
+
+	&__copy {
+		font-size: rem(13);
+		line-height: 1.4;
+		color: rgba($white, 0.65);
+	}
+
+	&__slogan {
+		font-family: $font-heading;
+		font-style: italic;
+		font-weight: 500;
+		font-size: rem(15);
+		line-height: 1.4;
+		color: var(--secondary);
+
+		@include minw($sm-pc) {
+			text-align: right;
+		}
+	}
+}

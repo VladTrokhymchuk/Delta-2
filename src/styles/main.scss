@@ -17,7 +17,7 @@
 // Секції конструктора (кожна нова секція реєструється в sections/_index.scss)
 @use 'sections';
 
-// Layout modules (розкоментовуйте по мірі появи файлів)
-// @use 'modules/header';
-// @use 'modules/footer';
+// Layout modules
+@use 'modules/header';
+@use 'modules/footer';
 // @use 'modules/breadcrumbs';

@@ -17,43 +17,73 @@
 
 <?php
 /**
- * Шапка сайту — каркас під верстку з Figma.
+ * Шапка сайту (Figma: хедер із логотипом, назвою, меню та кнопкою бронювання).
  *
- * Логотип і CTA беруться з ACF Options («Налаштування теми»), меню — з локації
- * `header_menu` (Зовнішній вигляд → Меню). Розмітка мінімальна: класи й структуру
- * доводимо під макет, коли він з'явиться.
+ * Контент — ACF Options «Налаштування теми»; якщо поле порожнє, підставляється
+ * значення з макета. Меню — Зовнішній вигляд → Меню, локація `header_menu`.
+ *
+ * @see functions-parts/parts/header.php
+ * @see acf-json/group_theme_settings.json
  */
-$has_acf  = function_exists('get_field');
-$logo     = $has_acf ? get_field('header_logo', 'options') : false;
-$logo_src = !empty($logo['url']) ? $logo['url'] : '';
-$logo_alt = !empty($logo['alt']) ? $logo['alt'] : get_bloginfo('name');
+$theme_uri = get_template_directory_uri();
+
+// --- Логотип --------------------------------------------------------------
+$logo      = delta_header_opt('header_logo');
+$logo_src  = !empty($logo['url']) ? $logo['url'] : $theme_uri . '/build/img/logo.png';
+$logo_alt  = !empty($logo['alt']) ? $logo['alt'] : '';
+
+// --- Назва й підпис -------------------------------------------------------
+$brand   = delta_header_opt('header_brand', get_bloginfo('name'));
+$tagline = delta_header_opt('header_tagline', 'Premium hospitality');
+
+// --- Кнопка ---------------------------------------------------------------
+$cta        = delta_header_opt('header_button');
+$cta_url    = !empty($cta['url'])    ? $cta['url']    : '#';
+$cta_title  = !empty($cta['title'])  ? $cta['title']  : __('Забронювати номер', 'delta');
+$cta_target = !empty($cta['target']) ? $cta['target'] : '';
 ?>
 <header class="header" id="header">
 	<div class="container header__inner">
-		<a href="<?= esc_url( home_url('/') ); ?>" class="header__logo" aria-label="<?= esc_attr( get_bloginfo('name') ); ?>">
-			<?php if ($logo_src) : ?>
-				<img src="<?= esc_url( $logo_src ); ?>" alt="<?= esc_attr( $logo_alt ); ?>">
-			<?php else : ?>
-				<?= esc_html( get_bloginfo('name') ); ?>
-			<?php endif; ?>
+
+		<a class="header__brand" href="<?= esc_url( home_url('/') ); ?>">
+			<img class="header__logo"
+			     src="<?= esc_url( $logo_src ); ?>"
+			     alt="<?= esc_attr( $logo_alt ); ?>"
+			     width="48" height="48"
+			     fetchpriority="high">
+			<span class="header__brand-text">
+				<span class="header__brand-name"><?= esc_html( $brand ); ?></span>
+				<?php if ( $tagline ) : ?>
+					<span class="header__brand-tagline"><?= esc_html( $tagline ); ?></span>
+				<?php endif; ?>
+			</span>
 		</a>
 
-		<nav class="header__nav" aria-label="<?php esc_attr_e('Головне меню', 'delta'); ?>">
-			<?php
-			wp_nav_menu([
-				'theme_location' => 'header_menu',
-				'container'      => false,
-				'menu_class'     => 'header__menu',
-				'fallback_cb'    => false,
-				'depth'          => 2,
-			]);
-			?>
+		<nav class="header__nav" id="header-nav" aria-label="<?php esc_attr_e('Головне меню', 'delta'); ?>">
+			<?php delta_header_nav(); ?>
+
+			<?php // Дублікат кнопки — видно лише у відкритому мобільному меню. ?>
+			<a class="bttn header__cta header__cta--mobile" href="<?= esc_url( $cta_url ); ?>"<?= $cta_target ? ' target="' . esc_attr($cta_target) . '"' : ''; ?>>
+				<?= esc_html( $cta_title ); ?>
+			</a>
 		</nav>
 
-		<button class="header__burger" type="button" aria-label="<?php esc_attr_e('Меню', 'delta'); ?>" aria-expanded="false">
-			<span></span>
-			<span></span>
-		</button>
+		<div class="header__actions">
+			<a class="bttn header__cta" href="<?= esc_url( $cta_url ); ?>"<?= $cta_target ? ' target="' . esc_attr($cta_target) . '"' : ''; ?>>
+				<?= esc_html( $cta_title ); ?>
+			</a>
+
+			<button class="header__burger"
+			        type="button"
+			        aria-label="<?php esc_attr_e('Меню', 'delta'); ?>"
+			        aria-expanded="false"
+			        aria-controls="header-nav">
+				<span></span>
+				<span></span>
+				<span></span>
+			</button>
+		</div>
+
 	</div>
 </header>
 

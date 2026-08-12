@@ -35,6 +35,22 @@ add_filter('acf/settings/load_json', function ($paths) {
 Каркас теми вже очікує такі поля Options (можна перейменувати, але тоді онови й місця використання):
 `header_logo` (header.php), `footer_phone` / `footer_email` / `footer_address` / `footer_socials` (llms.txt у `_seo-ai.php`).
 
+## Вкладки — ЗАВЖДИ вертикальні
+
+Поле типу `tab` у цьому проєкті створюється тільки з `placement: left` (у адмінці — «Розміщення: Ліворуч»). Горизонтальні вкладки згортаються в кашу, щойно їх стає більше чотирьох, а групи тут ростуть.
+
+```json
+{
+  "key": "field_theme_tab_header",
+  "label": "Шапка",
+  "name": "",
+  "type": "tab",
+  "placement": "left",
+  "endpoint": 0
+}
+```
+Правило стосується і груп полів CPT, і конструктора сторінок, і Options. Якщо створюєш групу в адмінці — не забудь перемкнути «Розміщення» на «Ліворуч» перед збереженням, інакше в JSON поїде `top`.
+
 ## Іменування полів
 - snake_case, з префіксом контексту: `hero_title`, `room_price`, `footer_copyright`.
 - у Flexible Content `name` layout = slug секції (узгоджено з [[section-builder]]).

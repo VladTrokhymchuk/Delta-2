@@ -24,6 +24,8 @@ include_once 'functions-parts/headache.php';
 include_once 'functions-parts/parts/remove_action.php';
 include_once 'functions-parts/parts/allow_svg.php';
 include_once 'functions-parts/parts/configure_menu.php';
+include_once 'functions-parts/parts/header.php';
+include_once 'functions-parts/parts/footer.php';
 include_once 'functions-parts/parts/classic-editor.php';
 include_once 'functions-parts/parts/admin_style.php';
 include_once 'functions-parts/parts/security.php';

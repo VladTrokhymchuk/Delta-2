@@ -1,0 +1,313 @@
+@use '../core' as *;
+
+// ============================================================
+// ШАПКА САЙТУ — Figma (специфікація хедера).
+//
+// Десктоп: висота 88px = 20 + 48 + 20, фон #FBF9F6, лінія знизу #DFD9CD.
+// Бокові відступи 80px на фреймі 1440 дає контейнер (див. _vars.scss),
+// тож окремих падінгів у шапці немає.
+//
+// < $sm-pc: меню ховається в панель, що виїжджає справа (бургер).
+// Мобільного фрейму в макеті поки немає — панель зроблена за загальною
+// логікою й доводиться, коли з'явиться екран.
+// ============================================================
+
+// Висоту шапки задаємо на .header__inner (20 + 48 + 20 = 88), а не падінгами:
+// тоді пункти меню можуть розтягнутись на всю висоту й давати зону кліку
+// від верхнього до нижнього краю шапки.
+$header-height:        rem(88);
+$header-height-mobile: rem(72);
+$header-menu-pad-x:    rem(16); // половина відступу 32px між пунктами
+
+.header {
+	position: relative;
+	z-index: 50;
+	background-color: var(--bg-soft);
+	border-bottom: 1px solid var(--border);
+
+	&__inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: rem(24);
+		min-height: $header-height-mobile;
+
+		@include minw($sm-pc) {
+			gap: rem(40);
+			min-height: $header-height;
+		}
+	}
+
+	// Навігація тягнеться на всю висоту шапки — інакше пункти не мали б куди
+	// розтягуватись, і зона кліку лишилась би висотою тексту.
+	&__nav {
+		@include minw($sm-pc) {
+			align-self: stretch;
+			display: flex;
+			align-items: stretch;
+		}
+	}
+
+	// --- Логотип + назва ----------------------------------------------------
+	&__brand {
+		display: flex;
+		align-items: center;
+		gap: rem(16);
+		flex-shrink: 0;
+	}
+
+	&__logo {
+		width: rem(48);
+		height: rem(48);
+		border-radius: $radius;
+		object-fit: contain;
+	}
+
+	&__brand-text {
+		display: flex;
+		flex-direction: column;
+		gap: rem(2);
+	}
+
+	&__brand-name {
+		font-family: $font-heading;
+		font-weight: 600;
+		font-size: rem(20);
+		line-height: 1;
+		letter-spacing: 0;
+		// Транформ, а не покладання на введений текст: у макеті назва в капсі,
+		// а в ACF її можуть ввести як «Готелі Дельта».
+		text-transform: uppercase;
+		color: var(--primary);
+	}
+
+	&__brand-tagline {
+		font-family: $font-body;
+		font-weight: 600;
+		font-size: rem(9);
+		line-height: 1;
+		letter-spacing: rem(1.5);
+		text-transform: uppercase;
+		color: var(--accent);
+	}
+
+	// --- Навігація ----------------------------------------------------------
+	// Відступ між пунктами (32px) зроблений падінгами посилань, а не gap —
+	// тоді клікабельна вся зона між ними, а не лише текст. Крайні падінги
+	// компенсуємо від'ємним margin, щоб блок меню лишався по сітці.
+	// По вертикалі посилання розтягнуте на всю висоту шапки (88px):
+	// вертикальний падінг = вся вільна висота, тож промахнутись важко.
+	&__menu {
+		display: flex;
+		align-items: stretch;
+		margin: 0 rem(-16);
+		padding: 0;
+		list-style: none;
+
+		li {
+			display: flex;
+			list-style: none;
+		}
+
+		a {
+			position: relative;
+			display: flex;
+			align-items: center;
+			padding: 0 $header-menu-pad-x;
+			font-family: $font-body;
+			font-weight: 600;
+			font-size: rem(14);
+			line-height: 1;
+			letter-spacing: 0;
+			color: var(--text);
+			white-space: nowrap;
+			transition: color 0.2s ease;
+
+			// Індикатор, що росте від центру. Лежить на самій нижній межі шапки
+			// й перекриває її лінію (bottom: -1px) — виходить вкладка на всю
+			// висоту пункту, а не підкреслення під текстом.
+			&::after {
+				content: '';
+				position: absolute;
+				left: $header-menu-pad-x;
+				right: $header-menu-pad-x;
+				bottom: -1px;
+				height: 2px;
+				background-color: var(--accent);
+				transform: scaleX(0);
+				transition: transform 0.25s ease;
+			}
+
+			&:hover {
+				color: var(--primary);
+
+				&::after { transform: scaleX(1); }
+			}
+
+			&:focus-visible {
+				outline: 2px solid $focus-ring;
+				outline-offset: -2px;
+				border-radius: $radius;
+			}
+		}
+
+		// Поточна сторінка — підкреслення лишається постійно.
+		.current-menu-item > a,
+		.current-menu-parent > a,
+		.current-menu-ancestor > a,
+		.current_page_item > a {
+			color: var(--primary);
+
+			&::after { transform: scaleX(1); }
+		}
+	}
+
+	// Підказка адміну, поки меню не призначене.
+	&__menu-hint {
+		margin-top: rem(8);
+		font-size: rem(12);
+		color: var(--text-muted);
+
+		a { text-decoration: underline; }
+
+		@include minw($sm-pc) {
+			position: absolute;
+			left: 50%;
+			bottom: rem(-28);
+			transform: translateX(-50%);
+			margin: 0;
+			white-space: nowrap;
+		}
+	}
+
+	// --- Кнопка та бургер ---------------------------------------------------
+	&__actions {
+		display: flex;
+		align-items: center;
+		gap: rem(12);
+		flex-shrink: 0;
+	}
+
+	&__cta {
+		// Розміри й типографіка — з базової .bttn (padding 14/28, 14px/700).
+		// Мобільний дублікат живе всередині панелі меню.
+		&--mobile { display: none; }
+	}
+
+	&__burger {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: rem(5);
+		width: rem(40);
+		height: rem(40);
+		padding: rem(8);
+		background: none;
+		border: 0;
+		cursor: pointer;
+
+		span {
+			display: block;
+			width: 100%;
+			height: 2px;
+			border-radius: 2px;
+			background-color: var(--primary);
+			transition: transform 0.25s ease, opacity 0.2s ease;
+		}
+
+		&:focus-visible {
+			outline: 2px solid $focus-ring;
+			outline-offset: 2px;
+		}
+	}
+}
+
+// ============================================================
+// Мобільна версія: меню в панелі
+// ============================================================
+@include maxw($sm-pc - 1px) {
+	.header {
+		&__nav {
+			position: fixed;
+			inset: 0 0 0 auto;
+			z-index: 60;
+			display: flex;
+			flex-direction: column;
+			gap: rem(24);
+			width: min(88vw, rem(360));
+			padding: rem(96) rem(24) rem(32);
+			overflow-y: auto;
+			background-color: var(--bg-soft);
+			border-left: 1px solid var(--border);
+			transform: translateX(100%);
+			visibility: hidden;
+			transition: transform 0.3s ease, visibility 0.3s ease;
+		}
+
+		&__menu {
+			flex-direction: column;
+			align-items: stretch;
+			margin: 0;
+
+			li { display: block; }
+
+			a {
+				padding: rem(14) 0;
+				font-size: rem(18);
+				border-bottom: 1px solid var(--border);
+
+				// У панелі індикатор лягає на роздільник між пунктами.
+				&::after {
+					left: 0;
+					right: auto;
+					bottom: -1px;
+					width: rem(32);
+					transform-origin: left;
+				}
+			}
+		}
+
+		&__cta {
+			// Основна кнопка ховається — у панелі є дублікат.
+			display: none;
+
+			&--mobile {
+				display: inline-flex;
+				margin-top: auto;
+			}
+		}
+	}
+
+	// Затемнення під панеллю.
+	.header::after {
+		content: '';
+		position: fixed;
+		inset: 0;
+		z-index: 55;
+		background-color: rgba($black, 0.45);
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.3s ease, visibility 0.3s ease;
+	}
+
+	.menu-open {
+		.header__nav {
+			transform: translateX(0);
+			visibility: visible;
+		}
+
+		.header::after {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		// Бургер → хрестик
+		.header__burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+		.header__burger span:nth-child(2) { opacity: 0; }
+		.header__burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+	}
+}
+
+@include minw($sm-pc) {
+	.header__burger { display: none; }
+}

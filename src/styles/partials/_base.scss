@@ -62,16 +62,14 @@ main {
 // Контейнер
 // ============================================================
 
+// Контент — 1280px; поля 20px додані до max-width, тож на 1440 бокові
+// відступи дорівнюють 80px із макета (див. _vars.scss).
 .container,
 [class*='__container'] {
   margin: 0 auto;
   width: 100%;
-  max-width: rem($maxWidthContainer);
-  padding: 0 rem(calc($containerPadding / 2));
-
-  @include minw($tablet) {
-    padding: 0 rem($containerPadding);
-  }
+  max-width: rem($containerWidth);
+  padding-inline: rem($containerPadding);
 }
 
 .container-wide { max-width: 100%; }

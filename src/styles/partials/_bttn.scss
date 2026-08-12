@@ -18,17 +18,21 @@
   align-items: center;
   justify-content: center;
   gap: rem(8);
-  padding: rem(12) rem(20);
+  // 14 + 19 (line-height 1 при 14px) + 14 = 47px висоти, як у макеті.
+  // Рамки в базовій кнопці немає навмисно: варіанти з рамкою компенсують
+  // її падінгом, щоб усі кнопки лишались однакової висоти.
+  padding: rem(14) rem(28);
   font-family: $font-body;
   font-weight: 700;
   font-size: rem(14);
-  line-height: 1.2;
+  line-height: 1;
+  letter-spacing: rem(0.5);
   text-align: center;
   cursor: pointer;
-  border: 1px solid transparent;
+  border: 0;
   border-radius: $radius;
   background-color: var(--primary);
-  color: var(--text-inverse);
+  color: var(--bg-soft);
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 
   &:hover {
@@ -52,8 +56,7 @@
   &[disabled],
   &.is-disabled {
     background-color: var(--disabled);
-    border-color: transparent;
-    color: var(--text-inverse);
+    color: var(--bg-soft);
     cursor: not-allowed;
     pointer-events: none;
   }
@@ -61,9 +64,12 @@
   // --- Secondary: рамка Warm Gold -----------------------------------------
   // У макеті показаний hover: біле тло + золота рамка. У спокої рамка
   // нейтральна — при наведенні «загорається» золотом.
+  // Падінг на 1px менший, ніж у базовій кнопці, — рамка з'їдає різницю,
+  // тож висота лишається 47px.
   &--secondary {
+    padding: rem(13) rem(27);
     background-color: var(--white);
-    border-color: var(--border);
+    border: 1px solid var(--border);
     color: var(--primary);
 
     &:hover,
@@ -87,7 +93,6 @@
   &--ghost {
     padding-inline: 0;
     background-color: transparent;
-    border-color: transparent;
     color: var(--primary);
 
     &:hover,

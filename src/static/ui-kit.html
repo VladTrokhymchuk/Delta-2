@@ -13,7 +13,8 @@
 	-->
 	<link rel="stylesheet" href="css/main.min.css">
 	<style>
-		body { padding: 4rem 0; background: #fff; }
+		body { background: #fff; }
+		.kit__body { padding: 4rem 0; }
 		.kit__section { margin-bottom: 6rem; }
 		.kit__panel { padding: 2.4rem; background: var(--bg-alt); border-radius: .8rem; }
 		.kit__grid { display: grid; gap: 2.4rem; grid-template-columns: 1fr; }
@@ -28,7 +29,40 @@
 	</style>
 </head>
 <body>
-<div class="container">
+
+<!-- Шапка: та сама розмітка, що в header.php (меню — статичний плейсхолдер) -->
+<header class="header" id="header">
+	<div class="container header__inner">
+		<a class="header__brand" href="#">
+			<img class="header__logo" src="img/logo.png" alt="" width="48" height="48">
+			<span class="header__brand-text">
+				<span class="header__brand-name">Готелі Дельта</span>
+				<span class="header__brand-tagline">Premium hospitality</span>
+			</span>
+		</a>
+
+		<nav class="header__nav" id="header-nav" aria-label="Головне меню">
+			<ul class="header__menu">
+				<li class="menu-item"><a href="#">Про нас</a></li>
+				<li class="menu-item current-menu-item"><a href="#">Номери</a></li>
+				<li class="menu-item"><a href="#">Послуги</a></li>
+				<li class="menu-item"><a href="#">Ресторан</a></li>
+				<li class="menu-item"><a href="#">Галерея</a></li>
+				<li class="menu-item"><a href="#">Контакти</a></li>
+			</ul>
+			<a class="bttn header__cta header__cta--mobile" href="#">Забронювати номер</a>
+		</nav>
+
+		<div class="header__actions">
+			<a class="bttn header__cta" href="#">Забронювати номер</a>
+			<button class="header__burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="header-nav">
+				<span></span><span></span><span></span>
+			</button>
+		</div>
+	</div>
+</header>
+
+<div class="container kit__body">
 
 	<!-- 1. Color Architecture -->
 	<section class="kit__section">
@@ -125,5 +159,51 @@
 	</section>
 
 </div>
+
+<!-- Підвал: та сама розмітка, що у footer.php -->
+<footer class="footer" id="footer">
+	<div class="container footer__inner">
+
+		<div class="footer__brand-col">
+			<a class="footer__brand" href="#">
+				<img class="footer__logo" src="img/logo.png" alt="" width="40" height="40">
+				<span class="footer__brand-name">Готелі Дельта</span>
+			</a>
+			<p class="footer__about">Класична елегантність та преміальний відпочинок у самому серці заповідної природи України.</p>
+		</div>
+
+		<div class="footer__cols">
+			<nav class="footer__col">
+				<p class="footer__col-title">Навігація</p>
+				<ul class="footer__menu">
+					<li><a href="#">Про готель</a></li>
+					<li><a href="#">Всі номери</a></li>
+					<li><a href="#">Послуги СПА</a></li>
+					<li><a href="#">Ресторан</a></li>
+					<li><a href="#">Контакти</a></li>
+				</ul>
+			</nav>
+
+			<div class="footer__col">
+				<p class="footer__col-title">Соціальні мережі</p>
+				<ul class="footer__menu">
+					<li><a href="#">Instagram</a></li>
+					<li><a href="#">Facebook</a></li>
+					<li><a href="#">Telegram</a></li>
+					<li><a href="#">YouTube</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="footer__bottom">
+			<p class="footer__copy">© 2025 Готель Дельта. Усі права захищено.</p>
+			<p class="footer__slogan">Класична елегантність. Відновлена тиша.</p>
+		</div>
+
+	</div>
+</footer>
+
+<!-- Той самий бандл, що на сайті: перевіряє бургер-меню на вузькому екрані -->
+<script src="js/app.min.js"></script>
 </body>
 </html>

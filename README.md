@@ -224,7 +224,7 @@ CSS-змінні автоматично генеруються в `:root` чер
 ```scss
 $fhd:    1900px;
 $lg:     1400px;
-$pc:     $containerWidth * 1px;  // ~1384px
+$pc:     $containerWidth * 1px;  // 1320px = 1280 контенту + 2×20 полів
 $sm-pc:  992px;
 $tablet: 768px;
 ```
@@ -236,6 +236,9 @@ $tablet: 768px;
 ### Головний entry
 
 `src/js/app.js` — завантажує спільні модулі (header, попапи, анімації) та init-функції секцій із `src/js/sections/`. Кожна init-функція сама перевіряє наявність своєї секції (`[data-section]`), тож зайвий код не виконується.
+
+> **Підкреслення в іменах — не стиль, а вимога.** Кожен `.js` без `_` стає окремим entry (див. «Авто-підхоплення»), і `import` із `app.js` перетворюється на ESM-import між бандлами. `app.min.js` підключається класичним `<script>`, тому сторінка впаде з «Cannot use import statement outside a module».
+> Спільні модулі й модулі секцій → `_header.js`, `_hero.js`. Без `_` — тільки `src/js/pages/*.js`, вони підключаються окремим тегом.
 
 ### Окремі сторінки
 
@@ -288,7 +291,7 @@ import '@styles/modules/modal.scss';
 
 | Родина | Ваги | Де застосовується |
 |---|---|---|
-| **Spectral** (serif) | 500, 600 | H1–H3 |
+| **Spectral** (serif) | 500, 600, 500 italic | H1–H3; курсив — слоган у підвалі |
 | **Manrope** (sans) | 400, 600, 700 | H4, body, кнопки, overline |
 
 `@font-face` згенеровані в [_fonts.scss](src/styles/partials/_fonts.scss) з `unicode-range` — браузер тягне лише потрібний сабсет. Кириличні файли Spectral 600 і Manrope 400 додатково преload'яться (`delta_preload_fonts()` у `_assets.php`).
@@ -308,6 +311,12 @@ import '@styles/modules/modal.scss';
 
 Класи-двійники `.h1`–`.h4` — коли візуальний рівень не збігається з семантичним (тег обираємо за структурою документа, вигляд — класом).
 
+### Сітка
+
+Контент — **1280px** (`$maxWidthContainer`), бокові поля контейнера — 20px. Поля додані **зверху** до `max-width` (`$containerWidth = 1320`), тому на фреймі 1440 з макета відступ від краю до контенту виходить рівно 80px, а сам контент лишається 1280. Один клас `.container` — і в шапці, і в підвалі, і в секціях; окремих падінгів у модулях не задаємо.
+
+Радіус за замовчуванням — `$radius: 6px` (кнопки, поля, логотип у шапці).
+
 ### UI-кіт: жива звірка з макетом
 
 [src/static/ui-kit.html](src/static/ui-kit.html) → `build/ui-kit.html`, відкривається без WordPress:
@@ -317,6 +326,32 @@ import '@styles/modules/modal.scss';
 
 **Кнопки:** `.bttn` (Primary), `.bttn--secondary` (рамка Warm Gold), `.bttn--ghost` (лише текст), `.bttn--accent` (CTA), `.bttn--light` (на темному), `[disabled]` → Sage.
 **Поля:** default / `:focus` / `.field--error` (або `.wpcf7-not-valid` від CF7), підпис — `.field__label`.
+**Шапка:** та сама розмітка, що в `header.php`, разом із бандлом `app.min.js` — бургер-меню перевіряється звуженням вікна.
+
+### Шапка сайту
+
+Розмітка — [header.php](header.php), хелпери — [functions-parts/parts/header.php](functions-parts/parts/header.php), стилі — [_header.scss](src/styles/modules/_header.scss), JS — [_header.js](src/js/modules/_header.js).
+
+Контент редагується в **Налаштування теми** (ACF Options, група `acf-json/group_theme_settings.json`): `header_logo`, `header_brand`, `header_tagline`, `header_button`. Кожне поле має фолбек із макета, тож шапка коректна й до заповнення.
+
+Меню — **Зовнішній вигляд → Меню**, локація `header_menu`. Поки меню не призначене, виводиться плейсхолдер із пунктами макета (і підказка адміну з посиланням на налаштування).
+
+### Підвал
+
+Розмітка — [footer.php](footer.php), хелпери — [functions-parts/parts/footer.php](functions-parts/parts/footer.php), стилі — [_footer.scss](src/styles/modules/_footer.scss).
+
+Увесь контент, **окрім колонки «Навігація»**, редагується в ACF Options → вкладка «Підвал»:
+
+| Поле | Що це |
+|---|---|
+| `footer_about` | опис під назвою (2–3 рядки) |
+| `footer_nav_title` | заголовок колонки меню (дефолт «Навігація») |
+| `footer_socials_title` | заголовок колонки соцмереж |
+| `footer_socials` | repeater `network` + `url` — назва мережі стає текстом посилання |
+| `footer_copyright` | копірайт; підтримує `%year%` |
+| `footer_slogan` | золотий курсивний рядок праворуч |
+
+Колонка «Навігація» — WP-меню локації `footer_menu`. Соцмережі без жодного заповненого рядка колонку не малюють; порожній `footer_about` / `footer_slogan` теж просто не виводяться.
 
 ---
 

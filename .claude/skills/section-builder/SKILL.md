@@ -22,7 +22,7 @@ description: >-
 | ACF layout | `acf-json/group_page_builder.json` → layout `hero` | поля контенту |
 | PHP template part | `template-parts/sections/hero.php` | розмітка |
 | SCSS | `src/styles/sections/_hero.scss` | стилі |
-| JS (за потреби) | `src/js/sections/hero.js` | інтерактив |
+| JS (за потреби) | `src/js/sections/_hero.js` | інтерактив (підкреслення обовʼязкове, див. §5) |
 
 Slug — lowercase-kebab, стабільний (не перейменовувати після створення — зламає контент у БД).
 
@@ -116,7 +116,11 @@ if (!$title && !$image) return; // не рендеримо порожню сек
 `_index.scss` уже підключений із `main.scss` через `@use 'sections';`. **Партіали Vite не сканує сам** — без `@forward` стилі не потраплять у збірку.
 
 ### 5. JS (тільки якщо є інтерактив)
-`src/js/sections/hero.js` — експортуй init, що сам перевіряє наявність секції:
+
+**Файл обовʼязково з підкресленням** — `src/js/sections/_hero.js`. Причина не косметична: за конвенцією збірки кожен `.js` без `_` стає ОКРЕМИМ entry, і тоді `import` із `app.js` перетворюється на ESM-import між бандлами. `app.min.js` підключається класичним `<script>`, тож сторінка впаде з «Cannot use import statement outside a module». Підкреслення = партіал, який вбудовується в `app.min.js`.
+(Окремий entry без `_` доречний лише для `src/js/pages/*.js` — вони й підключаються окремо.)
+
+Експортуй init, що сам перевіряє наявність секції:
 
 ```js
 export function initHero() {
@@ -125,9 +129,9 @@ export function initHero() {
   // ... slider / parallax / gsap
 }
 ```
-Підключи в `src/js/app.js` (файл уже є, поки порожній):
+Підключи в `src/js/app.js`:
 ```js
-import { initHero } from '@js/sections/hero.js';
+import { initHero } from '@js/sections/_hero.js';
 initHero();
 ```
 Бібліотеки (`gsap`, `swiper`, `@fancyapps/ui`, `parallax-js`, `matter-js`) вже у залежностях — імпортуй напряму (див. README теми). Якщо ліба потрібна лише одній секції — вантаж її умовно через `delta_has_section()` у `_assets.php`, а не глобально.
