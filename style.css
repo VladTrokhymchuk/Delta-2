@@ -1,0 +1,11 @@
+/*!
+Theme Name: Hotel Delta
+Theme URI: http://hotel-delta.local/
+Description: Кастомна WordPress-тема готелю «Дельта». Збірка на Vite, конструктор сторінок на ACF Flexible Content (класичний редактор), лише кастомні пост-тайпи. Стилі/скрипти підключаються з build/ через manifest.json — не редагуйте build/ вручну, працюйте у src/.
+Author: Vlad Trokhymchuk
+Author URI: https://github.com/VladTrokhymchuk
+Version: 1.0.0
+Requires at least: 6.0
+Requires PHP: 8.0
+Text Domain: delta
+*/

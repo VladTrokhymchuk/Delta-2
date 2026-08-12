@@ -1,0 +1,41 @@
+{
+  "name": "wp-template",
+  "version": "2.0.0",
+  "description": "Modern Vite-based WordPress theme build",
+  "type": "module",
+  "author": "Vlad Trokhymchuk",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite build --watch --mode development",
+    "build": "vite build",
+    "js": "vite build --mode js-only",
+    "css": "vite build --mode css-only",
+    "serve": "vite",
+    "clean": "node -e \"require('node:fs').rmSync('build',{recursive:true,force:true})\"",
+    "preview": "vite preview --outDir build"
+  },
+  "dependencies": {
+    "@fancyapps/ui": "^6.1.8",
+    "gsap": "^3.14.2",
+    "matter-js": "^0.20.0",
+    "parallax-js": "^3.1.0",
+    "swiper": "^11.2.10"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "browserslist-to-esbuild": "^2.1.1",
+    "fast-glob": "^3.3.3",
+    "postcss": "^8.4.49",
+    "sass": "^1.99.0",
+    "vite": "^6.3.6"
+  },
+  "overrides": {
+    "sass-embedded": "1.77.8"
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "Firefox ESR",
+    "not dead"
+  ]
+}

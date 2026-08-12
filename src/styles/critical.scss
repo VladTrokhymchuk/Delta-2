@@ -1,0 +1,8 @@
+// Критичний CSS — інлайниться в <head> (_assets.php).
+// Тут ЛИШЕ first-screen: шрифти, reset, база, типографіка, шапка.
+@use 'core' as *;
+
+@use 'partials/fonts';
+@use 'partials/reset';
+@use 'partials/base';
+@use 'partials/typography';

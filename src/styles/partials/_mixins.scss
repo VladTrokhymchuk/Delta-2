@@ -1,0 +1,45 @@
+@use 'vars' as *;
+
+// Встановлює width + height одним викликом. Якщо передати тільки $a — буде квадрат.
+@mixin size($a, $b: $a) {
+  width: $a;
+  height: $b;
+}
+
+// Медіа-запити: @include minw($tablet) { ... }
+@mixin minw($media) { @media (min-width: $media) { @content; } }
+@mixin maxw($media) { @media (max-width: $media) { @content; } }
+@mixin minh($media) { @media (min-height: $media) { @content; } }
+@mixin maxh($media) { @media (max-height: $media) { @content; } }
+
+// Приховує текст (image replacement для декоративних елементів).
+@mixin hide-text {
+  border: 0;
+  font: 0/0 a;
+  text-shadow: none;
+  color: transparent;
+}
+
+// Адаптивне значення, що плавно змінюється між $startSize і $minSize на ширині vw.
+// $type: 1 = тільки нижче контейнера, 2 = тільки вище, 0 (або інше) = завжди.
+// Приклад: @include adaptiv-value('padding', 50, 20, 0);
+@mixin adaptiv-value($property, $startSize, $minSize, $type: 0) {
+  $addSize: $startSize - $minSize;
+  $container: $maxWidthContainer * 1px;
+  $fluid: calc(#{$minSize * 1px} + #{$addSize} * ((100vw - 375px) / #{$maxWidth - 375}));
+  $fluidSmall: calc(#{$minSize * 1px} + #{$addSize} * ((100vw - 375px) / #{$maxWidthContainer - 375}));
+
+  @if $type == 1 {
+    #{$property}: $startSize * 1px;
+    @media (max-width: $container) {
+      #{$property}: $fluidSmall;
+    }
+  } @else if $type == 2 {
+    #{$property}: $startSize * 1px;
+    @media (min-width: $container) {
+      #{$property}: $fluid;
+    }
+  } @else {
+    #{$property}: $fluid;
+  }
+}

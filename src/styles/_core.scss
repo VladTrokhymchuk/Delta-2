@@ -1,0 +1,5 @@
+// Shared tools: змінні, мiksини, функції.
+// Використання в будь-якому партіалі: `@use '../core' as *;`
+@forward 'partials/vars';
+@forward 'partials/mixins';
+@forward 'partials/functions';

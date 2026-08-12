@@ -1,0 +1,21 @@
+// ============================================================
+// @font-face — заповнити за макетом Figma.
+//
+// 1. Поклади .woff2 у src/fonts/ (копіюються в build/fonts/).
+// 2. Опиши тут @font-face; шлях відносний: '../fonts/<file>.woff2'.
+// 3. Змінну сімейства пропиши у body (_base.scss).
+//
+// Правила: тільки woff2, `font-display: swap`, змінні шрифти —
+// одним @font-face із діапазоном ваг (font-weight: 300 700),
+// сабсети через unicode-range (латиниця/кирилиця окремо).
+// ============================================================
+
+/* Приклад:
+@font-face {
+	font-family: 'Delta Sans';
+	font-style: normal;
+	font-weight: 300 700;
+	font-display: swap;
+	src: url('../fonts/delta-sans.woff2') format('woff2');
+}
+*/

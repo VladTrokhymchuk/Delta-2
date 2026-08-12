@@ -1,0 +1,23 @@
+// Shared tools (vars + mixins + functions)
+@use 'core' as *;
+
+// Foundation
+@use 'partials/fonts';
+@use 'partials/reset';
+@use 'partials/base';
+@use 'partials/grids';
+@use 'partials/typography';
+@use 'partials/sup-classes';
+
+// UI primitives
+@use 'partials/forms';
+@use 'partials/checkbox';
+@use 'partials/bttn';
+
+// Секції конструктора (кожна нова секція реєструється в sections/_index.scss)
+@use 'sections';
+
+// Layout modules (розкоментовуйте по мірі появи файлів)
+// @use 'modules/header';
+// @use 'modules/footer';
+// @use 'modules/breadcrumbs';

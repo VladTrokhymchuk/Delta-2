@@ -1,0 +1,74 @@
+@use '../core' as *;
+
+// ============================================================
+// Форми — базовий каркас (поля + Contact Form 7).
+// Оформлення доводимо за макетом Figma.
+// ============================================================
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: rem(14) rem(16);
+  font-family: inherit;
+  font-size: rem(16);
+  line-height: 120%;
+  color: var(--text);
+  background-color: transparent;
+  border: 1px solid var(--border);
+  border-radius: rem(8);
+  transition: border-color 0.15s ease-in-out;
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:hover,
+  &:focus {
+    border-color: var(--text);
+  }
+}
+
+textarea {
+  min-height: rem(120);
+  resize: vertical;
+}
+
+// --- Contact Form 7 ---------------------------------------------------------
+.wpcf7 {
+  &-spinner { display: none !important; }
+
+  .screen-reader-response { display: none; }
+
+  &-not-valid-tip {
+    display: block;
+    margin-top: rem(4);
+    font-size: rem(14);
+    color: var(--error) !important;
+  }
+
+  &-form-control.wpcf7-not-valid {
+    border-color: var(--error);
+  }
+
+  &-response-output {
+    display: block;
+    width: 100%;
+    margin: rem(16) 0 0;
+    padding: rem(16);
+    font-size: rem(16);
+    text-align: center;
+    background: var(--bg-alt);
+    border: 0;
+    border-radius: rem(8);
+  }
+
+  &-form-control-wrap { display: block; }
+
+  // Автозаповнення Chrome не має перекривати фон поля.
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 100rem var(--bg) inset !important;
+  }
+}

@@ -1,0 +1,95 @@
+@use '../core' as *;
+@use 'vars' as *;
+
+// Генеруємо CSS-змінні з мапи $colors.
+// Потім у будь-якому компоненті: color: var(--accent);
+:root {
+  --app-height: 100%;
+
+  @each $name, $value in $colors {
+    --#{$name}: #{$value};
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 10px; // базовий для rem() (1rem = 10px)
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+body {
+  // Сімейство — після підключення шрифтів у _fonts.scss.
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  &.menu-open,
+  &.scroll-disable {
+    overflow: hidden;
+    height: 100vh;
+  }
+}
+
+img, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+main {
+  flex: 1;
+}
+
+// Сторінка, зібрана конструктором: відступи задає кожна секція окремо
+// (клас вішає delta_sections_main_class()).
+.main--sections {
+  padding: 0;
+}
+
+// ============================================================
+// Контейнер
+// ============================================================
+
+.container,
+[class*='__container'] {
+  margin: 0 auto;
+  width: 100%;
+  max-width: rem($maxWidthContainer);
+  padding: 0 rem(calc($containerPadding / 2));
+
+  @include minw($tablet) {
+    padding: 0 rem($containerPadding);
+  }
+}
+
+.container-wide { max-width: 100%; }
+
+// ============================================================
+// Utility
+// ============================================================
+
+.tac    { text-align: center; }
+.hidden { display: none !important; visibility: hidden !important; }
+
+// Приховано візуально, доступно скрінрідерам (a11y).
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

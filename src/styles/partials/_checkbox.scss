@@ -1,0 +1,46 @@
+@use '../core' as *;
+
+// ============================================================
+// Кастомний чекбокс (згода з політикою у формах CF7).
+// Птичка — інлайновий SVG через checkbox-bg() з _functions.scss,
+// тож зовнішні файли іконок не потрібні.
+// ============================================================
+
+.wpcf7-acceptance {
+	display: block;
+
+	.wpcf7-list-item { margin: 0; }
+
+	input[type='checkbox'] {
+		display: none;
+
+		& + span::before {
+			content: '';
+			float: left;
+			width: rem(16);
+			height: rem(16);
+			margin-right: rem(10);
+			border: 1px solid var(--text);
+			border-radius: rem(2);
+			background-color: transparent;
+			cursor: pointer;
+		}
+
+		&:checked + span::before {
+			border-color: var(--accent);
+			background: var(--accent) url(checkbox-bg(10, 8, #ffffff, 1)) no-repeat center center;
+		}
+	}
+
+	.wpcf7-list-item-label {
+		font-size: rem(14);
+		color: var(--text);
+
+		a {
+			color: inherit;
+			text-decoration: underline;
+
+			&:hover { color: var(--accent); }
+		}
+	}
+}

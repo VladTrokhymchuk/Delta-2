@@ -1,0 +1,48 @@
+@use '../core' as *;
+
+.grid,
+.grid-2,
+.grid-3,
+.grid-4 {
+  display: grid;
+  grid-gap: 20px;
+
+  @include minw($gridMinSize * 1px) {
+    grid-gap: 20px;
+
+    .w100 {
+      grid-column: span 2;
+    }
+  }
+
+  @include minw($sm-pc) {
+    .grid-span-3 {
+      grid-row: span 3 / span 3;
+      grid-column-start: 2;
+      grid-row-start: 3;
+    }
+  }
+}
+
+@include minw($gridMinSize * 1px) {
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@include minw($sm-pc) {
+
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@include minw($pc) {
+  .grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
