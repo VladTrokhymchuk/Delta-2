@@ -26,8 +26,10 @@ html {
 }
 
 body {
-  // Сімейство — після підключення шрифтів у _fonts.scss.
-  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-family: $font-body;
+  font-size: rem(14);
+  line-height: 1.5;
+  color: var(--text);
   display: flex;
   flex-direction: column;
   min-height: 100vh;

@@ -76,6 +76,36 @@ function my_assets() {
 add_action('wp_enqueue_scripts', 'my_assets', 20);
 
 /**
+ * Preload шрифтів першого екрана.
+ *
+ * Кирилиця, бо контент україномовний: Spectral 600 (H1) + Manrope 400 (текст).
+ * Латинські сабсети браузер підтягне сам за unicode-range — їх не преload'имо,
+ * щоб не витрачати бюджет першого запиту.
+ *
+ * Якщо перший екран змінить набір накреслень — онови список.
+ *
+ * @see .claude/skills/performance-optimization
+ */
+add_action('wp_head', 'delta_preload_fonts', 1);
+function delta_preload_fonts() {
+    $fonts = array(
+        'spectral-600-cyrillic.woff2',
+        'manrope-400-cyrillic.woff2',
+    );
+
+    $dir = get_stylesheet_directory() . '/build/fonts/';
+    $uri = get_stylesheet_directory_uri() . '/build/fonts/';
+
+    foreach ($fonts as $file) {
+        if (!is_readable($dir . $file)) continue;
+        printf(
+            '<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
+            esc_url($uri . $file)
+        );
+    }
+}
+
+/**
  * Прибрати jQuery Migrate на фронті.
  */
 function remove_jquery_migrate($scripts) {

@@ -42,13 +42,12 @@ description: >-
 - галереї номерів — лайтбокс із ліниво довантаженими повнорозмірними фото, а не всі одразу.
 
 ## 4. Шрифти
-- тільки **.woff2** у `src/fonts/` → `build/fonts/`, `font-display: swap` (шаблон уже в `_fonts.scss`);
-- `preload` для first-screen шрифту:
-  ```php
-  echo '<link rel="preload" href="'.get_stylesheet_directory_uri().'/build/fonts/<file>.woff2" as="font" type="font/woff2" crossorigin>';
-  ```
-- self-host, не Google Fonts CDN (одним запитом менше й без preconnect);
-- subset latin + cyrillic окремими `unicode-range` — не вантаж зайві гліфи.
+Базу вже зроблено: Spectral (500/600) і Manrope (400/600/700) self-hosted у `src/fonts/` → `build/fonts/`, з `font-display: swap` і `unicode-range` по сабсетах (latin, latin-ext, cyrillic, cyrillic-ext) — див. `_fonts.scss`. Preload кириличних Spectral 600 + Manrope 400 робить `delta_preload_fonts()` у [_assets.php](../../../functions-parts/_assets.php).
+
+Що тримати в голові далі:
+- **не додавай ваг «про запас»** — кожна це +4 файли; візуальну вагу краще брати з наявних;
+- якщо перший екран змінить набір накреслень — онови список у `delta_preload_fonts()`, і не преload'ь більше 2–3 файлів;
+- ніякого Google Fonts CDN (зайвий домен, preconnect, гірший LCP).
 
 ## 5. Кешування та доставка
 - довгі `Cache-Control`/`Expires` для `build/` (хешовані імена з Vite дозволяють immutable-кеш);

@@ -4,7 +4,7 @@
 
 **Архітектура теми** (конструктор сторінок на ACF Flexible Content, CPT, SEO) описана в скілах — [`.claude/skills/`](.claude/skills/README.md). Цей файл — про збірку фронтенду.
 
-**Стан:** каркас. Дизайн верстається з нуля за макетом Figma: кольори вже з макета (`_vars.scss`), шрифти в `_fonts.scss` — ще плейсхолдер; секцій і CPT ще немає.
+**Стан:** каркас. Дизайн верстається з нуля за макетом Figma: бренд-палітра (`_vars.scss`), шрифти (`_fonts.scss`) і типографічна сходинка (`_typography.scss`) уже з макета; секцій і CPT ще немає.
 
 ---
 
@@ -282,16 +282,31 @@ import '@styles/modules/modal.scss';
 
 Усе з `src/img/` та `src/fonts/` копіюється у `build/` зі збереженням вкладеності. Для шрифтів — **.woff2**.
 
-```scss
-@font-face {
-  font-family: 'Delta Sans';
-  src: url('../fonts/delta-sans.woff2') format('woff2');
-  font-weight: 400;
-  font-display: swap;
-}
-```
+### Шрифти проєкту
 
-Шрифти макета описуються один раз у [_fonts.scss](src/styles/partials/_fonts.scss) (зараз там шаблон-коментар).
+Дві родини з макета, **self-hosted** (без Google Fonts CDN), сабсети `latin`, `latin-ext`, `cyrillic`, `cyrillic-ext` — 20 файлів, 276 KB, ліцензія OFL:
+
+| Родина | Ваги | Де застосовується |
+|---|---|---|
+| **Spectral** (serif) | 500, 600 | H1–H3 |
+| **Manrope** (sans) | 400, 600, 700 | H4, body, кнопки, overline |
+
+`@font-face` згенеровані в [_fonts.scss](src/styles/partials/_fonts.scss) з `unicode-range` — браузер тягне лише потрібний сабсет. Кириличні файли Spectral 600 і Manrope 400 додатково преload'яться (`delta_preload_fonts()` у `_assets.php`).
+
+### Типографічна сходинка
+
+| Роль | Родина / вага | Розмір | Leading | Колір |
+|---|---|---|---|---|
+| H1 | Spectral 600 | 40px | 1.2 | `--primary` |
+| H2 | Spectral 500 | 32px | 1.2 | `--primary` |
+| H3 | Spectral 500 | 24px | 1.3 | `--primary` |
+| H4 | Manrope 700 | 16px | 1.4 | `--text` |
+| Body | Manrope 400 | 14px | 1.5 | `--text` |
+| `.overline` | Manrope 600 | 12px | 1.2 | `--secondary-deep` `#8A6E3B`, uppercase, tracking 2px |
+
+`--secondary-deep` — це макетний `#947640`, затемнений до AA-контрасту (4.3:1 → 4.8:1 на білому), бо overline набирається 12px.
+
+Класи-двійники `.h1`–`.h4` — коли візуальний рівень не збігається з семантичним (тег обираємо за структурою документа, вигляд — класом).
 
 ---
 

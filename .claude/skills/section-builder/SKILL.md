@@ -31,7 +31,10 @@ Slug — lowercase-kebab, стабільний (не перейменовува�
 ### 1. Розбери Figma
 Перед кодом зафіксуй: назву секції, список полів (заголовок, текст, кнопки, повторювані елементи → repeater, зображення), брейкпоінти. **Збережи посилання на Figma-ноду** — воно йде в шапку PHP і SCSS як коментар.
 
-Токени дизайну беруться з `src/styles/partials/`: кольори бренд-палітри вже заведені у `_vars.scss` (`--primary` Forest Green, `--secondary` Warm Gold, `--accent` Copper, `--bg-alt` Linen, `--text` Charcoal), шрифти в `_fonts.scss` — ще плейсхолдер. Нових хексів у секціях не з'являється: якщо в макеті колір, якого немає в мапі, — додай його у `$colors`, а не інлайном.
+Токени дизайну вже заведені в `src/styles/partials/` — у секціях їх не перевизначають:
+- **кольори** (`_vars.scss`): `--primary` Forest Green, `--secondary` Warm Gold, `--accent` Copper, `--bg-alt` Linen, `--text` Charcoal + семантичні. Немає потрібного кольору — додай ключ у `$colors`, а не інлайновий хекс;
+- **типографіка** (`_typography.scss`): H1–H3 Spectral, H4/body/кнопки Manrope, `.overline` для надзаголовків. Розміри в секції задавай лише там, де макет реально відходить від сходинки; для «візуально H2, семантично H3» використовуй класи `.h1`–`.h4`;
+- **шрифти** (`_fonts.scss`): Spectral 500/600, Manrope 400/600/700, self-hosted. Знадобилась інша вага — доклади `.woff2` у `src/fonts/`, не підключай CDN.
 
 ### 2. ACF layout (через acf-json)
 Додай новий layout у Flexible Content `page_sections`. Дотримуйся [[acf-fields]]:
