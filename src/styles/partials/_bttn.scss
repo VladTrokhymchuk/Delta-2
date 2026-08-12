@@ -1,8 +1,13 @@
 @use '../core' as *;
 
 // ============================================================
-// Кнопки — базовий каркас. Кольори, радіус, розміри та стани
-// доводимо за макетом Figma.
+// Кнопки. Розміри/радіус/типографіку доводимо за макетом, кольори —
+// з бренд-палітри (_vars.scss).
+//
+//   .bttn            — головна кнопка: Forest Green
+//   .bttn--accent    — CTA: Amber/Copper (дрібний текст → accent-dark, контраст)
+//   .bttn--outline   — вторинна: рамка Warm Gold
+//   .bttn--light     — на темному фоні (секції з --bg-dark)
 // ============================================================
 
 .bttn {
@@ -15,14 +20,14 @@
   line-height: 100%;
   text-align: center;
   cursor: pointer;
-  border: 0;
+  border: 1px solid transparent;
   border-radius: rem(8);
-  background-color: var(--accent);
+  background-color: var(--primary);
   color: var(--text-inverse);
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 
   &:hover {
-    background-color: var(--accent-dark);
+    background-color: var(--primary-dark);
   }
 
   &:focus-visible {
@@ -33,5 +38,39 @@
   &[disabled] {
     opacity: 0.5;
     pointer-events: none;
+  }
+
+  // --- CTA -----------------------------------------------------------------
+  // Базовий Copper дає з білим текстом лише 3.9:1, тому фон — accent-dark (5.0:1),
+  // а чистий Copper лишаємо для hover і великих декоративних елементів.
+  &--accent {
+    background-color: var(--accent-dark);
+
+    &:hover {
+      background-color: var(--accent);
+    }
+  }
+
+  // --- Вторинна (рамка Warm Gold) -----------------------------------------
+  &--outline {
+    background-color: transparent;
+    border-color: var(--border-accent);
+    color: var(--primary);
+
+    &:hover {
+      background-color: var(--secondary);
+      border-color: var(--secondary);
+      color: var(--primary);
+    }
+  }
+
+  // --- На темному фоні -----------------------------------------------------
+  &--light {
+    background-color: var(--white);
+    color: var(--primary);
+
+    &:hover {
+      background-color: var(--bg-alt);
+    }
   }
 }

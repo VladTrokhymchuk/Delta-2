@@ -81,6 +81,18 @@ main {
 .tac    { text-align: center; }
 .hidden { display: none !important; visibility: hidden !important; }
 
+// Фонові секції з бренд-палітри. На темному фоні перевертаємо колір тексту,
+// щоб не дублювати це в кожній секції.
+.bg-alt { background-color: var(--bg-alt); }
+
+.bg-dark {
+  background-color: var(--bg-dark);
+  color: var(--text-inverse);
+
+  h1, h2, h3, h4, h5, h6,
+  p, li { color: var(--text-inverse); }
+}
+
 // Приховано візуально, доступно скрінрідерам (a11y).
 .visually-hidden {
   position: absolute;

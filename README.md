@@ -4,7 +4,7 @@
 
 **Архітектура теми** (конструктор сторінок на ACF Flexible Content, CPT, SEO) описана в скілах — [`.claude/skills/`](.claude/skills/README.md). Цей файл — про збірку фронтенду.
 
-**Стан:** каркас. Дизайн верстається з нуля за макетом Figma — кольори/шрифти в `partials/` поки плейсхолдери, секцій і CPT ще немає.
+**Стан:** каркас. Дизайн верстається з нуля за макетом Figma: кольори вже з макета (`_vars.scss`), шрифти в `_fonts.scss` — ще плейсхолдер; секцій і CPT ще немає.
 
 ---
 
@@ -127,24 +127,25 @@ build/
 Єдине джерело правди — SCSS-мапа `$colors` у [src/styles/partials/_vars.scss](src/styles/partials/_vars.scss).
 
 ```scss
-$colors: (
-  'accent':       #000000,   // ← плейсхолдери; замінити на палітру з Figma
-  'accent-dark':  #000000,
-  'accent-light': #000000,
-  'text':         #111111,
-  'text-muted':   #666666,
-  'text-inverse': #ffffff,
-  'bg':           #ffffff,
-  'bg-alt':       #f5f5f5,
-  'bg-dark':      #111111,
-  'border':       #e5e5e5,
-  'border-dark':  #333333,
-  'black':        #000000,
-  'white':        #ffffff,
-  'success':      #2ecc71,
-  'warning':      #f39c12,
-  'error':        #e74c3c,
-);
+Бренд-палітра з Figma «1. Color Architecture» — п'ять бренд-кольорів, з яких виведені всі решта:
+
+| Токен | HEX | Роль за макетом |
+|---|---|---|
+| `$forest` → `--primary` | `#163324` | Forest Green — айдентика, шапка, головні кнопки |
+| `$gold` → `--secondary` | `#CCA86E` | Warm Gold — рамки, акценти, підсвітка серифів |
+| `$copper` → `--accent` | `#B0733C` | Amber/Copper — фокус-теги, CTA |
+| `$linen` → `--bg-alt` | `#F4EFE6` | Warm Linen — вторинні фони й панелі |
+| `$charcoal` → `--text` | `#222B25` | Charcoal Green — основний текст |
+
+Семантичні: `--success #2E7D32`, `--warning #EF6C00`, `--error #C62828`, `--info #00695C`.
+
+Похідні (hover-стани й нейтралі) виведені з бренд-кольорів і зафіксовані як hex:
+`--primary-dark #10251A`, `--primary-light #25573D`, `--secondary-dark #BF9148`,
+`--accent-dark #925F32`, `--text-muted #61665F`, `--border #DBD7CF`.
+
+**Два обмеження за контрастом** (розрахунки — у шапці `_vars.scss`):
+- білий текст на `--accent` дає 3.9:1 → для дрібного тексту бери `--accent-dark` (5.4:1);
+- Warm Gold на світлому фоні — 2.2:1, тобто лише лінії та декор, не текст.
 ```
 
 ### Як використовувати
