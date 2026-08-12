@@ -112,6 +112,18 @@
 		}
 	}
 
+	// Підказка редактору, якщо локація меню не призначена (відвідувач її не бачить).
+	&__menu-hint {
+		font-size: rem(13);
+		line-height: 1.4;
+		color: rgba($white, 0.65);
+
+		a {
+			color: var(--secondary);
+			text-decoration: underline;
+		}
+	}
+
 	// --- Нижня смуга ---------------------------------------------------------
 	&__bottom {
 		display: flex;

@@ -5,6 +5,43 @@
 
 if (!defined('ABSPATH')) exit;
 
+# --- ACF Options -------------------------------------------------------------
+
+/**
+ * Значення поля зі сторінки «Налаштування теми» з фолбеком.
+ * Один хелпер на всі глобальні поля (шапка, підвал, контакти).
+ *
+ * @see acf-json/group_theme_settings.json
+ */
+function delta_opt($field, $default = '') {
+	if (!function_exists('get_field')) return $default;
+
+	$value = get_field($field, 'options');
+
+	return ($value === null || $value === '' || $value === false) ? $default : $value;
+}
+
+# --- Меню --------------------------------------------------------------------
+
+/**
+ * Повідомлення на місці меню, якщо локація не призначена.
+ *
+ * Показуємо ЛИШЕ тим, хто може це полагодити. Фейкових пунктів не малюємо:
+ * посилання на «#» у продакшені виглядають як робоче меню й потрапляють
+ * у видачу та до відвідувачів.
+ */
+function delta_menu_missing_notice($class = '') {
+	if (!current_user_can('edit_theme_options')) return;
+
+	printf(
+		'<p class="%s">%s <a href="%s">%s</a></p>',
+		esc_attr($class),
+		esc_html__('Меню не призначене:', 'delta'),
+		esc_url(admin_url('nav-menus.php?action=locations')),
+		esc_html__('налаштувати', 'delta')
+	);
+}
+
 # --- Пристрій (Mobile_Detect) ------------------------------------------------
 function isMobile() {
   $detect = new Mobile_Detect;

@@ -1,8 +1,8 @@
 /**
  * Шапка: мобільне меню (бургер → панель справа).
  *
- * Стан тримається класом `menu-open` на <body> — CSS показує панель і
- * блокує скрол сторінки (див. _base.scss / _header.scss).
+ * Стан тримається класом `menu-open` на <body> — CSS показує панель, вмикає
+ * затемнення й блокує скрол (див. _base.scss / _header.scss).
  */
 
 const DESKTOP_BREAKPOINT = 992; // = $sm-pc
@@ -15,21 +15,43 @@ export function initHeader() {
   const nav = header.querySelector('.header__nav');
   if (!burger || !nav) return;
 
-  const isOpen = () => document.body.classList.contains('menu-open');
+  const body = document.body;
+  let scrollY = 0;
+
+  const isOpen = () => body.classList.contains('menu-open');
+
+  /**
+   * Блокує сторінку без стрибка: body стає fixed, тож треба вручну
+   * запам'ятати позицію скролу й повернути її при закритті.
+   */
+  const lockScroll = () => {
+    scrollY = window.scrollY;
+    body.style.top = `-${scrollY}px`;
+  };
+
+  const unlockScroll = () => {
+    body.style.top = '';
+    window.scrollTo(0, scrollY);
+  };
 
   const setOpen = (open) => {
-    document.body.classList.toggle('menu-open', open);
+    if (open === isOpen()) return;
+
+    if (open) lockScroll();
+    body.classList.toggle('menu-open', open);
+    if (!open) unlockScroll();
+
     burger.setAttribute('aria-expanded', String(open));
   };
 
   burger.addEventListener('click', () => setOpen(!isOpen()));
 
-  // Клік по пункту меню — закрити (посилання-якорі в межах сторінки).
+  // Клік по пункту меню — закрити (актуально для якорів у межах сторінки).
   nav.addEventListener('click', (e) => {
     if (e.target.closest('a')) setOpen(false);
   });
 
-  // Клік поза панеллю.
+  // Клік поза панеллю (затемнення або решта шапки).
   document.addEventListener('click', (e) => {
     if (!isOpen()) return;
     if (nav.contains(e.target) || burger.contains(e.target)) return;
@@ -44,9 +66,23 @@ export function initHeader() {
     }
   });
 
-  // Перехід на десктоп при відкритому меню — прибрати стан,
-  // інакше <body> лишиться заблокованим.
+  // Свайп праворуч по панелі — закрити (звичний жест для шухляди).
+  let touchStartX = null;
+
+  nav.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+
+  nav.addEventListener('touchend', (e) => {
+    if (touchStartX === null) return;
+    const delta = e.changedTouches[0].clientX - touchStartX;
+    touchStartX = null;
+    if (delta > 60) setOpen(false);
+  }, { passive: true });
+
+  // Перехід на десктоп при відкритому меню — прибрати стан, інакше <body>
+  // лишиться заблокованим. Пасивний слухач: лише читаємо ширину.
   window.addEventListener('resize', () => {
     if (window.innerWidth >= DESKTOP_BREAKPOINT && isOpen()) setOpen(false);
-  });
+  }, { passive: true });
 }

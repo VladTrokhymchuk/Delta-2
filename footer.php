@@ -12,15 +12,15 @@
  */
 $theme_uri = get_template_directory_uri();
 
-$logo     = delta_header_opt('header_logo');
+$logo     = delta_opt('header_logo');
 $logo_src = !empty($logo['url']) ? $logo['url'] : $theme_uri . '/build/img/logo.png';
 
-$brand   = delta_header_opt('header_brand', get_bloginfo('name'));
-$about   = delta_header_opt('footer_about');
-$slogan  = delta_header_opt('footer_slogan');
+$brand   = delta_opt('header_brand', get_bloginfo('name'));
+$about   = delta_opt('footer_about');
+$slogan  = delta_opt('footer_slogan');
 
-$nav_title     = delta_header_opt('footer_nav_title', __('Навігація', 'delta'));
-$socials_title = delta_header_opt('footer_socials_title', __('Соціальні мережі', 'delta'));
+$nav_title     = delta_opt('footer_nav_title', __('Навігація', 'delta'));
+$socials_title = delta_opt('footer_socials_title', __('Соціальні мережі', 'delta'));
 $socials       = delta_footer_socials();
 ?>
 <footer class="footer" id="footer">

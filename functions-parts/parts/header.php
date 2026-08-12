@@ -1,53 +1,35 @@
 <?php
 /**
- * Хелпери шапки: дані з ACF Options + вивід навігації.
+ * Хелпери шапки.
  *
- * Меню редагується в Зовнішній вигляд → Меню, локація `header_menu`.
- * Поки меню не призначене, виводиться плейсхолдер із макета — щоб шапка
- * не виглядала зламаною на свіжій інсталяції. Призначив меню — плейсхолдер зник.
+ * Контент шапки — ACF Options «Налаштування теми» (читається через delta_opt()).
+ * Меню — Зовнішній вигляд → Меню, локація `header_menu`.
+ *
+ * @see functions-parts/_custom-functions.php (delta_opt, delta_menu_missing_notice)
  */
 
 if (!defined('ABSPATH')) exit;
 
 /**
- * Значення поля шапки з ACF Options із фолбеком на дефолт із макета.
- */
-function delta_header_opt($field, $default = '') {
-    if (!function_exists('get_field')) return $default;
-    $value = get_field($field, 'options');
-    return ($value === null || $value === '' || $value === false) ? $default : $value;
-}
-
-/**
- * Навігація шапки. Без призначеного меню — плейсхолдер із макета.
+ * Навігація шапки.
+ *
+ * Локація не призначена — редактор бачить підказку, відвідувач нічого.
  */
 function delta_header_nav() {
-    if (has_nav_menu('header_menu')) {
-        wp_nav_menu(array(
-            'theme_location' => 'header_menu',
-            'container'      => false,
-            'menu_class'     => 'header__menu',
-            'fallback_cb'    => false,
-            'depth'          => 2,
-        ));
+    if (!has_nav_menu('header_menu')) {
+        delta_menu_missing_notice('header__menu-hint');
         return;
     }
 
-    // --- Плейсхолдер (меню ще не створене) ----------------------------------
-    $items = array('Про нас', 'Номери', 'Послуги', 'Ресторан', 'Галерея', 'Контакти');
-
-    echo '<ul class="header__menu header__menu--placeholder">';
-    foreach ($items as $item) {
-        echo '<li class="menu-item"><a href="#">' . esc_html($item) . '</a></li>';
-    }
-    echo '</ul>';
-
-    if (current_user_can('edit_theme_options')) {
-        printf(
-            '<p class="header__menu-hint">%s <a href="%s">%s</a></p>',
-            esc_html__('Меню ще не призначене:', 'delta'),
-            esc_url(admin_url('nav-menus.php')),
-            esc_html__('налаштувати', 'delta')
-        );
-    }
+    // menu_id задаємо явно: інакше WP підставляє `menu-{slug}`, а слаг береться
+    // з назви меню — назвуть його кирилицею, і в розмітку потрапить
+    // id="menu-%d0%b3%d0%be...". Явний id робить markup незалежним від назви.
+    wp_nav_menu(array(
+        'theme_location' => 'header_menu',
+        'container'      => false,
+        'menu_id'        => 'header-menu',
+        'menu_class'     => 'header__menu',
+        'fallback_cb'    => false,
+        'depth'          => 2,
+    ));
 }

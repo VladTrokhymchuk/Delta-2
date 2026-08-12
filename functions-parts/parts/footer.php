@@ -7,6 +7,7 @@
  * локація `footer_menu`.
  *
  * @see acf-json/group_theme_settings.json
+ * @see functions-parts/_custom-functions.php (delta_opt, delta_menu_missing_notice)
  */
 
 if (!defined('ABSPATH')) exit;
@@ -16,7 +17,7 @@ if (!defined('ABSPATH')) exit;
  */
 function delta_footer_copyright() {
     $year   = date_i18n('Y');
-    $custom = delta_header_opt('footer_copyright');
+    $custom = delta_opt('footer_copyright');
 
     if ($custom) {
         return str_replace('%year%', $year, $custom);
@@ -31,27 +32,26 @@ function delta_footer_copyright() {
 }
 
 /**
- * Навігація підвалу. Без призначеного меню — плейсхолдер із макета.
+ * Навігація підвалу.
+ *
+ * Локація не призначена — редактор бачить підказку, відвідувач нічого.
  */
 function delta_footer_nav() {
-    if (has_nav_menu('footer_menu')) {
-        wp_nav_menu(array(
-            'theme_location' => 'footer_menu',
-            'container'      => false,
-            'menu_class'     => 'footer__menu',
-            'fallback_cb'    => false,
-            'depth'          => 1,
-        ));
+    if (!has_nav_menu('footer_menu')) {
+        delta_menu_missing_notice('footer__menu-hint');
         return;
     }
 
-    $items = array('Про готель', 'Всі номери', 'Послуги СПА', 'Ресторан', 'Контакти');
-
-    echo '<ul class="footer__menu footer__menu--placeholder">';
-    foreach ($items as $item) {
-        echo '<li class="menu-item"><a href="#">' . esc_html($item) . '</a></li>';
-    }
-    echo '</ul>';
+    // menu_id явно — щоб id не збирався зі слага кириличної назви меню
+    // (див. коментар у parts/header.php).
+    wp_nav_menu(array(
+        'theme_location' => 'footer_menu',
+        'container'      => false,
+        'menu_id'        => 'footer-menu',
+        'menu_class'     => 'footer__menu',
+        'fallback_cb'    => false,
+        'depth'          => 1,
+    ));
 }
 
 /**

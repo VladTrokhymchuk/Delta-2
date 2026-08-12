@@ -223,25 +223,36 @@ $header-menu-pad-x:    rem(16); // половина відступу 32px між
 }
 
 // ============================================================
-// Мобільна версія: меню в панелі
+// Мобільна версія: меню в панелі, що виїжджає справа
 // ============================================================
 @include maxw($sm-pc - 1px) {
 	.header {
 		&__nav {
 			position: fixed;
-			inset: 0 0 0 auto;
+			// Панель починається ПІД шапкою, а не від нуля: логотип і бургер
+			// лишаються видимими й доступними, поки меню відкрите.
+			inset: $header-height-mobile 0 0 auto;
 			z-index: 60;
 			display: flex;
 			flex-direction: column;
 			gap: rem(24);
-			width: min(88vw, rem(360));
-			padding: rem(96) rem(24) rem(32);
+			// Телефон — майже на весь екран, планшет — фіксована колонка,
+			// інакше на 768–991px панель розтягується на пів-екрана порожнечею.
+			width: min(86vw, rem(320));
+			padding: rem(28) rem(24) rem(32);
 			overflow-y: auto;
+			overscroll-behavior: contain; // скрол панелі не «протікає» на сторінку
 			background-color: var(--bg-soft);
 			border-left: 1px solid var(--border);
+			box-shadow: -8px 0 32px rgba($black, 0.12);
 			transform: translateX(100%);
 			visibility: hidden;
 			transition: transform 0.3s ease, visibility 0.3s ease;
+
+			@include minw($tablet) {
+				width: rem(360);
+				padding-inline: rem(32);
+			}
 		}
 
 		&__menu {
@@ -273,17 +284,20 @@ $header-menu-pad-x:    rem(16); // половина відступу 32px між
 
 			&--mobile {
 				display: inline-flex;
+				width: 100%;
 				margin-top: auto;
 			}
 		}
 	}
 
-	// Затемнення під панеллю.
-	.header::after {
+	// Затемнення. Живе на <body>, а не в .header: псевдоелемент шапки потрапляв
+	// у її стек-контекст (z-index: 50) і накривав власний бургер — кнопку не було
+	// ні видно, ні куди натиснути. Тепер шапка лишається над затемненням.
+	body::after {
 		content: '';
 		position: fixed;
 		inset: 0;
-		z-index: 55;
+		z-index: 40;
 		background-color: rgba($black, 0.45);
 		opacity: 0;
 		visibility: hidden;
@@ -291,13 +305,13 @@ $header-menu-pad-x:    rem(16); // половина відступу 32px між
 	}
 
 	.menu-open {
-		.header__nav {
-			transform: translateX(0);
+		&::after {
+			opacity: 1;
 			visibility: visible;
 		}
 
-		.header::after {
-			opacity: 1;
+		.header__nav {
+			transform: translateX(0);
 			visibility: visible;
 		}
 

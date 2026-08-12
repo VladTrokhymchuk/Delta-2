@@ -35,10 +35,16 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
 
+  // Блокування скролу під час відкритого меню/попапа.
+  // position: fixed, а не overflow: hidden — на iOS Safari сам лише overflow
+  // сторінку не тримає. Зсув `top` виставляє JS, щоб позиція не стрибала
+  // на початок (див. src/js/modules/_header.js).
   &.menu-open,
   &.scroll-disable {
+    position: fixed;
+    inset-inline: 0;
+    width: 100%;
     overflow: hidden;
-    height: 100vh;
   }
 }
 

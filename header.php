@@ -28,16 +28,16 @@
 $theme_uri = get_template_directory_uri();
 
 // --- Логотип --------------------------------------------------------------
-$logo      = delta_header_opt('header_logo');
+$logo      = delta_opt('header_logo');
 $logo_src  = !empty($logo['url']) ? $logo['url'] : $theme_uri . '/build/img/logo.png';
 $logo_alt  = !empty($logo['alt']) ? $logo['alt'] : '';
 
 // --- Назва й підпис -------------------------------------------------------
-$brand   = delta_header_opt('header_brand', get_bloginfo('name'));
-$tagline = delta_header_opt('header_tagline', 'Premium hospitality');
+$brand   = delta_opt('header_brand', get_bloginfo('name'));
+$tagline = delta_opt('header_tagline', 'Premium hospitality');
 
 // --- Кнопка ---------------------------------------------------------------
-$cta        = delta_header_opt('header_button');
+$cta        = delta_opt('header_button');
 $cta_url    = !empty($cta['url'])    ? $cta['url']    : '#';
 $cta_title  = !empty($cta['title'])  ? $cta['title']  : __('Забронювати номер', 'delta');
 $cta_target = !empty($cta['target']) ? $cta['target'] : '';
