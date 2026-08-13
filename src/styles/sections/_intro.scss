@@ -1,0 +1,107 @@
+@use '../core' as *;
+
+// ============================================================
+// INTRO — вступний текст по центру (на фоні Warm Linen).
+//
+// Ієрархія навмисно спадна: надзаголовок → заголовок серифом →
+// головний абзац теж серифом, але дрібніший → додатковий абзац
+// гротеском і приглушений.
+// ============================================================
+
+.section--intro {
+	padding-block: rem(64);
+	background-color: var(--bg-alt);
+	text-align: center;
+
+	@include minw($tablet) {
+		padding-block: rem(96);
+	}
+
+	@include minw($sm-pc) {
+		padding-block: rem(120);
+	}
+}
+
+.intro {
+	&__inner {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	// Важча за базовий .overline (600) і кольору Copper, а не $gold-deep.
+	&__overline {
+		margin-bottom: rem(16);
+		font-weight: 700;
+		letter-spacing: rem(2);
+		color: var(--accent);
+	}
+
+	&__title {
+		// Сходинка дає H2 = 32px; тут макет крупніший, тож розмір локальний.
+		font-size: rem(28);
+		line-height: 1.2;
+
+		@include minw($tablet) {
+			font-size: rem(36);
+		}
+
+		@include minw($sm-pc) {
+			font-size: rem(40);
+		}
+	}
+
+	// Розділювач: крапка з двома лініями. Одним елементом + псевдоелементи,
+	// щоб не тримати в розмітці три порожні span.
+	&__ornament {
+		position: relative;
+		display: block;
+		width: rem(6);
+		height: rem(6);
+		margin: rem(24) auto;
+		border-radius: 50%;
+		background-color: var(--secondary);
+
+		&::before,
+		&::after {
+			content: '';
+			position: absolute;
+			top: 50%;
+			width: rem(40);
+			height: 1px;
+			background-color: var(--secondary);
+		}
+
+		&::before { right: rem(14); }
+		&::after  { left: rem(14); }
+
+		@include minw($tablet) {
+			margin-block: rem(28);
+		}
+	}
+
+	&__lead {
+		max-width: rem(800);
+		font-family: $font-heading;
+		font-weight: 400;
+		font-size: rem(18);
+		line-height: 1.5;
+		color: var(--primary);
+
+		@include minw($tablet) {
+			font-size: rem(22);
+		}
+	}
+
+	&__text {
+		max-width: rem(700);
+		margin-top: rem(16);
+		font-size: rem(14);
+		line-height: 1.6;
+		color: var(--text);
+
+		@include minw($tablet) {
+			font-size: rem(15);
+		}
+	}
+}

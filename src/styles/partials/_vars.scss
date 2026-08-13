@@ -30,6 +30,10 @@ $hairline:   #DFD9CD; // лінія під шапкою, рамки полів
 $muted: #61665F; // 70% $charcoal + 30% $linen — вторинний текст
 $sage:  #A2ADA7; // 40% $forest + 60% білого   — заблокована кнопка («Fully Booked»)
 
+// --- Світле золото ----------------------------------------------------------
+// Текст на темних поверхнях і поверх фото (кнопка з рамкою в hero).
+$gold-light: #FFD98C;
+
 // --- Окремий золотий для тексту ---------------------------------------------
 // Warm Gold заслабкий як текст на світлому (2.2:1), тож для overline у макеті
 // заданий темніший відтінок. У Figma це #947640 — на білому дає 4.3:1, а overline
@@ -51,9 +55,10 @@ $colors: (
   'primary-dark':  $forest-dark,
   'primary-light': $forest-light,
 
-  'secondary':      $gold,
-  'secondary-dark': $gold-dark,
-  'secondary-deep': $gold-deep, // золото, придатне для тексту (overline)
+  'secondary':       $gold,
+  'secondary-light': $gold-light, // текст на темному / поверх фото
+  'secondary-dark':  $gold-dark,
+  'secondary-deep':  $gold-deep,  // золото, придатне для тексту на світлому
 
   'accent':       $copper,
   'accent-dark':  $copper-dark,

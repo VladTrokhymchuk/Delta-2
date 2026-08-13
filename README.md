@@ -317,16 +317,12 @@ import '@styles/modules/modal.scss';
 
 Радіус за замовчуванням — `$radius: 6px` (кнопки, поля, логотип у шапці).
 
-### UI-кіт: жива звірка з макетом
+### UI-елементи
 
-[src/static/ui-kit.html](src/static/ui-kit.html) → `build/ui-kit.html`, відкривається без WordPress:
-**http://hotel-delta.local/wp-content/themes/Delta-2/build/ui-kit.html**
+**Кнопки** ([_bttn.scss](src/styles/partials/_bttn.scss)): `.bttn` (Primary), `.bttn--secondary` (рамка Warm Gold), `.bttn--ghost` (лише текст), `.bttn--accent` (CTA), `.bttn--gold` і `.bttn--ghost-light` (поверх фото / на темному), `.bttn--light`, `[disabled]` → Sage.
+Варіанти з рамкою мають падінг на 1px менший — висота всіх кнопок лишається 47px.
 
-Сторінка підключає ту саму зібрану `main.min.css`, що й сайт, і показує палітру, типографічну сходинку та стани кнопок і полів. Змінив токен у `partials/` — перевір тут, перш ніж верстати секцію.
-
-**Кнопки:** `.bttn` (Primary), `.bttn--secondary` (рамка Warm Gold), `.bttn--ghost` (лише текст), `.bttn--accent` (CTA), `.bttn--light` (на темному), `[disabled]` → Sage.
-**Поля:** default / `:focus` / `.field--error` (або `.wpcf7-not-valid` від CF7), підпис — `.field__label`.
-**Шапка:** та сама розмітка, що в `header.php`, разом із бандлом `app.min.js` — бургер-меню перевіряється звуженням вікна.
+**Поля** ([_forms.scss](src/styles/partials/_forms.scss)): default / `:focus` / `.field--error` (або `.wpcf7-not-valid` від CF7), підпис — `.field__label`.
 
 ### Шапка сайту
 

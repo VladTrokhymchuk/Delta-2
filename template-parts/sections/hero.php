@@ -1,0 +1,75 @@
+<?php
+/**
+ * Section: Hero — перший екран.
+ * Поля з ACF Flexible Content layout "hero" (acf-json/group_page_builder.json).
+ *
+ * Фон — <img>, а не CSS background: так браузер отримує srcset/sizes і тягне
+ * розмір під екран, а не 2560px на телефон. Це LCP-елемент, тож без lazy,
+ * із fetchpriority="high".
+ *
+ * @see src/styles/sections/_hero.scss
+ */
+
+if (!defined('ABSPATH')) exit;
+
+$image    = get_sub_field('hero_image'); // return_format = id
+$overline = get_sub_field('hero_overline');
+$title    = get_sub_field('hero_title');
+$subtitle = get_sub_field('hero_subtitle');
+$buttons  = get_sub_field('hero_buttons');
+
+if (!$title && !$image) return; // порожню секцію не рендеримо
+?>
+<section class="section section--hero" data-section="hero" id="hero">
+
+	<?php if ($image) : ?>
+		<div class="hero__media">
+			<?= wp_get_attachment_image($image, 'full', false, array(
+				'class'         => 'hero__bg',
+				'alt'           => '',
+				'fetchpriority' => 'high',
+				'decoding'      => 'async',
+				'sizes'         => '100vw',
+			)); ?>
+		</div>
+	<?php endif; ?>
+
+	<div class="container hero__inner">
+
+		<?php if ($overline) : ?>
+			<p class="overline overline--light hero__overline"><?= esc_html($overline); ?></p>
+		<?php endif; ?>
+
+		<?php if ($title) : ?>
+			<h1 class="hero__title"><?= esc_html($title); ?></h1>
+		<?php endif; ?>
+
+		<?php if ($subtitle) : ?>
+			<p class="hero__subtitle"><?= nl2br(esc_html($subtitle)); ?></p>
+		<?php endif; ?>
+
+		<?php if ($buttons) : ?>
+			<div class="hero__actions">
+				<?php foreach ($buttons as $btn) :
+					$link = !empty($btn['link']) ? $btn['link'] : null;
+					if (!$link || empty($link['url'])) continue;
+
+					// Вигляд кнопки з ACF → модифікатор із _bttn.scss.
+					$styles = array(
+						'gold'  => 'bttn--gold',
+						'ghost' => 'bttn--ghost-light',
+					);
+					$key   = $btn['style'] ?? 'gold';
+					$style = $styles[$key] ?? $styles['gold'];
+					?>
+					<a class="bttn <?= esc_attr($style); ?>"
+					   href="<?= esc_url($link['url']); ?>"
+					   <?php if (!empty($link['target'])) : ?>target="<?= esc_attr($link['target']); ?>" rel="noopener"<?php endif; ?>>
+						<?= esc_html(!empty($link['title']) ? $link['title'] : __('Детальніше', 'delta')); ?>
+					</a>
+				<?php endforeach; ?>
+			</div>
+		<?php endif; ?>
+
+	</div>
+</section>

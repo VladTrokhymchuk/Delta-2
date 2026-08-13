@@ -1,0 +1,154 @@
+{
+    "key": "group_room",
+    "title": "Номер",
+    "fields": [
+        {
+            "key": "field_room_tab_main",
+            "label": "Основне",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_room_price",
+            "label": "Ціна за ніч, ₴",
+            "name": "room_price",
+            "type": "number",
+            "instructions": "Лише число. Валюта й «\/ніч» додаються при виводі.",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "3200",
+            "min": 0,
+            "step": 50
+        },
+        {
+            "key": "field_room_status",
+            "label": "Статус",
+            "name": "room_status",
+            "type": "select",
+            "instructions": "Бейдж на картці номера.",
+            "required": 0,
+            "choices": {
+                "available": "Вільний",
+                "busy": "Зайнятий"
+            },
+            "default_value": "available",
+            "return_format": "value",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0
+        },
+        {
+            "key": "field_room_area",
+            "label": "Площа, м²",
+            "name": "room_area",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "25",
+            "min": 0,
+            "step": 1
+        },
+        {
+            "key": "field_room_tab_gallery",
+            "label": "Галерея",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_room_gallery",
+            "label": "Фотографії номера",
+            "name": "room_gallery",
+            "type": "gallery",
+            "instructions": "Показуються на сторінці номера. Обкладинку картки задає «Зображення запису».",
+            "required": 0,
+            "return_format": "id",
+            "library": "all",
+            "min": 0,
+            "max": 0,
+            "insert": "append",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_room_tab_details",
+            "label": "Характеристики",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_room_specs",
+            "label": "Короткі характеристики",
+            "name": "room_specs",
+            "type": "repeater",
+            "instructions": "Напр.: «Номер: 2-місний», «Ліжко: двоспальне 180×200», «Площа: 25 м²».",
+            "required": 0,
+            "layout": "table",
+            "button_label": "Додати рядок",
+            "min": 0,
+            "max": 0,
+            "sub_fields": [
+                {
+                    "key": "field_room_spec_text",
+                    "label": "Текст",
+                    "name": "text",
+                    "type": "text",
+                    "required": 0,
+                    "parent_repeater": "field_room_specs"
+                }
+            ]
+        },
+        {
+            "key": "field_room_amenities",
+            "label": "Зручності",
+            "name": "room_amenities",
+            "type": "repeater",
+            "instructions": "Кондиціонер, душ, фен, холодильник тощо.",
+            "required": 0,
+            "layout": "table",
+            "button_label": "Додати зручність",
+            "min": 0,
+            "max": 0,
+            "sub_fields": [
+                {
+                    "key": "field_room_amenity_text",
+                    "label": "Назва",
+                    "name": "text",
+                    "type": "text",
+                    "required": 0,
+                    "parent_repeater": "field_room_amenities"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "room"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Поля номера готелю.",
+    "show_in_rest": 0,
+    "modified": 1786838400
+}

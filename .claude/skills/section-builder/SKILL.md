@@ -37,7 +37,7 @@ Slug — lowercase-kebab, стабільний (не перейменовува�
 - **шрифти** (`_fonts.scss`): Spectral 500/600, Manrope 400/600/700, self-hosted. Знадобилась інша вага — доклади `.woff2` у `src/fonts/`, не підключай CDN;
 - **кнопки й поля** (`_bttn.scss`, `_forms.scss`): `.bttn` + модифікатори `--secondary` / `--ghost` / `--accent` / `--light`, поля зі станами focus/error. У секції не перевизначай їх — бери готові класи.
 
-Усе це видно на живій сторінці UI-кіта: `build/ui-kit.html` (джерело — `src/static/ui-kit.html`). Додав новий спільний елемент — додай його туди, щоб style guide не відставав.
+Статичних демо-сторінок для звірки не робимо — перевіряй у реальній темі.
 
 ### 2. ACF layout (через acf-json)
 Додай новий layout у Flexible Content `page_sections`. Дотримуйся [[acf-fields]]:

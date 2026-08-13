@@ -119,6 +119,41 @@
     &:active { background-color: var(--accent); }
   }
 
+  // --- Золота (Warm Gold) --------------------------------------------------
+  // Основна кнопка на темних фонах / поверх фото (hero). Текст — Forest Green:
+  // на золоті це 6.1:1, тоді як білий дав би лише 2.2:1.
+  &--gold {
+    background-color: var(--secondary);
+    color: var(--primary);
+
+    &:hover,
+    &:active { background-color: var(--secondary-dark); }
+  }
+
+  // --- Прозора з рамкою, поверх фото (вторинна в hero) ---------------------
+  // Рамка Forest Green (навмисно приглушена на фото) і світло-золотий текст.
+  // Падінг на 1px менший за базовий — рамка з'їдає різницю, висота лишається 47px.
+  &--ghost-light {
+    padding: rem(13) rem(27);
+    background-color: transparent;
+    border: 1px solid var(--primary);
+    color: var(--secondary-light);
+
+    &:hover,
+    &:active {
+      background-color: transparent;
+      border-color: var(--secondary-light);
+      color: var(--secondary-light);
+    }
+
+    &[disabled],
+    &.is-disabled {
+      background-color: transparent;
+      border-color: var(--disabled);
+      color: var(--disabled);
+    }
+  }
+
   // --- На темному фоні -----------------------------------------------------
   &--light {
     background-color: var(--white);

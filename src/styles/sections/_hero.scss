@@ -1,0 +1,123 @@
+@use '../core' as *;
+
+// ============================================================
+// HERO — перший екран головної.
+//
+// Фото на всю ширину, поверх нього шар #16332480 (Forest Green 50%),
+// контент по центру. Зображення додається з адмінки, тож секція має
+// коректно виглядати і без нього — тоді лишається суцільний темний фон.
+// ============================================================
+
+$hero-overlay: rgba($forest, 0.5); // #16332480 з макета
+
+.section--hero {
+	position: relative;
+	display: flex;
+	align-items: center;
+	min-height: rem(520);
+	padding-block: rem(64);
+	overflow: hidden;
+	// Фолбек, коли зображення ще не завантажили в адмінці.
+	background-color: var(--bg-dark);
+	color: var(--bg-alt);
+	text-align: center;
+
+	@include minw($tablet) {
+		min-height: rem(600);
+	}
+
+	@include minw($sm-pc) {
+		min-height: rem(700);
+		padding-block: rem(96);
+	}
+}
+
+.hero {
+	// --- Фон ---------------------------------------------------------------
+	&__media {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+
+		// Затемнення поверх фото.
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background-color: $hero-overlay;
+		}
+	}
+
+	&__bg {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	// --- Контент -----------------------------------------------------------
+	&__inner {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	// Крупніший за базовий .overline (12px/600/2px) — це рівень першого екрана.
+	&__overline {
+		margin-bottom: rem(16);
+		font-weight: 700;
+		font-size: rem(12);
+		letter-spacing: rem(2.5);
+
+		@include minw($tablet) {
+			font-size: rem(14);
+			letter-spacing: rem(3);
+		}
+	}
+
+	&__title {
+		// Сходинка задає H1 = 40px; перший екран навмисно крупніший (64px),
+		// тому розмір локальний і сходинки не змінює.
+		font-size: rem(36);
+		line-height: 1.1;
+		color: var(--text-inverse);
+
+		@include minw($tablet) {
+			font-size: rem(52);
+		}
+
+		@include minw($sm-pc) {
+			font-size: rem(64);
+		}
+	}
+
+	&__subtitle {
+		max-width: rem(680);
+		margin-top: rem(20);
+		font-size: rem(16);
+		// У макеті рядок один і line-height 100%. На вузьких екранах текст
+		// переноситься, тому там даємо повітря — інакше рядки злипаються.
+		line-height: 1.4;
+		color: var(--bg-alt);
+
+		@include minw($tablet) {
+			font-size: rem(18);
+			line-height: 1;
+		}
+	}
+
+	&__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: rem(16);
+		margin-top: rem(32);
+
+		@include minw($tablet) {
+			margin-top: rem(40);
+		}
+	}
+}

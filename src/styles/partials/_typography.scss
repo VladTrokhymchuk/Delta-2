@@ -73,6 +73,12 @@ li {
   letter-spacing: rem(2); // tracking 2px
   text-transform: uppercase;
   color: var(--secondary-deep);
+
+  // На темних фонах і поверх фото: $gold-deep там темніє в ніщо,
+  // тож беремо чистий Warm Gold (на Forest Green — 6.1:1).
+  &--light {
+    color: var(--secondary);
+  }
 }
 
 a {

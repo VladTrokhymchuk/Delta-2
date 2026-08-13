@@ -1,0 +1,309 @@
+{
+    "key": "group_page_builder",
+    "title": "Конструктор сторінки",
+    "fields": [
+        {
+            "key": "field_page_sections",
+            "label": "Секції",
+            "name": "page_sections",
+            "type": "flexible_content",
+            "instructions": "Сторінка збирається з секцій. Порядок можна міняти перетягуванням.",
+            "required": 0,
+            "button_label": "Додати секцію",
+            "min": "",
+            "max": "",
+            "layouts": {
+                "layout_hero": {
+                    "key": "layout_hero",
+                    "name": "hero",
+                    "label": "Hero — перший екран",
+                    "display": "block",
+                    "min": "",
+                    "max": "1",
+                    "sub_fields": [
+                        {
+                            "key": "field_hero_image",
+                            "label": "Фонове зображення",
+                            "name": "hero_image",
+                            "type": "image",
+                            "instructions": "Перший екран. Рекомендовано щонайменше 2560×1440, JPG\/WebP. Поверх зображення лягає темно-зелений шар 50%.",
+                            "required": 0,
+                            "return_format": "id",
+                            "library": "all",
+                            "preview_size": "medium",
+                            "min_width": "",
+                            "min_height": "",
+                            "max_size": ""
+                        },
+                        {
+                            "key": "field_hero_overline",
+                            "label": "Надзаголовок",
+                            "name": "hero_overline",
+                            "type": "text",
+                            "instructions": "Дрібний рядок над заголовком. Виводиться великими літерами.",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Естетика відновленої тиші",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_hero_title",
+                            "label": "Заголовок (H1)",
+                            "name": "hero_title",
+                            "type": "text",
+                            "instructions": "Головний заголовок сторінки — єдиний H1.",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Готель Дельта",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_hero_subtitle",
+                            "label": "Підзаголовок",
+                            "name": "hero_subtitle",
+                            "type": "textarea",
+                            "instructions": "Один-два рядки під заголовком.",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Ваш оазис затишку та абсолютного комфорту в обіймах недоторканої природи.",
+                            "maxlength": "",
+                            "rows": 2,
+                            "new_lines": ""
+                        },
+                        {
+                            "key": "field_hero_buttons",
+                            "label": "Кнопки",
+                            "name": "hero_buttons",
+                            "type": "repeater",
+                            "instructions": "Зазвичай дві: основна золота та текстова.",
+                            "required": 0,
+                            "layout": "block",
+                            "button_label": "Додати кнопку",
+                            "min": 0,
+                            "max": 3,
+                            "sub_fields": [
+                                {
+                                    "key": "field_hero_button_link",
+                                    "label": "Посилання",
+                                    "name": "link",
+                                    "type": "link",
+                                    "required": 0,
+                                    "return_format": "array",
+                                    "parent_repeater": "field_hero_buttons"
+                                },
+                                {
+                                    "key": "field_hero_button_style",
+                                    "label": "Вигляд",
+                                    "name": "style",
+                                    "type": "select",
+                                    "required": 0,
+                                    "choices": {
+                                        "gold": "Золота (основна)",
+                                        "ghost": "Прозора з рамкою (вторинна)"
+                                    },
+                                    "default_value": "gold",
+                                    "return_format": "value",
+                                    "allow_null": 0,
+                                    "multiple": 0,
+                                    "ui": 0,
+                                    "parent_repeater": "field_hero_buttons"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "layout_intro": {
+                    "key": "layout_intro",
+                    "name": "intro",
+                    "label": "Вступний текст (по центру)",
+                    "display": "block",
+                    "min": "",
+                    "max": "",
+                    "sub_fields": [
+                        {
+                            "key": "field_intro_overline",
+                            "label": "Надзаголовок",
+                            "name": "intro_overline",
+                            "type": "text",
+                            "instructions": "Дрібний рядок над заголовком. Виводиться великими літерами.",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Історія та спадщина",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_intro_title",
+                            "label": "Заголовок",
+                            "name": "intro_title",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Справжня філософія гостинності",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_intro_lead",
+                            "label": "Головний абзац",
+                            "name": "intro_lead",
+                            "type": "textarea",
+                            "instructions": "Виводиться серифом, крупніше за звичайний текст.",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "",
+                            "maxlength": "",
+                            "rows": 4,
+                            "new_lines": ""
+                        },
+                        {
+                            "key": "field_intro_text",
+                            "label": "Додатковий абзац",
+                            "name": "intro_text",
+                            "type": "textarea",
+                            "instructions": "Дрібніший текст під головним абзацом. Не обов'язковий.",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "",
+                            "maxlength": "",
+                            "rows": 3,
+                            "new_lines": ""
+                        }
+                    ]
+                },
+                "layout_rooms": {
+                    "key": "layout_rooms",
+                    "name": "rooms",
+                    "label": "Номери (картки)",
+                    "display": "block",
+                    "min": "",
+                    "max": "",
+                    "sub_fields": [
+                        {
+                            "key": "field_rooms_overline",
+                            "label": "Надзаголовок",
+                            "name": "rooms_overline",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Ваш приватний простір",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_rooms_title",
+                            "label": "Заголовок",
+                            "name": "rooms_title",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Номери та Апартаменти",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_rooms_subtitle",
+                            "label": "Підзаголовок",
+                            "name": "rooms_subtitle",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Оберіть досконалий варіант для вашого бездоганного відпочинку",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_rooms_source",
+                            "label": "Які номери показати",
+                            "name": "rooms_source",
+                            "type": "select",
+                            "instructions": "«Автоматично» бере номери за порядком їх сортування в розділі «Номери».",
+                            "required": 0,
+                            "choices": {
+                                "auto": "Автоматично",
+                                "manual": "Обрати вручну"
+                            },
+                            "default_value": "auto",
+                            "return_format": "value",
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0
+                        },
+                        {
+                            "key": "field_rooms_limit",
+                            "label": "Скільки показати",
+                            "name": "rooms_limit",
+                            "type": "number",
+                            "instructions": "Порожньо — усі.",
+                            "required": 0,
+                            "default_value": 3,
+                            "min": 1,
+                            "step": 1,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_rooms_source",
+                                        "operator": "==",
+                                        "value": "auto"
+                                    }
+                                ]
+                            ]
+                        },
+                        {
+                            "key": "field_rooms_items",
+                            "label": "Номери",
+                            "name": "rooms_items",
+                            "type": "relationship",
+                            "required": 0,
+                            "post_type": [
+                                "room"
+                            ],
+                            "filters": [
+                                "search"
+                            ],
+                            "return_format": "id",
+                            "min": 0,
+                            "max": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_rooms_source",
+                                        "operator": "==",
+                                        "value": "manual"
+                                    }
+                                ]
+                            ]
+                        },
+                        {
+                            "key": "field_rooms_button",
+                            "label": "Підпис кнопки на картці",
+                            "name": "rooms_button",
+                            "type": "text",
+                            "instructions": "Порожньо — «Детальніше».",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Детальніше",
+                            "maxlength": ""
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content"
+    ],
+    "active": true,
+    "description": "Секції сторінки. Нова секція = новий layout.",
+    "show_in_rest": 0,
+    "modified": 1786752000
+}
