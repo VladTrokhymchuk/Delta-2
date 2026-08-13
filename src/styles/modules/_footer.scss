@@ -1,23 +1,26 @@
 @use '../core' as *;
 
 // ============================================================
-// ПІДВАЛ (Figma: темна секція Forest Green).
+// ПІДВАЛ — Figma (специфікація футера).
 //
-// Десктоп: бренд-колонка зліва, дві колонки посилань справа,
-// під ними — розділювач і смуга з копірайтом та слоганом.
-// Мобільний фрейм у макеті відсутній — колонки просто стають
-// одна під одною.
+// Десктоп: 420px висоти = 80 (падінг) + 191 (контент) + 64 (gap)
+// + 45 (нижня смуга) + 40 (падінг знизу). Бокові 80px дає контейнер,
+// тож власних горизонтальних падінгів у футері немає.
+//
+// Мобільного фрейму в макеті немає — колонки просто стають одна під одною.
 //
 // Колонка «Навігація» = WP-меню, решта контенту — ACF Options.
 // ============================================================
 
+$footer-gap: rem(64); // між рядом колонок і нижньою смугою; і між колонками
+
 .footer {
 	background-color: var(--bg-dark);
-	color: var(--text-inverse);
-	padding: rem(48) 0 rem(24);
+	color: var(--bg-alt);
+	padding: rem(48) 0 rem(32);
 
 	@include minw($sm-pc) {
-		padding: rem(72) 0 rem(28);
+		padding: rem(80) 0 rem(40);
 	}
 
 	&__inner {
@@ -27,7 +30,8 @@
 		@include minw($sm-pc) {
 			grid-template-columns: minmax(0, 1fr) auto;
 			align-items: start;
-			gap: rem(48) rem(64);
+			// Рядковий відступ 64px — саме він відділяє колонки від нижньої смуги.
+			gap: $footer-gap rem(64);
 		}
 	}
 
@@ -41,6 +45,7 @@
 	&__logo {
 		width: rem(40);
 		height: rem(40);
+		border-radius: $radius;
 		object-fit: contain;
 	}
 
@@ -56,25 +61,32 @@
 
 	&__about {
 		max-width: rem(360);
-		margin-top: rem(20);
-		font-size: rem(14);
-		line-height: 1.6;
-		color: rgba($white, 0.72);
+		margin-top: rem(24);
+		font-family: $font-body;
+		font-weight: 400;
+		font-size: rem(13);
+		line-height: 1.5;
+		color: var(--bg-alt);
 	}
 
 	// --- Колонки посилань ----------------------------------------------------
 	&__cols {
 		display: grid;
-		grid-template-columns: repeat(2, minmax(rem(140), auto));
+		grid-template-columns: repeat(2, minmax(rem(87), auto));
 		gap: rem(32);
 
 		@include minw($sm-pc) {
-			gap: rem(64);
+			gap: $footer-gap;
 		}
 	}
 
+	&__col {
+		display: flex;
+		flex-direction: column;
+		gap: rem(16);
+	}
+
 	&__col-title {
-		margin-bottom: rem(20);
 		font-family: $font-body;
 		font-weight: 600;
 		font-size: rem(12);
@@ -85,23 +97,27 @@
 		color: var(--secondary);
 	}
 
+	// Відступ 16px між пунктами зроблений падінгами посилань, а не gap —
+	// тоді клікабельна вся смуга, а не лише рядок тексту. Зовнішні падінги
+	// знімаємо від'ємним margin, щоб колонка не «підросла» на 16px.
 	&__menu {
 		display: flex;
 		flex-direction: column;
-		gap: rem(14);
-		margin: 0;
+		margin: rem(-8) 0;
 		padding: 0;
 		list-style: none;
 
 		li { list-style: none; }
 
 		a {
+			display: block;
+			padding-block: rem(8);
 			font-family: $font-body;
 			font-weight: 400;
 			font-size: rem(15);
 			line-height: 1.2;
-			color: rgba($white, 0.88);
-			white-space: nowrap;
+			color: var(--bg-alt);
+			transition: color 0.2s ease;
 
 			&:hover { color: var(--secondary); }
 
@@ -130,7 +146,8 @@
 		flex-direction: column;
 		gap: rem(12);
 		padding-top: rem(24);
-		border-top: 1px solid rgba($white, 0.16);
+		border-top: 1px solid var(--secondary);
+		opacity: 0.8;
 
 		@include minw($sm-pc) {
 			grid-column: 1 / -1;
@@ -138,23 +155,22 @@
 			align-items: center;
 			justify-content: space-between;
 			gap: rem(24);
-			margin-top: rem(24);
-			padding-top: rem(28);
 		}
 	}
 
 	&__copy {
+		font-family: $font-body;
+		font-weight: 400;
 		font-size: rem(13);
-		line-height: 1.4;
-		color: rgba($white, 0.65);
+		line-height: 1;
+		color: var(--bg-alt);
 	}
 
 	&__slogan {
 		font-family: $font-heading;
-		font-style: italic;
-		font-weight: 500;
-		font-size: rem(15);
-		line-height: 1.4;
+		font-weight: 400;
+		font-size: rem(14);
+		line-height: 1;
 		color: var(--secondary);
 
 		@include minw($sm-pc) {

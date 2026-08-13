@@ -291,7 +291,7 @@ import '@styles/modules/modal.scss';
 
 | Родина | Ваги | Де застосовується |
 |---|---|---|
-| **Spectral** (serif) | 500, 600, 500 italic | H1–H3; курсив — слоган у підвалі |
+| **Spectral** (serif) | 400, 500, 600 | H1–H3; 400 — слоган у підвалі |
 | **Manrope** (sans) | 400, 600, 700 | H4, body, кнопки, overline |
 
 `@font-face` згенеровані в [_fonts.scss](src/styles/partials/_fonts.scss) з `unicode-range` — браузер тягне лише потрібний сабсет. Кириличні файли Spectral 600 і Manrope 400 додатково преload'яться (`delta_preload_fonts()` у `_assets.php`).
@@ -352,6 +352,8 @@ import '@styles/modules/modal.scss';
 | `footer_slogan` | золотий курсивний рядок праворуч |
 
 Колонка «Навігація» — WP-меню локації `footer_menu`. Соцмережі без жодного заповненого рядка колонку не малюють; порожній `footer_about` / `footer_slogan` теж просто не виводяться.
+
+Розміри з макета: висота 420 = 80 (падінг) + 191 (ряд колонок) + 64 (gap) + 45 (нижня смуга) + 40 (падінг знизу). Бокові 80px дає `.container`, тож власних горизонтальних падінгів у футері немає. Текст на темному — Warm Linen `#F4EFE6` (`--bg-alt`), лінія над копірайтом — Warm Gold.
 
 ---
 
