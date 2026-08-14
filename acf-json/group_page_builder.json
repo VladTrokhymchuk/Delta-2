@@ -488,6 +488,60 @@
                             ]
                         }
                     ]
+                },
+                "layout_gallery": {
+                    "key": "layout_gallery",
+                    "name": "gallery",
+                    "label": "Галерея",
+                    "display": "block",
+                    "min": "",
+                    "max": "",
+                    "sub_fields": [
+                        {
+                            "key": "field_gallery_overline",
+                            "label": "Надзаголовок",
+                            "name": "gallery_overline",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Фотохроніки Дельти",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_gallery_title",
+                            "label": "Заголовок",
+                            "name": "gallery_title",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Атмосфера в деталях",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_gallery_subtitle",
+                            "label": "Підзаголовок",
+                            "name": "gallery_subtitle",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Зазирніть у наш величний світ гармонії та затишку ще до приїзду",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_gallery_images",
+                            "label": "Зображення",
+                            "name": "gallery_images",
+                            "type": "gallery",
+                            "instructions": "Розміри чергуються за схемою: широке, широке, вузьке, дуже широке. Тому кратна чотирьом кількість виглядає найкраще (4, 8, 12).",
+                            "required": 0,
+                            "return_format": "id",
+                            "library": "all",
+                            "min": 0,
+                            "max": 0,
+                            "insert": "append",
+                            "preview_size": "medium"
+                        }
+                    ]
                 }
             }
         }

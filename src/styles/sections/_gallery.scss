@@ -1,0 +1,118 @@
+@use '../core' as *;
+
+// ============================================================
+// GALLERY — сітка з чергуванням розмірів.
+//
+// Макет лягає рівно на 12 колонок при відступі 32px (контейнер 1280):
+//   ряд 1 — 624 + 624        → span 6 + span 6
+//   ряд 2 — 404 + 844        → span 4 + span 8
+// Схема повторюється кожні 4 зображення, тож кратна чотирьом кількість
+// (4, 8, 12) заповнює сітку без порожнин.
+//
+// Висоти задані через aspect-ratio, а не px: при звуженні екрана обидва
+// елементи ряду масштабуються однаково й лишаються однієї висоти.
+// ============================================================
+
+.section--gallery {
+	padding-block: rem(64);
+	background-color: var(--bg-alt);
+
+	@include minw($tablet) {
+		padding-block: rem(96);
+	}
+
+	@include minw($sm-pc) {
+		padding-block: rem(120);
+	}
+}
+
+.gallery {
+	&__head {
+		margin-bottom: rem(40);
+		text-align: center;
+
+		@include minw($sm-pc) {
+			margin-bottom: rem(56);
+		}
+	}
+
+	&__overline {
+		margin-bottom: rem(16);
+		font-weight: 700;
+		letter-spacing: rem(2);
+		color: var(--accent);
+	}
+
+	&__title {
+		font-size: rem(28);
+		line-height: 1.2;
+
+		@include minw($tablet) { font-size: rem(36); }
+		@include minw($sm-pc)  { font-size: rem(40); }
+	}
+
+	&__subtitle {
+		max-width: rem(700);
+		margin: rem(16) auto 0;
+		font-size: rem(15);
+		line-height: 1.6;
+		color: var(--text-muted);
+	}
+
+	&__grid {
+		display: grid;
+		gap: rem(16);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		@include minw($tablet) {
+			grid-template-columns: repeat(2, 1fr);
+			gap: rem(24);
+		}
+
+		@include minw($sm-pc) {
+			grid-template-columns: repeat(12, 1fr);
+			gap: rem(32);
+		}
+	}
+
+	&__item {
+		overflow: hidden;
+		border-radius: rem(16);
+		aspect-ratio: 3 / 2;
+		list-style: none;
+
+		@include minw($sm-pc) {
+			// 1-й і 2-й у четвірці — половина ряду (624×288).
+			&:nth-child(4n + 1),
+			&:nth-child(4n + 2) {
+				grid-column: span 6;
+				aspect-ratio: 624 / 288;
+			}
+
+			// 3-й — вузький (404×372).
+			&:nth-child(4n + 3) {
+				grid-column: span 4;
+				aspect-ratio: 404 / 372;
+			}
+
+			// 4-й — широкий (844×372); висота збігається з попереднім.
+			&:nth-child(4n) {
+				grid-column: span 8;
+				aspect-ratio: 844 / 372;
+			}
+		}
+	}
+
+	&__img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 0.5s ease;
+	}
+
+	&__item:hover &__img {
+		transform: scale(1.03);
+	}
+}
