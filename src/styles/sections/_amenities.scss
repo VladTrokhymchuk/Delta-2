@@ -1,0 +1,113 @@
+@use '../core' as *;
+
+// ============================================================
+// AMENITIES — зручності та сервіси: іконка в колі + підпис.
+// Шість позицій у ряд на десктопі, далі згортається до трьох і двох.
+// ============================================================
+
+.section--amenities {
+	padding-block: rem(64);
+	background-color: var(--bg-alt);
+
+	@include minw($tablet) {
+		padding-block: rem(96);
+	}
+
+	@include minw($sm-pc) {
+		padding-block: rem(120);
+	}
+}
+
+.amenities {
+	&__head {
+		margin-bottom: rem(40);
+		text-align: center;
+
+		@include minw($sm-pc) {
+			margin-bottom: rem(56);
+		}
+	}
+
+	&__overline {
+		margin-bottom: rem(16);
+		font-weight: 700;
+		letter-spacing: rem(2);
+		color: var(--accent);
+	}
+
+	&__title {
+		font-size: rem(28);
+		line-height: 1.2;
+
+		@include minw($tablet) { font-size: rem(36); }
+		@include minw($sm-pc)  { font-size: rem(40); }
+	}
+
+	&__subtitle {
+		max-width: rem(700);
+		margin: rem(16) auto 0;
+		font-size: rem(15);
+		line-height: 1.6;
+		color: var(--text-muted);
+	}
+
+	&__list {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: rem(32) rem(16);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		@include minw($tablet) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+
+		@include minw($sm-pc) {
+			grid-template-columns: repeat(6, 1fr);
+			gap: rem(24);
+		}
+	}
+
+	&__item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: rem(12);
+		list-style: none;
+		text-align: center;
+	}
+
+	&__icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: rem(64);
+		height: rem(64);
+		border: 1px solid var(--border);
+		border-radius: 50%;
+		// Іконки намальовані зі stroke="currentColor", тож колір задається тут.
+		color: var(--primary);
+
+		svg {
+			width: rem(24);
+			height: rem(24);
+		}
+	}
+
+	&__label {
+		font-family: $font-body;
+		font-weight: 600;
+		font-size: rem(14);
+		// У макеті line-height 100%; на вузьких екранах підпис переноситься
+		// у два рядки, тому там даємо трохи повітря.
+		line-height: 1.3;
+		letter-spacing: 0;
+		color: var(--text);
+
+		@include minw($sm-pc) {
+			line-height: 1;
+		}
+	}
+}

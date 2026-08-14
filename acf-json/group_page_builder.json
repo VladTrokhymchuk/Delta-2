@@ -281,6 +281,90 @@
                             "maxlength": ""
                         }
                     ]
+                },
+                "layout_amenities": {
+                    "key": "layout_amenities",
+                    "name": "amenities",
+                    "label": "Зручності (іконки)",
+                    "display": "block",
+                    "min": "",
+                    "max": "",
+                    "sub_fields": [
+                        {
+                            "key": "field_amenities_overline",
+                            "label": "Надзаголовок",
+                            "name": "amenities_overline",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Все включено",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_amenities_title",
+                            "label": "Заголовок",
+                            "name": "amenities_title",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Зручності та Сервіси",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_amenities_subtitle",
+                            "label": "Підзаголовок",
+                            "name": "amenities_subtitle",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Створюємо атмосферу затишку, в якій кожна мить наповнена турботою",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_amenities_items",
+                            "label": "Зручності",
+                            "name": "amenities_items",
+                            "type": "repeater",
+                            "instructions": "Іконка + підпис. Оптимально 6 позицій.",
+                            "required": 0,
+                            "layout": "table",
+                            "button_label": "Додати зручність",
+                            "min": 0,
+                            "max": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_amenity_icon",
+                                    "label": "Іконка",
+                                    "name": "icon",
+                                    "type": "select",
+                                    "required": 0,
+                                    "choices": {
+                                        "wifi": "Wi-Fi",
+                                        "coffee": "Кава \/ ресторан",
+                                        "droplet": "Басейн \/ СПА",
+                                        "bed": "Ліжко",
+                                        "compass": "Гід \/ екскурсії",
+                                        "car": "Паркінг"
+                                    },
+                                    "default_value": "wifi",
+                                    "return_format": "value",
+                                    "allow_null": 0,
+                                    "multiple": 0,
+                                    "ui": 0,
+                                    "parent_repeater": "field_amenities_items"
+                                },
+                                {
+                                    "key": "field_amenity_title",
+                                    "label": "Підпис",
+                                    "name": "title",
+                                    "type": "text",
+                                    "required": 0,
+                                    "placeholder": "Безкоштовний Wi-Fi",
+                                    "parent_repeater": "field_amenities_items"
+                                }
+                            ]
+                        }
+                    ]
                 }
             }
         }

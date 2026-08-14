@@ -27,6 +27,7 @@ include_once 'functions-parts/parts/configure_menu.php';
 include_once 'functions-parts/parts/header.php';
 include_once 'functions-parts/parts/footer.php';
 include_once 'functions-parts/parts/rooms.php';
+include_once 'functions-parts/parts/icons.php';
 include_once 'functions-parts/parts/redirects.php';
 include_once 'functions-parts/parts/classic-editor.php';
 include_once 'functions-parts/parts/admin_style.php';
