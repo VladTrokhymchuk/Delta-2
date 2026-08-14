@@ -365,6 +365,129 @@
                             ]
                         }
                     ]
+                },
+                "layout_media_text": {
+                    "key": "layout_media_text",
+                    "name": "media-text",
+                    "label": "Текст + зображення",
+                    "display": "block",
+                    "min": "",
+                    "max": "",
+                    "sub_fields": [
+                        {
+                            "key": "field_media_text_image",
+                            "label": "Зображення",
+                            "name": "media_text_image",
+                            "type": "image",
+                            "instructions": "Горизонтальне, від 1500px завширшки.",
+                            "required": 0,
+                            "return_format": "id",
+                            "library": "all",
+                            "preview_size": "medium"
+                        },
+                        {
+                            "key": "field_media_text_position",
+                            "label": "Зображення розташувати",
+                            "name": "media_text_position",
+                            "type": "select",
+                            "instructions": "Дає змогу чергувати блоки: ресторан — фото праворуч, сауна — ліворуч.",
+                            "required": 0,
+                            "choices": {
+                                "right": "Праворуч",
+                                "left": "Ліворуч"
+                            },
+                            "default_value": "right",
+                            "return_format": "value",
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0
+                        },
+                        {
+                            "key": "field_media_text_overline",
+                            "label": "Надзаголовок",
+                            "name": "media_text_overline",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Гастрономічний досвід",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_media_text_title",
+                            "label": "Заголовок",
+                            "name": "media_text_title",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Ресторан Дельта",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_media_text_lead",
+                            "label": "Основний текст",
+                            "name": "media_text_lead",
+                            "type": "textarea",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "",
+                            "maxlength": "",
+                            "rows": 4,
+                            "new_lines": ""
+                        },
+                        {
+                            "key": "field_media_text_note",
+                            "label": "Додатковий текст",
+                            "name": "media_text_note",
+                            "type": "textarea",
+                            "instructions": "Дрібніший приглушений абзац під основним. Не обов'язковий.",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "",
+                            "maxlength": "",
+                            "rows": 3,
+                            "new_lines": ""
+                        },
+                        {
+                            "key": "field_media_text_buttons",
+                            "label": "Кнопки",
+                            "name": "media_text_buttons",
+                            "type": "repeater",
+                            "required": 0,
+                            "layout": "block",
+                            "button_label": "Додати кнопку",
+                            "min": 0,
+                            "max": 3,
+                            "sub_fields": [
+                                {
+                                    "key": "field_media_text_button_link",
+                                    "label": "Посилання",
+                                    "name": "link",
+                                    "type": "link",
+                                    "required": 0,
+                                    "return_format": "array",
+                                    "parent_repeater": "field_media_text_buttons"
+                                },
+                                {
+                                    "key": "field_media_text_button_style",
+                                    "label": "Вигляд",
+                                    "name": "style",
+                                    "type": "select",
+                                    "required": 0,
+                                    "choices": {
+                                        "primary": "Зелена (основна)",
+                                        "secondary": "Прозора з рамкою",
+                                        "ghost": "Текстова"
+                                    },
+                                    "default_value": "primary",
+                                    "return_format": "value",
+                                    "allow_null": 0,
+                                    "multiple": 0,
+                                    "ui": 0,
+                                    "parent_repeater": "field_media_text_buttons"
+                                }
+                            ]
+                        }
+                    ]
                 }
             }
         }

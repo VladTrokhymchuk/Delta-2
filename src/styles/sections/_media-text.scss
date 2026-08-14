@@ -1,0 +1,105 @@
+@use '../core' as *;
+
+// ============================================================
+// MEDIA + TEXT — універсальний блок: текст в одній колонці, фото в іншій.
+// Використовується для ресторану, сауни, СПА тощо; сторона зображення
+// перемикається полем у конструкторі.
+//
+// Пропорція колонок з макета: 495 тексту : 732 фото ≈ 1 : 1.45.
+// ============================================================
+
+.section--media-text {
+	padding-block: rem(64);
+	background-color: var(--bg-soft);
+
+	@include minw($tablet) {
+		padding-block: rem(96);
+	}
+
+	@include minw($sm-pc) {
+		padding-block: rem(120);
+	}
+}
+
+.media-text {
+	&__inner {
+		display: grid;
+		gap: rem(32);
+		align-items: center;
+
+		@include minw($sm-pc) {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr);
+			gap: rem(56);
+		}
+	}
+
+	// --- Текст ---------------------------------------------------------------
+	&__overline {
+		margin-bottom: rem(16);
+		font-weight: 700;
+		letter-spacing: rem(2);
+		color: var(--accent);
+	}
+
+	&__title {
+		font-size: rem(28);
+		line-height: 1.2;
+
+		@include minw($tablet) { font-size: rem(36); }
+		@include minw($sm-pc)  { font-size: rem(40); }
+	}
+
+	&__lead {
+		margin-top: rem(20);
+		font-size: rem(15);
+		line-height: 1.6;
+		color: var(--text);
+
+		@include minw($tablet) { font-size: rem(16); }
+	}
+
+	&__note {
+		margin-top: rem(16);
+		font-size: rem(13);
+		line-height: 1.6;
+		color: var(--text-muted);
+
+		@include minw($tablet) { font-size: rem(14); }
+	}
+
+	&__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: rem(16);
+		margin-top: rem(28);
+
+		@include minw($tablet) { margin-top: rem(32); }
+	}
+
+	// --- Зображення ----------------------------------------------------------
+	&__media {
+		overflow: hidden;
+		border-radius: rem(16);
+		aspect-ratio: 3 / 2;
+	}
+
+	&__img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
+
+// Дзеркальний варіант: фото ліворуч. Міняємо лише порядок колонок —
+// у DOM текст лишається першим, тож і читалка, і мобільна версія
+// показують спершу заголовок, а не картинку.
+.section--media-text-reverse {
+	@include minw($sm-pc) {
+		.media-text__inner {
+			grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+		}
+
+		.media-text__content { order: 2; }
+		.media-text__media   { order: 1; }
+	}
+}

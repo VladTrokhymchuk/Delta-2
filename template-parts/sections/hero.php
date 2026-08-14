@@ -54,15 +54,10 @@ if (!$title && !$image) return; // порожню секцію не рендер
 					$link = !empty($btn['link']) ? $btn['link'] : null;
 					if (!$link || empty($link['url'])) continue;
 
-					// Вигляд кнопки з ACF → модифікатор із _bttn.scss.
-					$styles = array(
-						'gold'  => 'bttn--gold',
-						'ghost' => 'bttn--ghost-light',
-					);
-					$key   = $btn['style'] ?? 'gold';
-					$style = $styles[$key] ?? $styles['gold'];
+					// «ghost» у hero — це варіант із рамкою поверх фото.
+					$key = ($btn['style'] ?? 'gold') === 'ghost' ? 'ghost-light' : 'gold';
 					?>
-					<a class="bttn <?= esc_attr($style); ?>"
+					<a class="<?= esc_attr(delta_button_class($key)); ?>"
 					   href="<?= esc_url($link['url']); ?>"
 					   <?php if (!empty($link['target'])) : ?>target="<?= esc_attr($link['target']); ?>" rel="noopener"<?php endif; ?>>
 						<?= esc_html(!empty($link['title']) ? $link['title'] : __('Детальніше', 'delta')); ?>
