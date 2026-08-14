@@ -643,6 +643,110 @@
                             ]
                         }
                     ]
+                },
+                "layout_booking_cta": {
+                    "key": "layout_booking_cta",
+                    "name": "booking-cta",
+                    "label": "Заклик до бронювання (форма)",
+                    "display": "block",
+                    "min": "",
+                    "max": "",
+                    "sub_fields": [
+                        {
+                            "key": "field_booking_cta_overline",
+                            "label": "Надзаголовок",
+                            "name": "booking_cta_overline",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Унікальний відпочинок чекає на вас",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_booking_cta_title",
+                            "label": "Заголовок",
+                            "name": "booking_cta_title",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Бажаєте відчути магію відновленої тиші?",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_booking_cta_text",
+                            "label": "Текст",
+                            "name": "booking_cta_text",
+                            "type": "textarea",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "",
+                            "maxlength": "",
+                            "rows": 4,
+                            "new_lines": ""
+                        },
+                        {
+                            "key": "field_booking_cta_phones",
+                            "label": "Телефони",
+                            "name": "booking_cta_phones",
+                            "type": "repeater",
+                            "instructions": "Можна кілька. Порожньо — візьметься телефон з «Налаштування теми» → Контакти.",
+                            "required": 0,
+                            "layout": "table",
+                            "button_label": "Додати телефон",
+                            "min": 0,
+                            "max": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_booking_cta_phone_number",
+                                    "label": "Номер",
+                                    "name": "number",
+                                    "type": "text",
+                                    "required": 0,
+                                    "default_value": "",
+                                    "placeholder": "+380 (44) 987-6543",
+                                    "maxlength": "",
+                                    "parent_repeater": "field_booking_cta_phones"
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_booking_cta_email",
+                            "label": "Email",
+                            "name": "booking_cta_email",
+                            "type": "email",
+                            "instructions": "Порожньо — візьметься з «Налаштування теми» → Контакти.",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "booking@hotel-delta.com.ua"
+                        },
+                        {
+                            "key": "field_booking_cta_form_title",
+                            "label": "Заголовок картки з формою",
+                            "name": "booking_cta_form_title",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Швидке бронювання",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_booking_cta_form",
+                            "label": "Форма",
+                            "name": "booking_cta_form",
+                            "type": "relationship",
+                            "instructions": "Форма Contact Form 7. Без неї секція покаже лише текстову колонку.",
+                            "required": 0,
+                            "post_type": [
+                                "wpcf7_contact_form"
+                            ],
+                            "filters": [
+                                "search"
+                            ],
+                            "return_format": "id",
+                            "min": 0,
+                            "max": 1
+                        }
+                    ]
                 }
             }
         }
@@ -667,5 +771,5 @@
     "active": true,
     "description": "Секції сторінки. Нова секція = новий layout.",
     "show_in_rest": 0,
-    "modified": 1786752000
+    "modified": 1786710054
 }

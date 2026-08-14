@@ -1,8 +1,9 @@
 /**
- * Шапка: мобільне меню (бургер → панель справа).
+ * Шапка: фіксація при скролі + мобільне меню (бургер → панель справа).
  *
- * Стан тримається класом `menu-open` на <body> — CSS показує панель, вмикає
- * затемнення й блокує скрол (див. _base.scss / _header.scss).
+ * Стан меню тримається класом `menu-open` на <body> — CSS показує панель,
+ * вмикає затемнення й блокує скрол (див. _base.scss / _header.scss).
+ * Сама шапка зафіксована в CSS; JS лише вішає `is-scrolled` для тіні.
  */
 
 const DESKTOP_BREAKPOINT = 992; // = $sm-pc
@@ -10,6 +11,8 @@ const DESKTOP_BREAKPOINT = 992; // = $sm-pc
 export function initHeader() {
   const header = document.querySelector('.header');
   if (!header) return;
+
+  initScrolledState(header);
 
   const burger = header.querySelector('.header__burger');
   const nav = header.querySelector('.header__nav');
@@ -85,4 +88,27 @@ export function initHeader() {
   window.addEventListener('resize', () => {
     if (window.innerWidth >= DESKTOP_BREAKPOINT && isOpen()) setOpen(false);
   }, { passive: true });
+}
+
+/**
+ * Тінь під зафіксованою шапкою — лише коли сторінку прокрутили від верху.
+ *
+ * Клас перемикається в rAF, а не на кожен подієвий тик: скрол сипле десятки
+ * подій за секунду, і кожна з них інакше чіпала б classList.
+ */
+function initScrolledState(header) {
+  let ticking = false;
+
+  const sync = () => {
+    ticking = false;
+    header.classList.toggle('is-scrolled', window.scrollY > 0);
+  };
+
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(sync);
+  }, { passive: true });
+
+  sync(); // перезавантаження вже прокрученої сторінки
 }

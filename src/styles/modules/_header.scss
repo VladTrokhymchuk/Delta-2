@@ -19,11 +19,48 @@ $header-height:        rem(88);
 $header-height-mobile: rem(72);
 $header-menu-pad-x:    rem(16); // половина відступу 32px між пунктами
 
+// Повна висота разом із лінією знизу — саме її компенсує сторінка.
+$header-offset:        $header-height + rem(1);
+$header-offset-mobile: $header-height-mobile + rem(1);
+
+// Шапка вийшла з потоку, тож місце під неї тримає падінг сторінки. Значення
+// зав'язані на ті самі змінні висоти, щоб зсув не роз'їхався з шапкою.
+body {
+	padding-top: $header-offset-mobile;
+
+	@include minw($sm-pc) {
+		padding-top: $header-offset;
+	}
+}
+
+// Якір не має ховатись під шапкою: без цього перехід на #anchor ставить
+// заголовок рівно під неї (працює і для scroll-behavior: smooth з _base.scss).
+html {
+	scroll-padding-top: $header-offset-mobile;
+
+	@include minw($sm-pc) {
+		scroll-padding-top: $header-offset;
+	}
+}
+
 .header {
-	position: relative;
+	// Не sticky: під час відкритого меню <body> стає position: fixed зі
+	// зсувом top (див. _header.js), і sticky поїхав би за ним за межі екрана —
+	// разом із бургером, яким меню закривають. Fixed прив'язаний до вікна.
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
 	z-index: 50;
 	background-color: var(--bg-soft);
 	border-bottom: 1px solid var(--border);
+	transition: box-shadow 0.25s ease;
+
+	// Тінь лише коли під шапкою вже проїхав контент — на самому верху вона
+	// зайва (клас вішає _header.js).
+	&.is-scrolled {
+		box-shadow: 0 2px 16px rgba($black, 0.1);
+	}
 
 	&__inner {
 		display: flex;
@@ -231,7 +268,7 @@ $header-menu-pad-x:    rem(16); // половина відступу 32px між
 			position: fixed;
 			// Панель починається ПІД шапкою, а не від нуля: логотип і бургер
 			// лишаються видимими й доступними, поки меню відкрите.
-			inset: $header-height-mobile 0 0 auto;
+			inset: $header-offset-mobile 0 0 auto;
 			z-index: 60;
 			display: flex;
 			flex-direction: column;

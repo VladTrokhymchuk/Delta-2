@@ -1,0 +1,174 @@
+@use '../core' as *;
+
+// ============================================================
+// BOOKING CTA — темно-зелена панель на світлому фоні: заклик + контакти
+// ліворуч, біла картка з формою CF7 праворуч.
+//
+// Панель не на всю ширину, а картка всередині container: саме контраст
+// зеленого прямокутника з полями Linen робить блок фінальним акцентом сторінки.
+// ============================================================
+
+.section--booking-cta {
+	padding-block: rem(48);
+	background-color: var(--bg-alt);
+
+	@include minw($tablet) {
+		padding-block: rem(72);
+	}
+
+	@include minw($sm-pc) {
+		padding-block: rem(96);
+	}
+}
+
+.booking-cta {
+	&__panel {
+		display: grid;
+		gap: rem(32);
+		padding: rem(28) rem(24);
+		background-color: var(--primary);
+		border: 1px solid var(--border-accent);
+		border-radius: rem(16);
+
+		@include minw($tablet) {
+			padding: rem(40) rem(36);
+			border-radius: rem(24);
+		}
+
+		// Текст тягнеться, картка тримає ширину з макета (480px).
+		@include minw($sm-pc) {
+			grid-template-columns: 1fr minmax(0, rem(480));
+			// Колонки різної висоти: картка не центрується, а стоїть по верху.
+			align-items: start;
+			gap: rem(48);
+			padding: rem(48);
+		}
+	}
+
+	// --- Ліва колонка ---------------------------------------------------------
+	&__content {
+		min-width: 0;
+	}
+
+	&__overline {
+		margin-bottom: rem(16);
+		font-weight: 700;
+		letter-spacing: rem(2);
+		// На Forest Green золото дає 6.1:1 — тут це повноцінний колір тексту,
+		// на відміну від світлих секцій, де беремо --secondary-deep.
+		color: var(--secondary);
+	}
+
+	// Spectral Regular — легше за типову вагу заголовків теми (600); на
+	// темному фоні тонкий серифний накреслення читається м'якше.
+	&__title {
+		max-width: rem(520);
+		font-weight: 400;
+		font-size: rem(28);
+		line-height: 1.2;
+		color: var(--bg-soft);
+
+		@include minw($tablet) { font-size: rem(36); }
+	}
+
+	&__text {
+		max-width: rem(600);
+		margin-top: rem(20);
+		font-size: rem(15);
+		line-height: 1.6;
+		color: var(--bg-alt);
+	}
+
+	&__contacts {
+		display: flex;
+		flex-wrap: wrap;
+		gap: rem(12) rem(32);
+		margin: rem(24) 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	&__contact {
+		display: flex;
+		align-items: center;
+		gap: rem(8);
+		list-style: none;
+	}
+
+	&__contact-icon {
+		display: inline-flex;
+		flex-shrink: 0;
+		color: var(--secondary);
+
+		svg {
+			display: block;
+			width: rem(16);
+			height: rem(16);
+		}
+	}
+
+	&__contact-link {
+		font-weight: 600;
+		font-size: rem(15);
+		line-height: 1;
+		color: var(--bg-soft);
+		text-decoration: none;
+		transition: color 0.2s ease;
+
+		&:hover,
+		&:focus-visible {
+			color: var(--secondary);
+		}
+
+		&:focus-visible {
+			outline: 2px solid $focus-ring;
+			outline-offset: 3px;
+		}
+	}
+
+	// --- Картка з формою ------------------------------------------------------
+	&__card {
+		padding: rem(24) rem(20);
+		background-color: var(--bg-soft);
+		border: 1px solid var(--border);
+		border-radius: rem(16);
+
+		@include minw($tablet) {
+			padding: rem(32);
+		}
+	}
+
+	&__form-title {
+		margin-bottom: rem(20);
+		font-family: $font-heading;
+		font-weight: 600;
+		font-size: rem(22);
+		line-height: 1;
+		color: var(--text);
+	}
+}
+
+// --- Розмітка форми (html_class="booking-form" у шорткоді CF7) ----------------
+// CF7 обгортає рядки в <p> (autop), тож поля розводимо gap'ом на самій формі,
+// а не margin'ами всередині — інакше порожні <p> лишали б випадкові щілини.
+.booking-form {
+	display: flex;
+	flex-direction: column;
+	gap: rem(16);
+
+	p {
+		margin: 0;
+	}
+
+	&__field {
+		display: block;
+	}
+
+	&__submit {
+		margin-top: rem(8);
+
+		.bttn {
+			width: 100%;
+		}
+	}
+}

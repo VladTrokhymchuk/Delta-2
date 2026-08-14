@@ -35,6 +35,25 @@ function get_asset($key, $type = 'css') {
     return get_stylesheet_directory_uri() . '/build/' . $manifest[$key][$type];
 }
 
+/**
+ * Готує CSS зі збірки до вставки в <style> у <head>.
+ *
+ * Vite пише шляхи до ассетів відносно файлу стилів (`url(../fonts/x.woff2)` з
+ * build/css/). Файл, підключений через <link>, розкриває їх правильно, але
+ * інлайновий CSS не має власного URL — браузер рахує їх від адреси СТОРІНКИ,
+ * і на головній `../fonts/` перетворюється на /fonts/ → 404 на кожен шрифт.
+ * Тому для інлайна робимо шляхи абсолютними.
+ */
+function delta_inline_css($css) {
+    $build_uri = get_stylesheet_directory_uri() . '/build';
+
+    return preg_replace(
+        '#url\(\s*([\'"]?)\.\./#',
+        'url($1' . $build_uri . '/',
+        $css
+    );
+}
+
 function my_assets() {
     $manifest = get_manifest();
 
@@ -44,7 +63,7 @@ function my_assets() {
         if (is_readable($critical_path)) {
             wp_register_style('critical', false);
             wp_enqueue_style('critical');
-            wp_add_inline_style('critical', file_get_contents($critical_path));
+            wp_add_inline_style('critical', delta_inline_css(file_get_contents($critical_path)));
         }
     }
 

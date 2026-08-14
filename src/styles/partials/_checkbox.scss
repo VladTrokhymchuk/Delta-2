@@ -6,20 +6,54 @@
 // тож зовнішні файли іконок не потрібні.
 // ============================================================
 
+// `.field__label, .wpcf7 form label` у _forms.scss — це підпис поля: uppercase,
+// 12px, letter-spacing, weight 600. Але в [acceptance] <label> обгортає весь
+// рядок згоди, тож ці правила треба зняти — інакше текст згоди йде капсом.
+//
+// Селектор навмисно повний: `.wpcf7-acceptance label` (0,1,1) програє
+// `.wpcf7 form label` (0,2,1) попри пізніший порядок у файлі.
+.wpcf7 form .wpcf7-acceptance label {
+	display: block;
+	margin-bottom: 0;
+	font-weight: 400;
+	font-size: rem(13);
+	line-height: 1.4;
+	letter-spacing: normal;
+	text-transform: none;
+	cursor: pointer;
+}
+
 .wpcf7-acceptance {
 	display: block;
 
 	.wpcf7-list-item { margin: 0; }
 
 	input[type='checkbox'] {
-		display: none;
+		// Не display: none — так чекбокс випадає з таб-порядку, і обовʼязкову
+		// згоду неможливо поставити з клавіатури (форма стає незасабмічуваною).
+		// Ховаємо візуально, лишаючи елемент фокусованим.
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		opacity: 0;
+		pointer-events: none;
+
+		// Підпис відступає під квадратик, а сам квадратик — абсолютний.
+		// Через float текст другого рядка підлазив би під чекбокс; так
+		// зберігається висячий відступ на всі рядки згоди.
+		& + span {
+			position: relative;
+			display: inline-block;
+			padding-left: rem(26);
+		}
 
 		& + span::before {
 			content: '';
-			float: left;
+			position: absolute;
+			top: rem(2);
+			left: 0;
 			width: rem(16);
 			height: rem(16);
-			margin-right: rem(10);
 			border: 1px solid var(--text);
 			border-radius: rem(2);
 			background-color: transparent;
@@ -30,17 +64,31 @@
 			border-color: var(--accent);
 			background: var(--accent) url(checkbox-bg(10, 8, #ffffff, 1)) no-repeat center center;
 		}
+
+		// Сам інпут невидимий, тож індикатор фокуса малюємо на його «коробці».
+		&:focus-visible + span::before {
+			outline: 2px solid $focus-ring;
+			outline-offset: 2px;
+		}
 	}
 
 	.wpcf7-list-item-label {
-		font-size: rem(14);
+		font-size: rem(13);
+		font-weight: 400;
+		// У зразку було line-height: 100%; тут текст згоди займає два рядки,
+		// тож без інтерліньяжу вони злипались би — беремо мінімальний робочий.
+		line-height: 1.4;
 		color: var(--text);
 
+		// Посилання приглушені відносно тексту — підкреслення лишається
+		// єдиним, що робить їх помітними як посилання.
 		a {
-			color: inherit;
+			font-size: inherit;
+			color: var(--text-muted);
 			text-decoration: underline;
 
-			&:hover { color: var(--accent); }
+			&:hover,
+			&:focus-visible { color: var(--accent); }
 		}
 	}
 }
