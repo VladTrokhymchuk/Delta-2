@@ -11,12 +11,11 @@
  *   src/js/sections/_hero.js       ✅
  *   src/js/pages/booking.js        ✅ окремий bundle — так і задумано
  *
- * Модулі секцій самі перевіряють наявність своєї секції (guard по
- * [data-section]), тож зайвий код не виконується.
- *
  * @see .claude/skills/section-builder
  */
 
 import { initHeader } from '@js/modules/_header.js';
+import { initSliders } from '@js/modules/_slider.js';
 
 initHeader();
+initSliders();

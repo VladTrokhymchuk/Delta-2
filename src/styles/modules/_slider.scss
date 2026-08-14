@@ -1,0 +1,103 @@
+@use '../core' as *;
+
+// ============================================================
+// СЛАЙДЕР — спільний вигляд для всіх секцій (див. src/js/modules/_slider.js).
+// Прогрес-смуга ліворуч на всю доступну ширину + стрілки праворуч.
+// ============================================================
+
+// Сусідні слайди мають бути видимі за межами контейнера, тож знімаємо
+// overflow: hidden, який Swiper ставить сам. Горизонтальний скрол сторінки
+// це не ламає — у body вже стоїть overflow-x: hidden (_base.scss).
+[data-slider].swiper {
+	overflow: visible;
+}
+
+.slider {
+	&__nav {
+		display: flex;
+		align-items: center;
+		gap: rem(24);
+		margin-top: rem(32);
+
+		&[hidden] { display: none; }
+
+		@include minw($sm-pc) {
+			margin-top: rem(40);
+			gap: rem(32);
+		}
+	}
+
+	// Swiper позиціонує прогрес-бар абсолютно й розтягує на всю ширину .swiper.
+	// Нам треба звичайний елемент у рядку — звідси підвищена специфічність
+	// (стилі Swiper підключаються після main.css).
+	//
+	// position: relative, а НЕ static: заливка всередині абсолютна
+	// (.swiper-pagination-progressbar-fill), тож доріжка має лишатись для неї
+	// системою координат. Зі static заливка рахується від іншого предка
+	// й зникає під overflow: hidden.
+	&__nav &__progress {
+		position: relative;
+		flex: 1;
+		width: auto;
+		max-width: rem(737);
+		height: rem(3);
+		border-radius: rem(2);
+		background-color: var(--border);
+		overflow: hidden;
+
+		--swiper-pagination-color: var(--accent);
+
+		.swiper-pagination-progressbar-fill {
+			border-radius: inherit;
+		}
+	}
+
+	&__arrows {
+		display: flex;
+		flex-shrink: 0;
+		gap: rem(8);
+		// Притискаємо до правого краю: прогрес обмежений max-width, тож
+		// вільний простір між ними має лишатись саме тут.
+		margin-left: auto;
+	}
+
+	&__arrow {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: rem(44);
+		height: rem(44);
+		padding: 0;
+		background-color: var(--white);
+		border: 1px solid var(--border);
+		border-radius: $radius;
+		color: var(--primary);
+		cursor: pointer;
+		transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+
+		svg {
+			width: rem(20);
+			height: rem(20);
+		}
+
+		&:hover {
+			border-color: var(--secondary);
+			color: var(--accent);
+		}
+
+		&:focus-visible {
+			outline: 2px solid $focus-ring;
+			outline-offset: 2px;
+		}
+
+		// Іконка намальована стрілкою вліво — для «наступного» розвертаємо.
+		&--next svg { transform: rotate(180deg); }
+
+		// Клас вішає Swiper, коли гортати далі нікуди.
+		&.swiper-button-disabled,
+		&[disabled] {
+			opacity: 0.35;
+			pointer-events: none;
+		}
+	}
+}

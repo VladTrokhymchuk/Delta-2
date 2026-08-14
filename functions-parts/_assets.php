@@ -53,9 +53,26 @@ function my_assets() {
         wp_enqueue_style('main', $main, ['critical'], null);
     }
 
+    // Swiper — лише там, де є секція зі слайдером.
+    // Це класичний UMD-скрипт із build/js/libs/ (не бандлиться у app), тому
+    // app має від нього залежати: інакше initRooms() виконається раніше,
+    // ніж з'явиться window.Swiper.
+    $app_deps  = [];
+    $swiper_js = '/build/js/libs/swiper-bundle.min.js';
+
+    if (function_exists('delta_has_section') && delta_has_section(['rooms'])) {
+        if ($swiper_css = get_asset('modules/swiper', 'css')) {
+            wp_enqueue_style('swiper', $swiper_css, ['main'], null);
+        }
+        if (file_exists(get_stylesheet_directory() . $swiper_js)) {
+            wp_enqueue_script('swiper', get_stylesheet_directory_uri() . $swiper_js, [], null, true);
+            $app_deps[] = 'swiper';
+        }
+    }
+
     // Головний JS.
     if ($app = get_asset('app', 'js')) {
-        wp_enqueue_script('app', $app, [], null, true);
+        wp_enqueue_script('app', $app, $app_deps, null, true);
     }
 
     // Сторінкові стилі — умовно.
@@ -68,10 +85,6 @@ function my_assets() {
     //     wp_enqueue_style('page-contacts', $css, ['main'], null);
     // }
 
-    // Приклад умовної ліби під секцію конструктора:
-    // if (function_exists('delta_has_section') && delta_has_section('rooms-slider')) {
-    //     wp_enqueue_script('swiper', get_stylesheet_directory_uri() . '/build/js/libs/swiper-bundle.min.js', [], null, true);
-    // }
 }
 add_action('wp_enqueue_scripts', 'my_assets', 20);
 

@@ -1,0 +1,10 @@
+// Стилі Swiper — окремий entry (manifest: modules/swiper).
+// Підключається УМОВНО, лише на сторінках із секцією-слайдером
+// (див. delta_has_section() у functions-parts/_assets.php).
+//
+// Беремо не весь swiper-bundle.css, а лише ядро та пагінацію: стрілки в нас
+// власні (Swiper вішає на них клас .swiper-button-disabled, стилі якого ми
+// задаємо самі в _rooms.scss), тож navigation.css не потрібен.
+
+@use '../../../node_modules/swiper/swiper.css';
+@use '../../../node_modules/swiper/modules/pagination.css';

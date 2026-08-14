@@ -53,25 +53,30 @@ if (!$ids && !$title) return;
 		<?php endif; ?>
 
 		<?php if ($ids) : ?>
-			<ul class="rooms__grid">
+		<div class="rooms__slider swiper"
+		     data-slider
+		     data-slider-per-view="1.15"
+		     data-slider-per-view-tablet="2"
+		     data-slider-per-view-desktop="3">
+			<ul class="rooms__grid swiper-wrapper">
 				<?php foreach ($ids as $room_id) :
 					$status = delta_room_status($room_id);
 					$price  = delta_room_price($room_id);
 					$text   = delta_room_excerpt($room_id);
 					$url    = get_permalink($room_id);
 					?>
-					<li class="rooms__item">
+					<li class="rooms__item swiper-slide">
 						<article class="room-card">
 
 							<?php if (has_post_thumbnail($room_id)) : ?>
-								<a class="room-card__media" href="<?= esc_url($url); ?>" tabindex="-1" aria-hidden="true">
+								<div class="room-card__media">
 									<?= get_the_post_thumbnail($room_id, 'large', array(
 										'class'    => 'room-card__img',
 										'loading'  => 'lazy',
 										'decoding' => 'async',
 										'alt'      => '',
 									)); ?>
-								</a>
+								</div>
 							<?php endif; ?>
 
 							<div class="room-card__body">
@@ -88,8 +93,11 @@ if (!$ids && !$title) return;
 									</div>
 								<?php endif; ?>
 
+								<?php // Посилання на назві розтягується на всю картку (див. _rooms.scss). ?>
 								<h3 class="room-card__title">
-									<a href="<?= esc_url($url); ?>"><?= esc_html(get_the_title($room_id)); ?></a>
+									<a class="room-card__cover-link" href="<?= esc_url($url); ?>">
+										<?= esc_html(get_the_title($room_id)); ?>
+									</a>
 								</h3>
 
 								<?php if ($text) : ?>
@@ -107,6 +115,29 @@ if (!$ids && !$title) return;
 					</li>
 				<?php endforeach; ?>
 			</ul>
+		</div>
+
+		<?php
+		// Керування слайдером. Якщо слайди вміщаються, Swiper вимикається
+		// (watchOverflow) і JS ховає цей блок атрибутом hidden.
+		$arrow = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">'
+			. '<path d="M13 16.5001L6.49988 9.99983L13 3.5" stroke="currentColor" stroke-width="2"/></svg>';
+		?>
+		<div class="slider__nav" data-slider-nav hidden>
+			<div class="slider__progress" data-slider-progress></div>
+
+			<div class="slider__arrows">
+				<button class="slider__arrow slider__arrow--prev" type="button" data-slider-prev
+				        aria-label="<?php esc_attr_e('Попередні номери', 'delta'); ?>">
+					<?= $arrow; // phpcs:ignore WordPress.Security.EscapeOutput — статичний SVG ?>
+				</button>
+
+				<button class="slider__arrow slider__arrow--next" type="button" data-slider-next
+				        aria-label="<?php esc_attr_e('Наступні номери', 'delta'); ?>">
+					<?= $arrow; // phpcs:ignore WordPress.Security.EscapeOutput — статичний SVG ?>
+				</button>
+			</div>
+		</div>
 		<?php endif; ?>
 
 	</div>

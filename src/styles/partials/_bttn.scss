@@ -61,27 +61,27 @@
     pointer-events: none;
   }
 
-  // --- Secondary: рамка Warm Gold -----------------------------------------
-  // У макеті показаний hover: біле тло + золота рамка. У спокої рамка
-  // нейтральна — при наведенні «загорається» золотом.
+  // --- Secondary: прозора з рамкою -----------------------------------------
+  // У спокої рамка Forest Green (специфікація картки номера), на ховері
+  // «загорається» золотом — саме цей стан показаний в UI-кіті макета.
   // Падінг на 1px менший, ніж у базовій кнопці, — рамка з'їдає різницю,
   // тож висота лишається 47px.
   &--secondary {
     padding: rem(13) rem(27);
-    background-color: var(--white);
-    border: 1px solid var(--border);
+    background-color: transparent;
+    border: 1px solid var(--primary);
     color: var(--primary);
 
     &:hover,
     &:active {
-      background-color: var(--white);
+      background-color: transparent;
       border-color: var(--secondary);
       color: var(--primary);
     }
 
     &[disabled],
     &.is-disabled {
-      background-color: var(--white);
+      background-color: transparent;
       border-color: var(--border);
       color: var(--disabled);
     }
