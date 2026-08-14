@@ -1,0 +1,80 @@
+{
+    "key": "group_review",
+    "title": "Відгук",
+    "fields": [
+        {
+            "key": "field_review_text",
+            "label": "Текст відгуку",
+            "name": "review_text",
+            "type": "textarea",
+            "instructions": "Без лапок — вони додаються оформленням.",
+            "required": 1,
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 5,
+            "new_lines": ""
+        },
+        {
+            "key": "field_review_rating",
+            "label": "Оцінка",
+            "name": "review_rating",
+            "type": "select",
+            "instructions": "Кількість зірок.",
+            "required": 0,
+            "choices": {
+                "5": "5",
+                "4": "4",
+                "3": "3",
+                "2": "2",
+                "1": "1"
+            },
+            "default_value": "5",
+            "return_format": "value",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0
+        },
+        {
+            "key": "field_review_date",
+            "label": "Дата відгуку",
+            "name": "review_date",
+            "type": "date_picker",
+            "instructions": "Порожньо — береться дата публікації запису.",
+            "required": 0,
+            "display_format": "d.m.Y",
+            "return_format": "Ymd",
+            "first_day": 1
+        },
+        {
+            "key": "field_review_source",
+            "label": "Джерело",
+            "name": "review_source",
+            "type": "text",
+            "instructions": "Booking, Google тощо. Не обов'язково, але підвищує довіру — і до відгуку, і до сайту в пошуку.",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Booking.com",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "review"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Заголовок запису — ім'я гостя.",
+    "show_in_rest": 0,
+    "modified": 1786924800
+}

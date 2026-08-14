@@ -542,6 +542,107 @@
                             "preview_size": "medium"
                         }
                     ]
+                },
+                "layout_reviews": {
+                    "key": "layout_reviews",
+                    "name": "reviews",
+                    "label": "Відгуки",
+                    "display": "block",
+                    "min": "",
+                    "max": "",
+                    "sub_fields": [
+                        {
+                            "key": "field_reviews_overline",
+                            "label": "Надзаголовок",
+                            "name": "reviews_overline",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Враження наших гостей",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_reviews_title",
+                            "label": "Заголовок",
+                            "name": "reviews_title",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Відгуки про Готель Дельта",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_reviews_subtitle",
+                            "label": "Підзаголовок",
+                            "name": "reviews_subtitle",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Щирі емоції та вдячність тих, хто вже знайшов свій оазис тиші",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_reviews_source",
+                            "label": "Які відгуки показати",
+                            "name": "reviews_source",
+                            "type": "select",
+                            "required": 0,
+                            "choices": {
+                                "auto": "Автоматично (найновіші)",
+                                "manual": "Обрати вручну"
+                            },
+                            "default_value": "auto",
+                            "return_format": "value",
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0
+                        },
+                        {
+                            "key": "field_reviews_limit",
+                            "label": "Скільки показати",
+                            "name": "reviews_limit",
+                            "type": "number",
+                            "instructions": "Порожньо — усі.",
+                            "required": 0,
+                            "default_value": 2,
+                            "min": 1,
+                            "step": 1,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_reviews_source",
+                                        "operator": "==",
+                                        "value": "auto"
+                                    }
+                                ]
+                            ]
+                        },
+                        {
+                            "key": "field_reviews_items",
+                            "label": "Відгуки",
+                            "name": "reviews_items",
+                            "type": "relationship",
+                            "required": 0,
+                            "post_type": [
+                                "review"
+                            ],
+                            "filters": [
+                                "search"
+                            ],
+                            "return_format": "id",
+                            "min": 0,
+                            "max": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_reviews_source",
+                                        "operator": "==",
+                                        "value": "manual"
+                                    }
+                                ]
+                            ]
+                        }
+                    ]
                 }
             }
         }

@@ -1,0 +1,152 @@
+@use '../core' as *;
+
+// ============================================================
+// REVIEWS — картки відгуків: ім'я + зірки, цитата курсивом, дата.
+// ============================================================
+
+// Фон секції збігається з фоном карток — вони відділяються лише рамкою.
+.section--reviews {
+	padding-block: rem(64);
+	background-color: var(--bg-soft);
+
+	@include minw($tablet) {
+		padding-block: rem(96);
+	}
+
+	@include minw($sm-pc) {
+		padding-block: rem(120);
+	}
+}
+
+.reviews {
+	&__head {
+		margin-bottom: rem(40);
+		text-align: center;
+
+		@include minw($sm-pc) {
+			margin-bottom: rem(56);
+		}
+	}
+
+	&__overline {
+		margin-bottom: rem(16);
+		font-weight: 700;
+		letter-spacing: rem(2);
+		color: var(--accent);
+	}
+
+	&__title {
+		font-size: rem(28);
+		line-height: 1.2;
+
+		@include minw($tablet) { font-size: rem(36); }
+		@include minw($sm-pc)  { font-size: rem(40); }
+	}
+
+	&__subtitle {
+		max-width: rem(700);
+		margin: rem(16) auto 0;
+		font-size: rem(15);
+		line-height: 1.6;
+		color: var(--text-muted);
+	}
+
+	&__grid {
+		display: grid;
+		gap: rem(24);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		@include minw($tablet) {
+			grid-template-columns: repeat(2, 1fr);
+			gap: rem(32);
+		}
+	}
+
+	&__item {
+		display: flex;
+		list-style: none;
+	}
+}
+
+.review-card {
+	display: flex;
+	flex-direction: column;
+	// Відступи між рядками картки — gap, а не margin у кожного елемента:
+	// так порожній блок (напр. без джерела) не лишає зайвого повітря.
+	gap: rem(20);
+	width: 100%;
+	padding: rem(24);
+	background-color: var(--bg-soft);
+	border: 1px solid var(--border);
+	border-radius: rem(16);
+
+	@include minw($tablet) {
+		padding: rem(32);
+	}
+
+	&__head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: rem(16);
+	}
+
+	&__author {
+		font-family: $font-body;
+		font-weight: 700;
+		font-size: rem(16);
+		line-height: 1;
+		letter-spacing: 0;
+		color: var(--primary);
+	}
+
+	&__stars {
+		display: inline-flex;
+		flex-shrink: 0;
+		gap: rem(4);
+		color: var(--secondary);
+
+		svg {
+			width: rem(14);
+			height: rem(14);
+		}
+	}
+
+	// Цитата: Spectral курсивом — так само, як слоган у підвалі.
+	// Лапки додаються оформленням, щоб редактор не ставив їх руками.
+	&__text {
+		margin: 0;
+		font-family: $font-heading;
+		font-style: italic;
+		font-weight: 400;
+		font-size: rem(15);
+		line-height: 1.5;
+		letter-spacing: 0;
+		color: var(--text);
+
+		@include minw($tablet) { font-size: rem(16); }
+
+		p::before { content: '«'; }
+		p::after  { content: '»'; }
+	}
+
+	&__meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: rem(8) rem(12);
+		margin-top: auto;
+		font-size: rem(13);
+		line-height: 1.4;
+		color: var(--text-muted);
+	}
+
+	&__source {
+		&::before {
+			content: '·';
+			margin-right: rem(12);
+		}
+	}
+}

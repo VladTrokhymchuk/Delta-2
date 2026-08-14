@@ -43,4 +43,35 @@ function init_post_types()
         'supports'      => array('title', 'editor', 'thumbnail', 'excerpt', 'page-attributes'),
         'rewrite'       => array('slug' => 'rooms', 'with_front' => false),
     ));
+
+    // --- Відгуки ------------------------------------------------------------
+    // Службовий тип: власних сторінок не має (public => false), бо окрема
+    // сторінка на кожен відгук — це тонкий контент, який шкодить, а не
+    // допомагає. Відгуки виводяться секцією й дають розмітку Review.
+    register_post_type('review', array(
+        'labels' => array(
+            'name'          => 'Відгуки',
+            'singular_name' => 'Відгук',
+            'add_new'       => 'Додати відгук',
+            'add_new_item'  => 'Додати відгук',
+            'edit_item'     => 'Редагувати відгук',
+            'search_items'  => 'Знайти відгук',
+            'not_found'     => 'Відгуків не знайдено',
+            'menu_name'     => 'Відгуки',
+        ),
+        'public'              => false,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => false,
+        'publicly_queryable'  => false,
+        'exclude_from_search' => true,
+        'has_archive'         => false,
+        'rewrite'             => false,
+        'show_in_rest'        => false,
+        'menu_position'       => 6,
+        'menu_icon'           => 'dashicons-format-quote',
+        'hierarchical'        => false,
+        // Ім'я автора — у заголовку, текст відгуку — в ACF-полі.
+        'supports'            => array('title', 'page-attributes'),
+    ));
 }
