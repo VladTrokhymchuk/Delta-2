@@ -53,9 +53,19 @@ if (!$ids && !$title) return;
 		<?php endif; ?>
 
 		<?php if ($ids) : ?>
+		<?php // Мобільний фрейм: проміжок 16px, наступна картка визирає ~24px —
+		      // без цього краю слайдер не читається як слайдер.
+		      //
+		      // Звідси 1.07: контент на 390 — це 358px, і картка з макета (358)
+		      // разом із проміжком 16 закінчувалась би рівно на краю екрана,
+		      // тобто сусідньої не було б видно взагалі. 1.07 дає картку ~334
+		      // і 24px наступної. Більше значення = ширший край і вужча картка.
+		      //
+		      // Планшет і десктоп — на значеннях за замовчуванням (_slider.js). ?>
 		<div class="rooms__slider swiper"
 		     data-slider
-		     data-slider-per-view="1.15"
+		     data-slider-per-view="1.07"
+		     data-slider-gap="16"
 		     data-slider-per-view-tablet="2"
 		     data-slider-per-view-desktop="3">
 			<ul class="rooms__grid swiper-wrapper">

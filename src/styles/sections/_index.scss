@@ -12,3 +12,7 @@
 @forward 'reviews';
 @forward 'booking-cta';
 @forward 'location';
+
+// Спільний мобільний ритм секцій — тільки в кінці: правило перебиває
+// власні padding-block секцій вище (див. коментар у _section.scss).
+@forward 'section';

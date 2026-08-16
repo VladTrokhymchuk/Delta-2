@@ -90,5 +90,11 @@
 			&:hover,
 			&:focus-visible { color: var(--accent); }
 		}
+
+		// Мобільний адаптив (Figma, фрейм 390). line-height лишається 1.4:
+		// текст згоди тут займає три рядки, і без інтерліньяжу вони злипаються.
+		@include maxw($tablet - 1px) {
+			font-size: rem(12);
+		}
 	}
 }

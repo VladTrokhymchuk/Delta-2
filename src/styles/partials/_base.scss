@@ -23,6 +23,20 @@ html {
   -webkit-text-size-adjust: 100%;
   background-color: var(--bg);
   color: var(--text);
+
+  // Горизонтальне обрізання МАЄ бути тут, а не лише на <body>.
+  // За контейнер навмисно виходять дві речі: слайдери (сусідні картки
+  // визирають — _slider.scss знімає з них overflow) і закрита мобільна панель
+  // меню, яка стоїть за правим краєм. Самого `overflow-x: hidden` на <body>
+  // для них мало: поки в <html> overflow visible, значення body переходить
+  // на viewport, а сам body лишається непідрізаним — сторінка розтягувалась
+  // до 2100px при вікні 500.
+  //
+  // clip, а не hidden: не робить із кореня скрол-контейнер (тобто нічого не
+  // можна прокрутити вбік навіть програмно) і не ламає position: fixed шапки.
+  // Рядок із hidden — фолбек для Safari < 16, який clip ще не розуміє.
+  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -33,7 +47,10 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  // Дублюємо обрізання й тут: коли в <html> стоїть clip, значення з body вже
+  // нікуди не переходить, і без цього рядка body лишився б scroll-контейнером.
   overflow-x: hidden;
+  overflow-x: clip;
 
   // Блокування скролу під час відкритого меню/попапа.
   // position: fixed, а не overflow: hidden — на iOS Safari сам лише overflow
@@ -76,6 +93,12 @@ main {
   width: 100%;
   max-width: rem($containerWidth);
   padding-inline: rem($containerPadding);
+
+  // На мобільному фреймі (390) у макеті всюди 16px, а не 20: так контент
+  // виходить рівно 358px — саме на цю ширину розраховані картки й слайди.
+  @include maxw($tablet - 1px) {
+    padding-inline: rem(16);
+  }
 }
 
 .container-wide { max-width: 100%; }

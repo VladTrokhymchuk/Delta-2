@@ -8,8 +8,9 @@
 // тож окремих падінгів у шапці немає.
 //
 // < $sm-pc: меню ховається в панель, що виїжджає справа (бургер).
-// Мобільного фрейму в макеті поки немає — панель зроблена за загальною
-// логікою й доводиться, коли з'явиться екран.
+// < $tablet: розміри з мобільного фрейму 390 (висота 60, поля 16,
+// логотип 36, бургер-плашка 34 — див. блок «МОБІЛЬНИЙ АДАПТИВ» унизу).
+// Проміжок 768–991px лишається на планшетних значеннях.
 // ============================================================
 
 // Висоту шапки задаємо на .header__inner (20 + 48 + 20 = 88), а не падінгами:
@@ -17,11 +18,13 @@
 // від верхнього до нижнього краю шапки.
 $header-height:        rem(88);
 $header-height-mobile: rem(72);
+$header-height-sm:     rem(60); // мобільний фрейм 390: 12 + 36 + 12
 $header-menu-pad-x:    rem(16); // половина відступу 32px між пунктами
 
 // Повна висота разом із лінією знизу — саме її компенсує сторінка.
 $header-offset:        $header-height + rem(1);
 $header-offset-mobile: $header-height-mobile + rem(1);
+$header-offset-sm:     $header-height-sm + rem(1);
 
 // Шапка вийшла з потоку, тож місце під неї тримає падінг сторінки. Значення
 // зав'язані на ті самі змінні висоти, щоб зсув не роз'їхався з шапкою.
@@ -356,6 +359,78 @@ html {
 		.header__burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 		.header__burger span:nth-child(2) { opacity: 0; }
 		.header__burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+	}
+}
+
+// ============================================================
+// МОБІЛЬНИЙ АДАПТИВ — Figma, фрейм 390.
+// ------------------------------------------------------------
+// Шапка 60px: padding 12/16, бренд 171×36 (лого 36 + gap 10 + текст 125),
+// бургер — темна плашка 34×34 зі світлими рисками.
+// Межа $tablet, а не $sm-pc: планшет 768–991 лишається на 72px, там
+// мобільні 60px із 15px-назвою виглядали б загубленими на широкому рядку.
+// ============================================================
+@include maxw($tablet - 1px) {
+	// Місце під шапку та якорі — за новою висотою (див. коментарі вище).
+	body { padding-top: $header-offset-sm; }
+	html { scroll-padding-top: $header-offset-sm; }
+
+	.header {
+		&__inner {
+			// 12 + 36 (висота бренду) + 12 = 60.
+			min-height: $header-height-sm;
+			padding-block: rem(12);
+			gap: rem(12);
+			// Бокові 16px приходять із .container (_base.scss).
+		}
+
+		// Панель меню відкривається з-під шапки, тож її верх іде за висотою.
+		&__nav { top: $header-offset-sm; }
+
+		&__brand { gap: rem(10); }
+
+		&__logo {
+			width: rem(36);
+			height: rem(36);
+			border-radius: rem(4);
+		}
+
+		&__brand-text { gap: rem(1); }
+
+		&__brand-name { font-size: rem(15); }
+
+		&__brand-tagline {
+			font-size: rem(7.5);
+			// Figma віддає letter-spacing у відсотках (тут 100%, в overline hero —
+			// 300%). Буквально це 7.5px на літеру: підпис не влазив би у 125px,
+			// відведені під текстовий блок у тому ж макеті. Читаємо як px —
+			// 100% = 1px, і тоді все сходиться і з шириною, і з десктопом (1.5px).
+			letter-spacing: rem(1);
+		}
+
+		// --- Бургер: темна плашка ---------------------------------------------
+		&__burger {
+			align-items: center;
+			// 3 риски по 2px + 2 проміжки по 2.25 = 10.5 — висота групи з макета.
+			gap: rem(2.25);
+			width: rem(34);
+			height: rem(34);
+			padding: rem(8);
+			border-radius: rem(6);
+			background-color: var(--primary);
+
+			span {
+				width: rem(12);
+				background-color: var(--bg-soft);
+			}
+		}
+	}
+
+	// Хрестик: риски сходяться на 4.25px (2px риска + 2.25px проміжок),
+	// а не на 7px, як при десктопному кроці.
+	.menu-open {
+		.header__burger span:nth-child(1) { transform: translateY(rem(4.25)) rotate(45deg); }
+		.header__burger span:nth-child(3) { transform: translateY(rem(-4.25)) rotate(-45deg); }
 	}
 }
 
