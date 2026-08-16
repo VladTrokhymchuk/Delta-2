@@ -21,6 +21,43 @@ function delta_opt($field, $default = '') {
 	return ($value === null || $value === '' || $value === false) ? $default : $value;
 }
 
+# --- Карти -------------------------------------------------------------------
+
+/**
+ * Дістає адресу вбудованої карти Google із того, що вставили в поле.
+ *
+ * Менеджер копіює з «Поділитися → Вбудувати карту» цілий <iframe>. Виводити
+ * його як є не можна з двох причин: у коді Google зашиті width/height 600×450,
+ * які ламають сітку, і це сира HTML з поля — тобто вектор для довільної
+ * розмітки. Тому беремо ЛИШЕ src, перевіряємо, що це справді google-мапа,
+ * а сам <iframe> малюємо своїми атрибутами.
+ *
+ * @param string $embed Код <iframe> або гола адреса.
+ * @return string Безпечний URL або '' — якщо це не карта Google.
+ */
+function delta_gmap_src($embed) {
+	$embed = trim((string) $embed);
+	if ($embed === '') return '';
+
+	// Вставили цілий <iframe> — витягуємо src; вставили саму адресу — беремо як є.
+	$url = preg_match('#\ssrc\s*=\s*["\']([^"\']+)["\']#i', $embed, $m)
+		? $m[1]
+		: $embed;
+
+	$url = esc_url_raw(html_entity_decode($url, ENT_QUOTES));
+	if (!$url) return '';
+
+	$host = strtolower((string) wp_parse_url($url, PHP_URL_HOST));
+	$path = (string) wp_parse_url($url, PHP_URL_PATH);
+
+	// Хост зіставляємо цілком: інакше `google.evil.com` пройшов би перевірку
+	// «починається з google». {1,2} — це і google.com, і google.com.ua.
+	if (!preg_match('#^(www\.|maps\.)?google(\.[a-z]{2,3}){1,2}$#', $host)) return '';
+	if (strpos($path, '/maps/embed') === false) return '';
+
+	return $url;
+}
+
 # --- Меню --------------------------------------------------------------------
 
 /**

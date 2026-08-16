@@ -9,15 +9,16 @@
 // ============================================================
 
 .section--booking-cta {
-	padding-block: rem(48);
+	// 120px — з макета, спільне значення з .section--location.
+	padding-block: rem(56);
 	background-color: var(--bg-alt);
 
 	@include minw($tablet) {
-		padding-block: rem(72);
+		padding-block: rem(80);
 	}
 
 	@include minw($sm-pc) {
-		padding-block: rem(96);
+		padding-block: rem(120);
 	}
 }
 

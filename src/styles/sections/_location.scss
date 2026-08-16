@@ -1,0 +1,148 @@
+@use '../core' as *;
+
+// ============================================================
+// LOCATION — «Ваш шлях до релаксу»: текст і контакти зліва, карта справа.
+//
+// Колонки в макеті нерівні (текст ~514, карта ~730), тож не 1fr 1fr,
+// а 5/7 — інакше карта втрачає ширину, на якій читається ілюстрація.
+// ============================================================
+
+.section--location {
+	// 120px — з макета. На вузьких екранах така «повітряна подушка» з'їдає
+	// пів-екрана, тож до неї доростаємо сходинками.
+	padding-block: rem(56);
+	background-color: var(--bg-soft);
+
+	@include minw($tablet) {
+		padding-block: rem(80);
+	}
+
+	@include minw($sm-pc) {
+		padding-block: rem(120);
+	}
+}
+
+.location {
+	&__inner {
+		display: grid;
+		gap: rem(32);
+
+		// Макет: текст 515 + gap 64 + карта 733 = 1312, тобто на 32px більше за
+		// контейнер (1280). Цю різницю віддаємо карті — вона тягнеться на все,
+		// що лишилось, і 32px на Google-мапі не видно. Текстова колонка натомість
+		// тримає рівно свої 515: від її ширини залежать переноси в абзаці.
+		@include minw($sm-pc) {
+			grid-template-columns: minmax(0, rem(515)) minmax(0, 1fr);
+			// Колонки різної висоти — рівняємо по верху, а не по центру.
+			align-items: start;
+			gap: rem(64);
+		}
+	}
+
+	&__content {
+		min-width: 0;
+	}
+
+	// Розмір і трекінг — з базового .overline; відрізняються лише вага (700
+	// замість 600), інтерліньяж та колір.
+	&__overline {
+		margin-bottom: rem(16);
+		font-weight: 700;
+		line-height: 1;
+		color: var(--accent);
+	}
+
+	&__title {
+		font-weight: 600;
+		font-size: rem(28);
+		line-height: 1.2;
+		color: var(--text);
+
+		@include minw($tablet) { font-size: rem(36); }
+		@include minw($sm-pc)  { font-size: rem(40); }
+	}
+
+	&__text {
+		margin-top: rem(20);
+		font-size: rem(16);
+		line-height: 1.6;
+		color: var(--text);
+	}
+
+	// Роздільник — рамка списку, а не окремий <hr>: зайвого елемента в
+	// розмітці немає, а без контактів лінія зникає разом зі списком.
+	&__contacts {
+		display: flex;
+		flex-direction: column;
+		gap: rem(16);
+		margin: rem(32) 0 0;
+		padding: rem(24) 0 0;
+		border-top: 1px solid var(--border);
+		list-style: none;
+	}
+
+	// Висоту рядка задає іконка (20px) — текст із line-height 1 у неї вкладається.
+	&__contact {
+		display: flex;
+		align-items: center;
+		gap: rem(12);
+		list-style: none;
+	}
+
+	&__contact-icon {
+		display: inline-flex;
+		flex-shrink: 0;
+		color: var(--text);
+
+		svg {
+			display: block;
+			width: rem(20);
+			height: rem(20);
+		}
+	}
+
+	&__contact-link,
+	&__contact-text {
+		font-size: rem(14);
+		line-height: 1;
+		color: var(--text);
+	}
+
+	&__contact-link {
+		text-decoration: none;
+		transition: color 0.2s ease;
+
+		&:hover,
+		&:focus-visible { color: var(--accent); }
+
+		&:focus-visible {
+			outline: 2px solid $focus-ring;
+			outline-offset: 3px;
+		}
+	}
+
+	// --- Карта ----------------------------------------------------------------
+	// overflow: hidden — щоб кути iframe'а реально обрізались по радіусу.
+	// Пропорції тримає обгортка, а не зашиті в код Google 600×450:
+	// 733×400 з макета — це 733/400, при контейнері 1280 дає рівно 400px висоти.
+	&__media {
+		position: relative;
+		overflow: hidden;
+		aspect-ratio: 733 / 400;
+		border: 1px solid var(--border);
+		border-radius: rem(16);
+
+		// На вузькому екрані 733/400 лишає надто низьку смужку, щоб на карті
+		// щось було видно — там пускаємо ближче до квадрата.
+		@include maxw($tablet - 1px) {
+			aspect-ratio: 4 / 3;
+		}
+	}
+
+	&__map {
+		display: block;
+		width: 100%;
+		height: 100%;
+		border: 0;
+	}
+}

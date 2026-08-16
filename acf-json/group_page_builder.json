@@ -747,6 +747,107 @@
                             "max": 1
                         }
                     ]
+                },
+                "layout_location": {
+                    "key": "layout_location",
+                    "name": "location",
+                    "label": "Місцезнаходження (карта)",
+                    "display": "block",
+                    "min": "",
+                    "max": "",
+                    "sub_fields": [
+                        {
+                            "key": "field_location_overline",
+                            "label": "Надзаголовок",
+                            "name": "location_overline",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Місцезнаходження",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_location_title",
+                            "label": "Заголовок",
+                            "name": "location_title",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Ваш шлях до релаксу",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_location_text",
+                            "label": "Текст",
+                            "name": "location_text",
+                            "type": "textarea",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "",
+                            "maxlength": "",
+                            "rows": 4,
+                            "new_lines": ""
+                        },
+                        {
+                            "key": "field_location_address",
+                            "label": "Адреса",
+                            "name": "location_address",
+                            "type": "text",
+                            "instructions": "Порожньо — візьметься з «Налаштування теми» → Контакти.",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "вул. Лісова Заповідна, 12, с. Бережани, Львівська обл.",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_location_phones",
+                            "label": "Телефони",
+                            "name": "location_phones",
+                            "type": "repeater",
+                            "instructions": "Можна кілька. Порожньо — візьметься телефон з «Налаштування теми» → Контакти.",
+                            "required": 0,
+                            "layout": "table",
+                            "button_label": "Додати телефон",
+                            "min": 0,
+                            "max": 0,
+                            "sub_fields": [
+                                {
+                                    "key": "field_location_phone_number",
+                                    "label": "Номер",
+                                    "name": "number",
+                                    "type": "text",
+                                    "required": 0,
+                                    "default_value": "",
+                                    "placeholder": "+380 (44) 987-6543",
+                                    "maxlength": "",
+                                    "parent_repeater": "field_location_phones"
+                                }
+                            ]
+                        },
+                        {
+                            "key": "field_location_email",
+                            "label": "Email",
+                            "name": "location_email",
+                            "type": "email",
+                            "instructions": "Порожньо — візьметься з «Налаштування теми» → Контакти.",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "booking@hotel-delta.com.ua"
+                        },
+                        {
+                            "key": "field_location_map_embed",
+                            "label": "Карта Google",
+                            "name": "location_map_embed",
+                            "type": "textarea",
+                            "instructions": "Google Maps → «Поділитися» → «Вбудувати карту» → скопіювати код. Можна вставити весь &lt;iframe&gt; або лише адресу з src — тема візьме звідти посилання й підставить власні розміри.",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "<iframe src=\"https:\/\/www.google.com\/maps\/embed?pb=…\"><\/iframe>",
+                            "maxlength": "",
+                            "rows": 4,
+                            "new_lines": ""
+                        }
+                    ]
                 }
             }
         }
@@ -771,5 +872,5 @@
     "active": true,
     "description": "Секції сторінки. Нова секція = новий layout.",
     "show_in_rest": 0,
-    "modified": 1786710054
+    "modified": 1786883326
 }
