@@ -282,6 +282,140 @@
                         }
                     ]
                 },
+                "layout_rooms_list": {
+                    "key": "layout_rooms_list",
+                    "name": "rooms-list",
+                    "label": "Номери (розгорнутий список)",
+                    "display": "block",
+                    "min": "",
+                    "max": "",
+                    "sub_fields": [
+                        {
+                            "key": "field_rooms_list_overline",
+                            "label": "Надзаголовок",
+                            "name": "rooms_list_overline",
+                            "type": "text",
+                            "instructions": "Шапка секції необов'язкова — на сторінці «Номери» її роль виконує перший екран.",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_rooms_list_title",
+                            "label": "Заголовок",
+                            "name": "rooms_list_title",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_rooms_list_subtitle",
+                            "label": "Підзаголовок",
+                            "name": "rooms_list_subtitle",
+                            "type": "text",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_rooms_list_source",
+                            "label": "Які номери показати",
+                            "name": "rooms_list_source",
+                            "type": "select",
+                            "instructions": "«Автоматично» бере номери за порядком їх сортування в розділі «Номери».",
+                            "required": 0,
+                            "choices": {
+                                "auto": "Автоматично",
+                                "manual": "Обрати вручну"
+                            },
+                            "default_value": "auto",
+                            "return_format": "value",
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0
+                        },
+                        {
+                            "key": "field_rooms_list_limit",
+                            "label": "Скільки показати",
+                            "name": "rooms_list_limit",
+                            "type": "number",
+                            "instructions": "Порожньо — усі.",
+                            "required": 0,
+                            "default_value": "",
+                            "min": 1,
+                            "step": 1,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_rooms_list_source",
+                                        "operator": "==",
+                                        "value": "auto"
+                                    }
+                                ]
+                            ]
+                        },
+                        {
+                            "key": "field_rooms_list_items",
+                            "label": "Номери",
+                            "name": "rooms_list_items",
+                            "type": "relationship",
+                            "required": 0,
+                            "post_type": [
+                                "room"
+                            ],
+                            "filters": [
+                                "search"
+                            ],
+                            "return_format": "id",
+                            "min": 0,
+                            "max": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_rooms_list_source",
+                                        "operator": "==",
+                                        "value": "manual"
+                                    }
+                                ]
+                            ]
+                        },
+                        {
+                            "key": "field_rooms_list_detail_label",
+                            "label": "Підпис кнопки «Детальніше»",
+                            "name": "rooms_list_detail_label",
+                            "type": "text",
+                            "instructions": "Порожньо — значення з «Налаштування теми» → Сторінка «Номери».",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Детальніше",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_rooms_list_book_label",
+                            "label": "Підпис кнопки «Забронювати»",
+                            "name": "rooms_list_book_label",
+                            "type": "text",
+                            "instructions": "Порожньо — значення з «Налаштування теми» → Сторінка «Номери».",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Забронювати",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_rooms_list_book_link",
+                            "label": "Куди веде «Забронювати»",
+                            "name": "rooms_list_book_link",
+                            "type": "link",
+                            "instructions": "Порожньо — значення з «Налаштування теми», а якщо і там порожньо — якір #booking на цій же сторінці.",
+                            "required": 0,
+                            "return_format": "array"
+                        }
+                    ]
+                },
                 "layout_amenities": {
                     "key": "layout_amenities",
                     "name": "amenities",
@@ -872,5 +1006,5 @@
     "active": true,
     "description": "Секції сторінки. Нова секція = новий layout.",
     "show_in_rest": 0,
-    "modified": 1786883326
+    "modified": 1786881600
 }

@@ -17,7 +17,7 @@
             "label": "Логотип",
             "name": "header_logo",
             "type": "image",
-            "instructions": "Порожньо — використовується build\/img\/logo.png із теми. Рекомендовано PNG\/SVG, мінімум 96×96.",
+            "instructions": "Порожньо — використовується build/img/logo.png із теми. Рекомендовано PNG/SVG, мінімум 96×96.",
             "required": 0,
             "return_format": "array",
             "library": "all",
@@ -196,6 +196,169 @@
                     "parent_repeater": "field_footer_socials"
                 }
             ]
+        },
+        {
+            "key": "field_theme_tab_rooms_page",
+            "label": "Сторінка «Номери»",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_rooms_page_hero_image",
+            "label": "Фон першого екрана",
+            "name": "rooms_page_hero_image",
+            "type": "image",
+            "instructions": "Широке фото, мінімум 1920px. Порожньо — лишиться суцільний темно-зелений фон.",
+            "required": 0,
+            "return_format": "id",
+            "library": "all",
+            "preview_size": "medium",
+            "min_width": "",
+            "min_height": "",
+            "max_size": ""
+        },
+        {
+            "key": "field_rooms_page_hero_overline",
+            "label": "Надзаголовок",
+            "name": "rooms_page_hero_overline",
+            "type": "text",
+            "instructions": "Дрібний золотий рядок над заголовком.",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Приватність та абсолютне задоволення",
+            "maxlength": ""
+        },
+        {
+            "key": "field_rooms_page_hero_title",
+            "label": "Заголовок (H1)",
+            "name": "rooms_page_hero_title",
+            "type": "text",
+            "instructions": "Порожньо — «Наші номери».",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Наші номери",
+            "maxlength": ""
+        },
+        {
+            "key": "field_rooms_page_hero_subtitle",
+            "label": "Підзаголовок",
+            "name": "rooms_page_hero_subtitle",
+            "type": "textarea",
+            "instructions": "Один-два рядки під заголовком.",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Кожна кімната в Готелі Дельта — це досконалий простір, де шляхетні традиції європейської гостинності поєднуються зі справжньою природною тишею.",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_rooms_page_detail_label",
+            "label": "Напис на кнопці «Детальніше»",
+            "name": "rooms_page_detail_label",
+            "type": "text",
+            "instructions": "Веде на сторінку номера. Порожньо — «Детальніше».",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Детальніше",
+            "maxlength": ""
+        },
+        {
+            "key": "field_rooms_page_book_label",
+            "label": "Напис на кнопці «Забронювати»",
+            "name": "rooms_page_book_label",
+            "type": "text",
+            "instructions": "Порожньо — «Забронювати».",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Забронювати",
+            "maxlength": ""
+        },
+        {
+            "key": "field_rooms_page_book_link",
+            "label": "Куди веде «Забронювати»",
+            "name": "rooms_page_book_link",
+            "type": "link",
+            "instructions": "Порожньо — до форми бронювання внизу цієї ж сторінки (#booking).",
+            "required": 0,
+            "return_format": "array"
+        },
+        {
+            "key": "field_theme_tab_booking",
+            "label": "Бронювання",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_booking_overline",
+            "label": "Надзаголовок",
+            "name": "booking_overline",
+            "type": "text",
+            "instructions": "Секція-заклик у нижній частині сторінки «Номери» (на звичайних сторінках вона додається конструктором і має власні поля).",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Унікальний відпочинок чекає на вас",
+            "maxlength": ""
+        },
+        {
+            "key": "field_booking_title",
+            "label": "Заголовок",
+            "name": "booking_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Бажаєте відчути магію відновленої тиші?",
+            "maxlength": ""
+        },
+        {
+            "key": "field_booking_text",
+            "label": "Текст",
+            "name": "booking_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Зв'яжіться з нашою службою бронювання прямо зараз.",
+            "maxlength": "",
+            "rows": 4,
+            "new_lines": ""
+        },
+        {
+            "key": "field_booking_form_title",
+            "label": "Заголовок картки з формою",
+            "name": "booking_form_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Швидке бронювання",
+            "maxlength": ""
+        },
+        {
+            "key": "field_booking_form",
+            "label": "Форма",
+            "name": "booking_form",
+            "type": "relationship",
+            "instructions": "Форма Contact Form 7. Без неї секція покаже лише текстову колонку. Телефони та email беруться з вкладки «Контакти».",
+            "required": 0,
+            "post_type": [
+                "wpcf7_contact_form"
+            ],
+            "filters": [
+                "search"
+            ],
+            "return_format": "id",
+            "min": 0,
+            "max": 1
         }
     ],
     "location": [
@@ -214,7 +377,7 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "Глобальні дані сайту: шапка та контакти.",
+    "description": "Глобальні дані сайту: шапка, контакти, сторінка «Номери» та бронювання.",
     "show_in_rest": 0,
-    "modified": 1786665600
+    "modified": 1786881600
 }

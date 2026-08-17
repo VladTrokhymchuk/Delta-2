@@ -1,0 +1,348 @@
+@use '../core' as *;
+
+// ============================================================
+// ROOMS LIST — розгорнутий список номерів (сторінка «Номери»).
+//
+// Один номер = смуга на всю ширину: фото з одного боку, опис з іншого.
+// Сусідні смуги дзеркальні й на різному фоні — так довгий список читається
+// як послідовність, а не як однорідна сітка.
+//
+// Фон смуги тягнеться на всю ширину вікна, тому поля задає не секція, а сама
+// смуга: інакше між кольоровими блоками з'явились би білі проміжки.
+// ============================================================
+
+.section--rooms-list {
+	padding-block: 0;
+}
+
+.rooms-list {
+
+	// --- Шапка секції --------------------------------------------------------
+	// На сторінці «Номери» її роль виконує перший екран, тож поля порожні
+	// й блок не виводиться. Потрібна вона лише коли секцію ставлять
+	// конструктором на звичайну сторінку.
+	&__head {
+		padding-block: rem(56) 0;
+		text-align: center;
+
+		@include minw($sm-pc) {
+			padding-block: rem(96) 0;
+		}
+	}
+
+	&__overline {
+		margin-bottom: rem(16);
+		font-weight: 700;
+		letter-spacing: rem(2);
+	}
+
+	&__title {
+		font-size: rem(28);
+		line-height: 1.2;
+
+		@include minw($tablet) { font-size: rem(36); }
+		@include minw($sm-pc)  { font-size: rem(40); }
+	}
+
+	&__subtitle {
+		max-width: rem(700);
+		margin: rem(16) auto 0;
+		font-size: rem(15);
+		line-height: 1.6;
+	}
+
+	// --- Смуга номера --------------------------------------------------------
+	&__row {
+		padding-block: rem(40);
+		background-color: var(--bg-soft);
+
+		@include minw($tablet) {
+			padding-block: rem(72);
+		}
+
+		@include minw($sm-pc) {
+			padding-block: rem(100);
+		}
+
+		// Кожна друга — темніший фон і дзеркальний порядок колонок.
+		&--alt {
+			background-color: var(--bg-alt);
+		}
+	}
+
+	&__inner {
+		display: grid;
+		gap: rem(24);
+
+		@include minw($sm-pc) {
+			// 680 і 536 з макета (1440) із проміжком 64 — тримаємо пропорцію,
+			// а не пікселі, щоб на 1280 колонки стискались разом.
+			grid-template-columns: minmax(0, 680fr) minmax(0, 536fr);
+			align-items: center;
+			gap: rem(64);
+		}
+	}
+
+	// Дзеркальні смуги: фото праворуч, ширша колонка лишається під фото.
+	// Розкладка через grid-column, а не order, — DOM-порядок (фото → опис)
+	// зберігається однаковим для всіх смуг.
+	&__row--alt &__inner {
+		@include minw($sm-pc) {
+			grid-template-columns: minmax(0, 536fr) minmax(0, 680fr);
+		}
+	}
+
+	&__row--alt &__media {
+		@include minw($sm-pc) {
+			grid-column: 2;
+			grid-row: 1;
+		}
+	}
+
+	&__row--alt &__content {
+		@include minw($sm-pc) {
+			grid-column: 1;
+			grid-row: 1;
+		}
+	}
+
+	// --- Фото ----------------------------------------------------------------
+	&__media {
+		overflow: hidden;
+		border-radius: rem(16);
+	}
+
+	&__img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		// 680×480 з макета.
+		aspect-ratio: 17 / 12;
+		object-fit: cover;
+	}
+
+	// --- Опис ----------------------------------------------------------------
+	// Колонка контенту — 32px між блоками (макет). Надзаголовок, назва й
+	// орнамент ідуть щільніше, тому винесені в окрему групу.
+	&__content {
+		display: flex;
+		flex-direction: column;
+
+		@include minw($sm-pc) {
+			gap: rem(32);
+		}
+	}
+
+	&__room-overline {
+		margin-bottom: rem(12);
+		font-weight: 700;
+		font-size: rem(11);
+		line-height: 1;
+		// Figma пише 200%; при 11px це 22px на літеру — читаємо як 2px.
+		letter-spacing: rem(2);
+		color: var(--accent);
+	}
+
+	&__room-title {
+		font-weight: 600;
+		font-size: rem(24);
+		line-height: 1.2;
+
+		@include minw($tablet) { font-size: rem(36); }
+
+		a:hover { color: var(--accent); }
+	}
+
+	// Розділювач під назвою: крапка з двома лініями, як у секції intro,
+	// але притиснутий до лівого краю колонки.
+	&__ornament {
+		position: relative;
+		display: block;
+		width: rem(6);
+		height: rem(6);
+		margin: rem(20) 0 0 rem(46);
+		border-radius: 50%;
+		background-color: var(--secondary);
+
+		&::before,
+		&::after {
+			content: '';
+			position: absolute;
+			top: 50%;
+			width: rem(40);
+			height: 1px;
+			background-color: var(--secondary);
+		}
+
+		&::before { right: rem(14); }
+		&::after  { left: rem(14); }
+	}
+
+	&__text {
+		margin-top: rem(16);
+		font-size: rem(15);
+		line-height: 1.6;
+		color: var(--text-muted);
+
+		@include minw($sm-pc) {
+			margin-top: 0; // проміжок дає gap колонки
+		}
+	}
+
+	// --- Характеристики (іконка в кружечку + текст) --------------------------
+	&__specs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: rem(12);
+		margin-top: rem(24);
+		padding: 0;
+		list-style: none;
+
+		@include minw($sm-pc) {
+			margin-top: 0; // проміжок дає gap колонки
+		}
+	}
+
+	&__spec {
+		display: flex;
+		align-items: center;
+		gap: rem(8);
+		padding-right: rem(16);
+		font-weight: 600;
+		font-size: rem(13);
+		line-height: 1;
+		color: var(--text);
+		list-style: none;
+	}
+
+	&__spec-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex: 0 0 auto;
+		@include size(rem(32));
+		border-radius: 50%;
+		background-color: var(--bg-alt);
+		color: var(--primary);
+
+		svg {
+			@include size(rem(14));
+		}
+	}
+
+	// --- Ціна та кнопки ------------------------------------------------------
+	&__footer {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: rem(20);
+		margin-top: rem(28);
+		padding-top: rem(24);
+		border-top: 1px solid var(--border);
+
+		@include minw($sm-pc) {
+			margin-top: 0; // проміжок дає gap колонки
+		}
+	}
+
+	&__price {
+		display: flex;
+		flex-direction: column;
+		gap: rem(4);
+	}
+
+	&__price-label {
+		font-family: $font-body;
+		font-weight: 700;
+		font-size: rem(11);
+		line-height: 1;
+		// Figma пише 100%; при 11px це 11px на літеру — читаємо як 1px.
+		letter-spacing: rem(1);
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+
+	&__price-value {
+		font-family: $font-heading;
+		font-weight: 600;
+		font-size: rem(28);
+		line-height: 1;
+		color: var(--accent);
+		white-space: nowrap;
+	}
+
+	&__price-period {
+		font-family: $font-body;
+		font-weight: 400;
+		font-size: rem(13);
+		line-height: 1;
+		color: var(--text-muted);
+	}
+
+	&__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: rem(12);
+	}
+}
+
+// ============================================================
+// МОБІЛЬНИЙ АДАПТИВ — Figma, фрейм 390.
+// ------------------------------------------------------------
+// Колонки складаються в одну: фото зверху, опис під ним. Ціна й кнопки
+// перестають бути одним рядком — кнопки розтягуються на всю ширину, бо
+// поруч вони вже не вміщаються.
+// ============================================================
+@include maxw($tablet - 1px) {
+	.rooms-list {
+		// Кадр вужчий, тож і заокруглення дрібніше — 16px на 358px ширини
+		// читалось би як завал кутів.
+		&__media { border-radius: rem(8); }
+
+		&__room-overline {
+			margin-bottom: rem(10);
+			font-size: rem(11);
+			letter-spacing: rem(2);
+		}
+
+		&__room-title { font-size: rem(22); }
+
+		&__ornament { margin-top: rem(16); }
+
+		&__text {
+			margin-top: rem(12);
+			font-size: rem(13);
+			line-height: 1.6;
+		}
+
+		&__specs {
+			gap: rem(10);
+			margin-top: rem(20);
+		}
+
+		&__spec {
+			gap: rem(6);
+			padding-right: rem(8);
+			font-size: rem(12);
+		}
+
+		&__spec-icon {
+			@include size(rem(28));
+		}
+
+		&__footer {
+			align-items: stretch;
+			flex-direction: column;
+			gap: rem(16);
+			margin-top: rem(20);
+			padding-top: rem(20);
+		}
+
+		&__actions {
+			flex-direction: column;
+		}
+
+		&__action { width: 100%; }
+	}
+}

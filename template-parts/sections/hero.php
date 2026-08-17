@@ -7,20 +7,39 @@
  * розмір під екран, а не 2560px на телефон. Це LCP-елемент, тож без lazy,
  * із fetchpriority="high".
  *
+ * Два режими роботи:
+ *   • конструктор — поля рядка Flexible Content (get_sub_field);
+ *   • архів номерів /rooms/ — значення приходять у $args із
+ *     «Налаштування теми» (archive-room.php). Розмітка одна на обидва,
+ *     щоб перший екран не розповзався у двох копіях.
+ *
  * @see src/styles/sections/_hero.scss
  */
 
 if (!defined('ABSPATH')) exit;
 
-$image    = get_sub_field('hero_image'); // return_format = id
-$overline = get_sub_field('hero_overline');
-$title    = get_sub_field('hero_title');
-$subtitle = get_sub_field('hero_subtitle');
-$buttons  = get_sub_field('hero_buttons');
+$args = (isset($args) && is_array($args)) ? $args : array();
+
+if ($args) {
+	$image    = $args['image']    ?? null;
+	$overline = $args['overline'] ?? '';
+	$title    = $args['title']    ?? '';
+	$subtitle = $args['subtitle'] ?? '';
+	$buttons  = $args['buttons']  ?? array();
+} else {
+	$image    = get_sub_field('hero_image'); // return_format = id
+	$overline = get_sub_field('hero_overline');
+	$title    = get_sub_field('hero_title');
+	$subtitle = get_sub_field('hero_subtitle');
+	$buttons  = get_sub_field('hero_buttons');
+}
+
+// Модифікатор вигляду («--compact» для внутрішніх сторінок).
+$modifier = $args['modifier'] ?? '';
 
 if (!$title && !$image) return; // порожню секцію не рендеримо
 ?>
-<section class="section section--hero" data-section="hero" id="hero">
+<section class="<?= esc_attr(trim('section section--hero ' . $modifier)); ?>" data-section="hero" id="hero">
 
 	<?php if ($image) : ?>
 		<div class="hero__media">

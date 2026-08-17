@@ -13,11 +13,22 @@
             "endpoint": 0
         },
         {
+            "key": "field_room_overline",
+            "label": "Надзаголовок",
+            "name": "room_overline",
+            "type": "text",
+            "instructions": "Дрібний золотий рядок над назвою у списку номерів. Порожньо — не виводиться.",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Premium Suite",
+            "maxlength": ""
+        },
+        {
             "key": "field_room_price",
             "label": "Ціна за ніч, ₴",
             "name": "room_price",
             "type": "number",
-            "instructions": "Лише число. Валюта й «\/ніч» додаються при виводі.",
+            "instructions": "Лише число. Валюта й «/ніч» додаються при виводі.",
             "required": 0,
             "default_value": "",
             "placeholder": "3200",
@@ -92,13 +103,38 @@
             "label": "Короткі характеристики",
             "name": "room_specs",
             "type": "repeater",
-            "instructions": "Напр.: «Номер: 2-місний», «Ліжко: двоспальне 180×200», «Площа: 25 м²».",
+            "instructions": "Рядок під описом у списку номерів: іконка + короткий текст. Напр.: «45 м²», «2 Гості», «King Bed». Порожньо — підставиться площа з поля вище.",
             "required": 0,
             "layout": "table",
             "button_label": "Додати рядок",
             "min": 0,
             "max": 0,
             "sub_fields": [
+                {
+                    "key": "field_room_spec_icon",
+                    "label": "Іконка",
+                    "name": "icon",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "choices": {
+                        "area": "Площа",
+                        "users": "Гості",
+                        "bed": "Ліжко",
+                        "wifi": "Wi-Fi",
+                        "coffee": "Сніданок",
+                        "droplet": "Ванна",
+                        "car": "Паркінг",
+                        "compass": "Локація",
+                        "star": "Зірка"
+                    },
+                    "default_value": "",
+                    "return_format": "value",
+                    "allow_null": 1,
+                    "multiple": 0,
+                    "ui": 0,
+                    "parent_repeater": "field_room_specs"
+                },
                 {
                     "key": "field_room_spec_text",
                     "label": "Текст",
@@ -150,5 +186,5 @@
     "active": true,
     "description": "Поля номера готелю.",
     "show_in_rest": 0,
-    "modified": 1786838400
+    "modified": 1786881600
 }

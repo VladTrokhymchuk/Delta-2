@@ -23,8 +23,8 @@
 //
 // Перебір, а не [class*='__title']: під таку маску потрапили б і заголовки
 // карток (.room-card__title, .review-card__title), у яких своя сходинка.
-$section-blocks:  'intro', 'rooms', 'amenities', 'media-text', 'gallery',
-                  'reviews', 'booking-cta', 'location';
+$section-blocks:  'intro', 'rooms', 'rooms-list', 'amenities', 'media-text',
+                  'gallery', 'reviews', 'booking-cta', 'location';
 
 // Секції з окремим блоком-шапкою (__head + підзаголовок під заголовком).
 // Решта верстає надзаголовок і заголовок прямо в колонці контенту, тож
@@ -49,6 +49,12 @@ $head-blocks:     'rooms', 'amenities', 'gallery', 'reviews';
 	// Перший екран живе за власним фреймом (390×460, поля 48) — див. _hero.scss.
 	.section--hero {
 		padding-block: rem(48);
+	}
+
+	// Список номерів поля не має взагалі: кольорові смуги йдуть впритул одна
+	// до одної, а власні відступи тримає кожна смуга (див. _rooms-list.scss).
+	.section--rooms-list {
+		padding-block: 0;
 	}
 
 	// --- Шапка секції -------------------------------------------------------

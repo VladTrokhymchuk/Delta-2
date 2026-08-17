@@ -9,19 +9,39 @@
  * «Налаштування теми» → Контакти, щоб контакти не розходились між підвалом
  * і секцією.
  *
+ * Два режими роботи:
+ *   • конструктор — поля рядка Flexible Content (get_sub_field);
+ *   • архів номерів /rooms/ — $args['source'] = 'options', і весь текст
+ *     та форма приходять з «Налаштування теми» → Бронювання.
+ *
  * @see functions-parts/parts/icons.php (delta_icon)
  * @see src/styles/sections/_booking-cta.scss
  */
 
 if (!defined('ABSPATH')) exit;
 
-$overline   = get_sub_field('booking_cta_overline');
-$title      = get_sub_field('booking_cta_title');
-$text       = get_sub_field('booking_cta_text');
-$form_title = get_sub_field('booking_cta_form_title');
+$from_options = isset($args['source']) && $args['source'] === 'options';
+
+if ($from_options) {
+	$overline   = delta_opt('booking_overline');
+	$title      = delta_opt('booking_title');
+	$text       = delta_opt('booking_text');
+	$form_title = delta_opt('booking_form_title');
+	$rows       = array(); // телефони в опціях не дублюємо — вони у вкладці «Контакти»
+	$email      = '';
+	$form_ids   = (array) delta_opt('booking_form');
+} else {
+	$overline   = get_sub_field('booking_cta_overline');
+	$title      = get_sub_field('booking_cta_title');
+	$text       = get_sub_field('booking_cta_text');
+	$form_title = get_sub_field('booking_cta_form_title');
+	$rows       = (array) get_sub_field('booking_cta_phones');
+	$email      = get_sub_field('booking_cta_email');
+	$form_ids   = (array) get_sub_field('booking_cta_form');
+}
 
 $phones = array();
-foreach ((array) get_sub_field('booking_cta_phones') as $row) {
+foreach ($rows as $row) {
 	$number = trim((string) ($row['number'] ?? ''));
 	if ($number !== '') $phones[] = $number;
 }
@@ -29,11 +49,17 @@ if (!$phones && ($fallback = delta_opt('footer_phone'))) {
 	$phones[] = $fallback;
 }
 
-$email = get_sub_field('booking_cta_email') ?: delta_opt('footer_email');
+$email = $email ?: delta_opt('footer_email');
 
 // Relationship повертає масив ID — беремо перший (max = 1).
-$form_ids = (array) get_sub_field('booking_cta_form');
-$form_id  = (int) reset($form_ids);
+$form_id = (int) reset($form_ids);
+
+// Якір для кнопок «Забронювати» зі списку номерів — лише на першій CTA
+// сторінки: два однакові id зробили б розмітку невалідною. Прапорець у
+// $GLOBALS, а не static: файл підключається то з render_sections(), то з
+// get_template_part(), тобто щоразу в іншій області видимості.
+$anchor = empty($GLOBALS['delta_booking_anchor']) ? 'booking' : '';
+$GLOBALS['delta_booking_anchor'] = true;
 
 $form = ($form_id && class_exists('WPCF7_ContactForm'))
 	? WPCF7_ContactForm::get_instance($form_id)
@@ -41,7 +67,7 @@ $form = ($form_id && class_exists('WPCF7_ContactForm'))
 
 if (!$title && !$text && !$form) return;
 ?>
-<section class="section section--booking-cta" data-section="booking-cta">
+<section class="section section--booking-cta" data-section="booking-cta"<?= $anchor ? ' id="' . esc_attr($anchor) . '"' : ''; ?>>
 	<div class="container">
 		<div class="booking-cta__panel">
 
