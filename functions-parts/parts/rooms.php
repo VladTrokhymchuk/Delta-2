@@ -144,3 +144,21 @@ add_action('pre_get_posts', function ($query) {
     $query->set('posts_per_page', -1);
     $query->set('orderby', array('menu_order' => 'ASC', 'date' => 'DESC'));
 });
+
+/**
+ * Список номерів в адмінці — теж за полем «Порядок», а не за датою.
+ *
+ * Інакше менеджер бачить один порядок у себе, а сайт віддає інший, і
+ * незрозуміло, яке число куди рухати. Сортування ставимо лише тоді, коли
+ * користувач не клікнув по колонці сам (`orderby` в запиті порожній).
+ */
+add_action('pre_get_posts', function ($query) {
+    if (!is_admin() || !$query->is_main_query() || $query->get('post_type') !== 'room') {
+        return;
+    }
+    if (!empty($_GET['orderby'])) {
+        return;
+    }
+
+    $query->set('orderby', array('menu_order' => 'ASC', 'date' => 'DESC'));
+});
