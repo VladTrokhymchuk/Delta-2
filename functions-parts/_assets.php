@@ -79,7 +79,12 @@ function my_assets() {
     $app_deps  = [];
     $swiper_js = '/build/js/libs/swiper-bundle.min.js';
 
-    if (function_exists('delta_has_section') && delta_has_section(['rooms'])) {
+    // Сторінка номера теж має слайдер («Інші номери готелю»), але секцій
+    // конструктора в неї немає — delta_has_section() її не побачить.
+    $needs_swiper = is_singular('room')
+        || (function_exists('delta_has_section') && delta_has_section(['rooms']));
+
+    if ($needs_swiper) {
         if ($swiper_css = get_asset('modules/swiper', 'css')) {
             wp_enqueue_style('swiper', $swiper_css, ['main'], null);
         }
@@ -87,6 +92,20 @@ function my_assets() {
             wp_enqueue_script('swiper', get_stylesheet_directory_uri() . $swiper_js, [], null, true);
             $app_deps[] = 'swiper';
         }
+    }
+
+    // Лайтбокс — лише там, де є галерея. Бібліотека вантажиться окремим
+    // <script> із build/js/libs/ (у бандл не імпортується — 43 КБ на кожній
+    // сторінці не потрібні), тож app має від неї залежати: initGallery()
+    // перевіряє window.FsLightbox і без неї нічого не робить.
+    $fslightbox_js = '/build/js/libs/fslightbox.js';
+
+    $needs_lightbox = is_singular('room')
+        || (function_exists('delta_has_section') && delta_has_section(['gallery']));
+
+    if ($needs_lightbox && file_exists(get_stylesheet_directory() . $fslightbox_js)) {
+        wp_enqueue_script('fslightbox', get_stylesheet_directory_uri() . $fslightbox_js, [], null, true);
+        $app_deps[] = 'fslightbox';
     }
 
     // Головний JS.

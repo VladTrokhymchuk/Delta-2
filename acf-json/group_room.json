@@ -17,10 +17,21 @@
             "label": "Надзаголовок",
             "name": "room_overline",
             "type": "text",
-            "instructions": "Дрібний золотий рядок над назвою у списку номерів. Порожньо — не виводиться.",
+            "instructions": "Дрібний золотий рядок над назвою на картці номера та в списку номерів. Для першого екрана сторінки номера є окреме поле нижче. Порожньо — не виводиться.",
             "required": 0,
             "default_value": "",
             "placeholder": "Premium Suite",
+            "maxlength": ""
+        },
+        {
+            "key": "field_room_hero_overline",
+            "label": "Надзаголовок першого екрана",
+            "name": "room_hero_overline",
+            "type": "text",
+            "instructions": "Дрібний золотий рядок над назвою поверх фото на сторінці номера. Окремо від надзаголовка картки — там це мітка типу номера, тут рекламний рядок. Порожньо — не виводиться.",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Вишуканий простір для незабутнього відпочинку",
             "maxlength": ""
         },
         {
@@ -79,7 +90,7 @@
             "label": "Фотографії номера",
             "name": "room_gallery",
             "type": "gallery",
-            "instructions": "Показуються на сторінці номера. Обкладинку картки задає «Зображення запису».",
+            "instructions": "Сітка на сторінці номера. Перші два фото стають верхнім рядом (широке + вузьке), наступні три — нижнім. Обкладинку картки задає «Зображення запису».",
             "required": 0,
             "return_format": "id",
             "library": "all",
@@ -118,15 +129,28 @@
                     "instructions": "",
                     "required": 0,
                     "choices": {
-                        "area": "Площа",
+                        "ruler": "Площа",
                         "users": "Гості",
-                        "bed": "Ліжко",
+                        "bed-double": "Ліжко",
+                        "building": "Поверх",
+                        "trees": "Краєвид",
                         "wifi": "Wi-Fi",
-                        "coffee": "Сніданок",
+                        "coffee": "Сніданок / кава",
                         "droplet": "Ванна",
                         "car": "Паркінг",
                         "compass": "Локація",
-                        "star": "Зірка"
+                        "star": "Зірка",
+                        "snowflake": "Кондиціонер",
+                        "wine": "Міні-бар",
+                        "lock": "Сейф",
+                        "tv": "Телевізор",
+                        "hanger": "Халати",
+                        "sparkles": "Косметика",
+                        "towel": "Рушники",
+                        "wind": "Фен",
+                        "door": "Балкон",
+                        "bell": "Рум-сервіс",
+                        "clock": "24/7"
                     },
                     "default_value": "",
                     "return_format": "value",
@@ -146,17 +170,127 @@
             ]
         },
         {
+            "key": "field_room_features",
+            "label": "Картка «Характеристики номера»",
+            "name": "room_features",
+            "type": "repeater",
+            "instructions": "Панель збоку від опису на сторінці номера: іконка, назва характеристики та значення. Напр.: «Площа номера» → «45 м²», «Тип ліжка» → «King-size».",
+            "required": 0,
+            "layout": "table",
+            "button_label": "Додати характеристику",
+            "min": 0,
+            "max": 0,
+            "sub_fields": [
+                {
+                    "key": "field_room_feature_icon",
+                    "label": "Іконка",
+                    "name": "icon",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "choices": {
+                        "ruler": "Площа",
+                        "users": "Гості",
+                        "bed-double": "Ліжко",
+                        "building": "Поверх",
+                        "trees": "Краєвид",
+                        "wifi": "Wi-Fi",
+                        "coffee": "Сніданок / кава",
+                        "droplet": "Ванна",
+                        "car": "Паркінг",
+                        "compass": "Локація",
+                        "star": "Зірка",
+                        "snowflake": "Кондиціонер",
+                        "wine": "Міні-бар",
+                        "lock": "Сейф",
+                        "tv": "Телевізор",
+                        "hanger": "Халати",
+                        "sparkles": "Косметика",
+                        "towel": "Рушники",
+                        "wind": "Фен",
+                        "door": "Балкон",
+                        "bell": "Рум-сервіс",
+                        "clock": "24/7"
+                    },
+                    "default_value": "",
+                    "return_format": "value",
+                    "allow_null": 1,
+                    "multiple": 0,
+                    "ui": 0,
+                    "parent_repeater": "field_room_features"
+                },
+                {
+                    "key": "field_room_feature_label",
+                    "label": "Назва",
+                    "name": "label",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "placeholder": "Площа номера",
+                    "parent_repeater": "field_room_features"
+                },
+                {
+                    "key": "field_room_feature_value",
+                    "label": "Значення",
+                    "name": "value",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "placeholder": "45 м²",
+                    "parent_repeater": "field_room_features"
+                }
+            ]
+        },
+        {
             "key": "field_room_amenities",
             "label": "Зручності",
             "name": "room_amenities",
             "type": "repeater",
-            "instructions": "Кондиціонер, душ, фен, холодильник тощо.",
+            "instructions": "Блок «Зручності номера» на сторінці номера: кондиціонер, сейф, фен, рум-сервіс тощо.",
             "required": 0,
             "layout": "table",
             "button_label": "Додати зручність",
             "min": 0,
             "max": 0,
             "sub_fields": [
+                {
+                    "key": "field_room_amenity_icon",
+                    "label": "Іконка",
+                    "name": "icon",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "choices": {
+                        "snowflake": "Кондиціонер",
+                        "wine": "Міні-бар",
+                        "lock": "Сейф",
+                        "wifi": "Wi-Fi",
+                        "tv": "Телевізор",
+                        "hanger": "Халати",
+                        "sparkles": "Косметика",
+                        "coffee": "Кавова машина",
+                        "towel": "Рушники",
+                        "wind": "Фен",
+                        "door": "Балкон",
+                        "bell": "Рум-сервіс",
+                        "clock": "24/7",
+                        "droplet": "Ванна",
+                        "car": "Паркінг",
+                        "bed-double": "Ліжко",
+                        "ruler": "Площа",
+                        "users": "Гості",
+                        "trees": "Краєвид",
+                        "building": "Поверх",
+                        "compass": "Локація",
+                        "star": "Зірка"
+                    },
+                    "default_value": "",
+                    "return_format": "value",
+                    "allow_null": 1,
+                    "multiple": 0,
+                    "ui": 0,
+                    "parent_repeater": "field_room_amenities"
+                },
                 {
                     "key": "field_room_amenity_text",
                     "label": "Назва",
@@ -166,6 +300,46 @@
                     "parent_repeater": "field_room_amenities"
                 }
             ]
+        },
+        {
+            "key": "field_room_tab_booking",
+            "label": "Бронювання",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_room_form",
+            "label": "Форма бронювання",
+            "name": "room_form",
+            "type": "relationship",
+            "instructions": "Форма Contact Form 7 саме для цього номера. Порожньо — візьметься спільна з «Налаштування теми» → Бронювання.",
+            "required": 0,
+            "post_type": [
+                "wpcf7_contact_form"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "elements": "",
+            "min": 0,
+            "max": 1,
+            "return_format": "id"
+        },
+        {
+            "key": "field_room_booking_text",
+            "label": "Текст під заголовком",
+            "name": "room_booking_text",
+            "type": "textarea",
+            "instructions": "Абзац у зеленій панелі бронювання. Порожньо — візьметься спільний текст із «Налаштування теми».",
+            "required": 0,
+            "default_value": "",
+            "rows": 3,
+            "new_lines": ""
         }
     ],
     "location": [
@@ -186,5 +360,5 @@
     "active": true,
     "description": "Поля номера готелю.",
     "show_in_rest": 0,
-    "modified": 1786881600
+    "modified": 1787011200
 }

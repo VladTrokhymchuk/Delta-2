@@ -1,0 +1,39 @@
+@use '../core' as *;
+
+// ============================================================
+// Lightbox — перевизначення стилів бібліотеки fslightbox.
+// Вмикається на сітці галереї (див. src/js/sections/_gallery.js); сам скрипт
+// бібліотеки підключається лише там, де галерея є (functions-parts/_assets.php).
+// !important — щоб перекрити інлайнові стилі бібліотеки.
+// ============================================================
+
+.fslightbox {
+  &-source {
+    border-radius: rem(4);
+    background: #fbfbfe;
+
+    @include minw($sm-pc) {
+      border-radius: rem(12);
+    }
+  }
+
+  &-slide-btn {
+    background: rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 0 12px rgba(60, 63, 74, 0.1);
+    border-radius: 50%;
+
+    @include minw($sm-pc) {
+      padding: rem(15) !important;
+    }
+  }
+
+  &-open {
+    overflow: visible !important;
+    height: auto !important;
+
+    body {
+      overflow: hidden;
+      height: 100vh;
+    }
+  }
+}

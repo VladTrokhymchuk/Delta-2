@@ -187,12 +187,113 @@
 
 	// Мінімальний відступ від опису, коли картка невисока й auto не спрацював.
 	&__text + &__footer,
-	&__title + &__footer {
+	&__headline + &__footer {
 		margin-top: rem(20);
+	}
+
+	// Назва та ціна в один рядок. У звичайній картці в блоці лише назва,
+	// тож рядок нічим не відрізняється від самої назви.
+	&__headline {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: rem(12);
 	}
 
 	&__link {
 		width: 100%;
+	}
+}
+
+// ============================================================
+// «Інші номери готелю» — добірка внизу сторінки номера.
+// Макет: секція 1440×724, поля 80/120, шапка відбита на 48.
+//
+// Чотири картки в ряду замість трьох (кількість й проміжок 24 рахує
+// Swiper — data-slider-* у rooms.php): 4 × 302 + 3 × 24 = рівно 1280.
+// Картка вужча, тож опису в ній немає: надзаголовок номера стоїть там,
+// де на звичайній картці бейдж статусу, а ціна — окремим рядком під назвою.
+// ============================================================
+.section--rooms-similar {
+	background-color: var(--bg-soft);
+
+	@include minw($sm-pc) {
+		padding-block: rem(80) rem(120);
+	}
+
+	.rooms__head {
+		@include minw($sm-pc) {
+			margin-bottom: rem(48);
+		}
+	}
+}
+
+// Картка 302×397: медіа 220 + тіло 177.
+.room-card--compact {
+	border-radius: rem(16);
+
+	// Пропорція з макета (302×220). Не піксельна висота: на планшеті картка
+	// вужча, і фіксовані 220 зламали б кадр.
+	.room-card__media {
+		aspect-ratio: 302 / 220;
+	}
+
+	// Крок 12 між усіма рядками тіла — замість власних margin'ів у кожного.
+	.room-card__body {
+		gap: rem(12);
+		padding: rem(20);
+	}
+
+	// Висота рядка надзаголовка тримається навіть порожньою (див. коментар
+	// у rooms.php) — 10px кегль при line-height 1.
+	.room-card__meta {
+		min-height: rem(10);
+		margin-bottom: 0;
+	}
+
+	.room-card__overline {
+		font-weight: 700;
+		font-size: rem(10);
+		line-height: 1;
+		// Figma пише 150%; при 10px це 15px на літеру — очевидно не те, що
+		// на екрані. Читаємо як 1.5px.
+		letter-spacing: rem(1.5);
+	}
+
+	.room-card__title {
+		font-size: rem(20);
+		line-height: 1;
+	}
+
+	// Сума кеглем підпису, «/ ніч» дрібнішим і приглушеним — як у макеті.
+	.room-card__price {
+		display: flex;
+		align-items: baseline;
+		gap: rem(6);
+		color: var(--primary);
+	}
+
+	.room-card__price-value {
+		font-family: $font-body;
+		font-weight: 700;
+		font-size: rem(14);
+		line-height: 1;
+		color: inherit;
+	}
+
+	.room-card__price-period {
+		font-family: $font-body;
+		font-weight: 400;
+		font-size: rem(13);
+		line-height: 1;
+		color: var(--text-muted);
+	}
+
+	// Кнопка й так відбита кроком тіла (12), а лінія над нею в макеті
+	// прибрана: у вужчій картці вона різала б і без того щільний блок.
+	.room-card__footer {
+		padding-top: 0;
+		border-top: 0;
 	}
 }
 

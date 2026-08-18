@@ -14,6 +14,9 @@
 @forward 'booking-cta';
 @forward 'location';
 
+// Блоки сторінки номера (не конструктор — див. template-parts/room/).
+@forward 'room-about';
+
 // Спільний мобільний ритм секцій — тільки в кінці: правило перебиває
 // власні padding-block секцій вище (див. коментар у _section.scss).
 @forward 'section';

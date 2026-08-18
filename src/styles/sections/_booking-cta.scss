@@ -11,7 +11,9 @@
 .section--booking-cta {
 	// 120px — з макета, спільне значення з .section--location.
 	padding-block: rem(56);
-	background-color: var(--bg-alt);
+	// Найсвітліша поверхня теми (#FBF9F6): зелена панель на ній читається
+	// як окремий об'єкт, а не як продовження попередньої секції на Linen.
+	background-color: var(--bg-soft);
 
 	@include minw($tablet) {
 		padding-block: rem(80);
@@ -78,6 +80,45 @@
 		font-size: rem(15);
 		line-height: 1.6;
 		color: var(--bg-alt);
+	}
+
+	// --- Ціна (сторінка номера, замість контактів) ---------------------------
+	// Сума крупно золотим, «від» і «/ ніч» дрібним поруч: у панелі це головна
+	// цифра сторінки, і вона має читатись раніше за форму.
+	//
+	// Кегель рядка (Spectral 600 36/100% з макета) задано на самому рядку —
+	// сума його успадковує, а підписи навколо перебивають своїм дрібним.
+	&__price {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: rem(8);
+		margin: rem(28) 0 0;
+		font-family: $font-heading;
+		font-weight: 600;
+		font-size: rem(28);
+		line-height: 1;
+		letter-spacing: 0;
+		color: var(--secondary);
+
+		@include minw($tablet) { font-size: rem(36); }
+	}
+
+	&__price-label,
+	&__price-period {
+		font-family: $font-body;
+		font-weight: 400;
+		line-height: 1;
+		color: inherit;
+	}
+
+	&__price-label { font-size: rem(14); }
+
+	&__price-period { font-size: rem(13); }
+
+	// Сума — успадковує родину й кегль рядка, тож окремих правил не має.
+	&__price-value {
+		color: inherit;
 	}
 
 	&__contacts {

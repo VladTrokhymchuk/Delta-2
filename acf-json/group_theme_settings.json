@@ -359,6 +359,112 @@
             "return_format": "id",
             "min": 0,
             "max": 1
+        },
+        {
+            "key": "field_booking_room_form",
+            "label": "Форма на сторінці номера",
+            "name": "booking_room_form",
+            "type": "relationship",
+            "instructions": "Коротка форма для сторінок номера (імʼя та телефон): категорію обирати не треба — номер уже відкритий. Порожньо — візьметься форма вище. Окремий номер може перебити її своїм полем.",
+            "required": 0,
+            "post_type": [
+                "wpcf7_contact_form"
+            ],
+            "filters": [
+                "search"
+            ],
+            "return_format": "id",
+            "min": 0,
+            "max": 1
+        },
+        {
+            "key": "field_theme_tab_room_page",
+            "label": "Сторінка номера",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_room_page_specs_title",
+            "label": "Заголовок картки характеристик",
+            "name": "room_page_specs_title",
+            "type": "text",
+            "instructions": "Панель збоку від опису номера. Самі рядки задаються в номері.",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Характеристики номера",
+            "maxlength": ""
+        },
+        {
+            "key": "field_room_page_amenities_overline",
+            "label": "Зручності — надзаголовок",
+            "name": "room_page_amenities_overline",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Все до найменших дрібниць",
+            "maxlength": ""
+        },
+        {
+            "key": "field_room_page_amenities_title",
+            "label": "Зручності — заголовок",
+            "name": "room_page_amenities_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Зручності номера",
+            "maxlength": ""
+        },
+        {
+            "key": "field_room_page_booking_title",
+            "label": "Заголовок панелі бронювання",
+            "name": "room_page_booking_title",
+            "type": "text",
+            "instructions": "%s підставляє назву номера. Напр.: «Забронювати номер «%s»».",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Забронювати номер «%s»",
+            "maxlength": ""
+        },
+        {
+            "key": "field_room_page_similar_overline",
+            "label": "Інші номери — надзаголовок",
+            "name": "room_page_similar_overline",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Схожі варіанти",
+            "maxlength": ""
+        },
+        {
+            "key": "field_room_page_similar_title",
+            "label": "Інші номери — заголовок",
+            "name": "room_page_similar_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "Інші номери готелю",
+            "maxlength": ""
+        },
+        {
+            "key": "field_room_page_similar_limit",
+            "label": "Інші номери — скільки показувати",
+            "name": "room_page_similar_limit",
+            "type": "number",
+            "instructions": "Порожньо — 4.",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "4",
+            "min": 1,
+            "max": 12,
+            "step": 1
         }
     ],
     "location": [
@@ -379,5 +485,5 @@
     "active": true,
     "description": "Глобальні дані сайту: шапка, контакти, сторінка «Номери» та бронювання.",
     "show_in_rest": 0,
-    "modified": 1786881600
+    "modified": 1787011200
 }

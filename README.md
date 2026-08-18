@@ -72,6 +72,7 @@ Delta-2/
 ├── build/                         # згенерована збірка (підключається з WP-теми)
 ├── functions-parts/               # PHP теми (див. .claude/skills/page-constructor)
 ├── template-parts/sections/       # шаблони секцій конструктора
+├── template-parts/room/           # блоки сторінки номера (single-room.php)
 ├── acf-json/                      # групи полів ACF (версіонуються)
 ├── vite-config/                   # кастомні плагіни — див. vite-config/README.md
 ├── vite.config.js

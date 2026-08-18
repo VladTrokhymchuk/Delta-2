@@ -16,6 +16,8 @@
 
 import { initHeader } from '@js/modules/_header.js';
 import { initSliders } from '@js/modules/_slider.js';
+import { initGallery } from '@js/sections/_gallery.js';
 
 initHeader();
 initSliders();
+initGallery();

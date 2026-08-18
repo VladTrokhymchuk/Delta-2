@@ -79,7 +79,8 @@
 
 	&__item {
 		overflow: hidden;
-		border-radius: rem(16);
+		// $radius-lg із _vars.scss — те саме значення, що в картках і панелях.
+		border-radius: $radius-lg;
 		aspect-ratio: 3 / 2;
 		list-style: none;
 
@@ -105,7 +106,24 @@
 		}
 	}
 
+	// Кожне фото — посилання на повний розмір, яке перехоплює лайтбокс
+	// (див. src/js/sections/_gallery.js).
+	&__link {
+		display: block;
+		width: 100%;
+		height: 100%;
+		cursor: zoom-in;
+
+		// Обводка всередину: у .gallery__item стоїть overflow: hidden,
+		// і зовнішній контур фокуса просто зрізало б.
+		&:focus-visible {
+			outline: 2px solid $focus-ring;
+			outline-offset: rem(-4);
+		}
+	}
+
 	&__img {
+		display: block;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
@@ -114,6 +132,60 @@
 
 	&__item:hover &__img {
 		transform: scale(1.03);
+	}
+}
+
+// ============================================================
+// ГАЛЕРЕЯ НОМЕРА — інша розкладка на тій самій розмітці.
+// Макет: 1440×924, поля 80, проміжок 24, фон #FBF9F6.
+//
+// Секція лягає на 12 колонок при проміжку 24 (контейнер 1280):
+//   ряд 1 — 737 + 519        → span 7 + span 5, висота 437
+//   ряд 2 — три по 411       → span 4 × 3,      висота 303
+// Схема повторюється кожні 5 фото, тож кратна п'яти кількість заповнює
+// сітку без порожнин; «зайві» фото лягають рівними кадрами.
+//
+// Висоту 924 задають не пікселі, а пропорції кадрів: 80 + 437 + 24 + 303
+// + 80. Так на вужчих екранах сітка стискається цілком, а не обрізає фото.
+// ============================================================
+.section--gallery-room {
+	// Warm Linen тут був би темнішим за наступну секцію з описом — беремо
+	// найсвітлішу поверхню теми, ту саму, що в шапці.
+	background-color: var(--bg-soft);
+	padding-block: rem(56);
+
+	@include minw($tablet) {
+		padding-block: rem(64);
+	}
+
+	@include minw($sm-pc) {
+		padding-block: rem(80);
+	}
+
+	.gallery__grid {
+		@include minw($sm-pc) {
+			gap: rem(24);
+		}
+	}
+
+	@include minw($sm-pc) {
+		.gallery__item {
+			// Скидаємо базову схему (вона рахує четвірками), щоб її
+			// nth-child(4n…) не змішувався з п'ятірками нижче.
+			grid-column: span 4;
+			aspect-ratio: 411 / 303;
+
+			&:nth-child(5n + 1) {
+				grid-column: span 7;
+				aspect-ratio: 737 / 437;
+			}
+
+			// Висота та сама, що в сусіда по ряду, — інакше ряд «сходинкою».
+			&:nth-child(5n + 2) {
+				grid-column: span 5;
+				aspect-ratio: 519 / 437;
+			}
+		}
 	}
 }
 

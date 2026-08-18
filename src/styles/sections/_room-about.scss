@@ -1,0 +1,208 @@
+@use '../core' as *;
+
+// ============================================================
+// ROOM ABOUT — опис номера + картка «Характеристики номера».
+// Макет: 1440×597, поля 80 з боків, 40 зверху й 80 знизу, колонки
+// розведені на 64.
+//
+// Дві колонки: текст тягнеться, картка тримає ширину з макета (400) і
+// стоїть по верху — вона коротша за опис, і центрування лишало б її
+// висіти посеред порожнечі. Висоту 597 задає саме картка (477 + поля).
+//
+// Увесь текст лівої колонки приходить із редактора (заголовок теж),
+// тож типографіка задана тут, а не класами в розмітці.
+// ============================================================
+
+.section--room-about {
+	padding-block: rem(56);
+	// Той самий #FBF9F6, що й у галереї вище: два блоки читаються однією
+	// світлою смугою, а межа між ними тримається лише полями.
+	background-color: var(--bg-soft);
+
+	@include minw($tablet) {
+		padding-block: rem(40) rem(64);
+	}
+
+	@include minw($sm-pc) {
+		padding-block: rem(40) rem(80);
+	}
+}
+
+.room-about {
+	&__inner {
+		display: grid;
+		gap: rem(32);
+
+		@include minw($sm-pc) {
+			grid-template-columns: minmax(0, 1fr) rem(400);
+			align-items: start;
+			gap: rem(64);
+		}
+	}
+
+	// --- Опис (WYSIWYG) -----------------------------------------------------
+	// Відступи саме зверху, а не знизу: так перший елемент блоку легко
+	// лишити без поля (:first-child), і текст завжди починається рівно
+	// по верхньому краю колонки — незалежно від того, з чого редактор почав.
+	&__text {
+		h2 {
+			margin-top: rem(24);
+			font-family: $font-heading;
+			font-weight: 600;
+			font-size: rem(28);
+			line-height: 1;
+			letter-spacing: 0;
+			color: var(--primary);
+
+			@include minw($sm-pc) {
+				font-size: rem(36);
+			}
+		}
+
+		p {
+			margin-top: rem(16);
+			font-family: $font-body;
+			font-weight: 400;
+			font-size: rem(14);
+			line-height: 1.6;
+			color: var(--text);
+
+			@include minw($sm-pc) {
+				font-size: rem(15);
+			}
+		}
+
+		> :first-child {
+			margin-top: 0;
+		}
+	}
+
+	// --- Картка характеристик -----------------------------------------------
+	&__specs {
+		display: grid;
+		gap: rem(24);
+		padding: rem(20);
+		background-color: var(--bg-alt);
+		border: 1px solid var(--border);
+		border-radius: rem(16);
+
+		@include minw($tablet) {
+			padding: rem(32);
+		}
+	}
+
+	&__specs-title {
+		font-family: $font-heading;
+		font-weight: 600;
+		font-size: rem(20);
+		line-height: 1;
+		color: var(--primary);
+
+		@include minw($sm-pc) {
+			font-size: rem(22);
+		}
+	}
+
+	&__list {
+		display: grid;
+		gap: rem(4);
+		margin: 0;
+	}
+
+	&__row {
+		display: flex;
+		align-items: center;
+		gap: rem(16);
+		// Висота рядка з макета. Саме min-height: значення тримається,
+		// коли назва коротка, але довге значення в два рядки не обріжеться.
+		min-height: rem(68);
+		padding-block: rem(12);
+		border-bottom: 1px solid var(--border);
+	}
+
+	// Слот під іконку з макета (36×32). Заливки в нього не задано — розмір
+	// потрібен, щоб назви характеристик стояли в один вертикальний рядок
+	// незалежно від ширини самої іконки.
+	&__icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		width: rem(36);
+		height: rem(32);
+		border-radius: rem(100);
+		color: var(--primary);
+
+		svg {
+			display: block;
+			width: rem(16);
+			height: rem(16);
+		}
+	}
+
+	// Займає весь залишок рядка (336 − іконка 36 − проміжок 16 = 284 з макета):
+	// довге значення тоді переноситься всередині пари, а не розпихає рядок.
+	&__pair {
+		display: grid;
+		flex: 1;
+		gap: rem(2);
+		min-width: 0;
+	}
+
+	// Назва характеристики — рівень .overline, але без окремого класу
+	// в розмітці: <dt> тут завжди надпис і ніколи не буває чимось іншим.
+	//
+	// Колір макета — #6B756E; на Warm Linen це 4.1:1, тобто нижче AA для
+	// 11px. Беремо --text-muted (#61665F, 5.1:1) — різниця на око не читається.
+	&__label {
+		font-family: $font-body;
+		font-weight: 700;
+		font-size: rem(11);
+		line-height: 1;
+		// Figma пише 100%; при 11px це 11px на літеру — очевидно не те, що
+		// на екрані. Читаємо як 1px, як і решту трекінгів у макеті.
+		letter-spacing: rem(1);
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+
+	&__value {
+		margin: 0;
+		font-family: $font-heading;
+		font-weight: 600;
+		font-size: rem(18);
+		line-height: 1;
+		color: var(--primary);
+	}
+}
+
+// ============================================================
+// МОБІЛЬНИЙ АДАПТИВ.
+// ------------------------------------------------------------
+// Макета під 390 для цього блоку немає — тримаємо ту саму логіку, що
+// в решті секцій: одна колонка (вмикається з $sm-pc), кеглі на крок
+// менші, картка з меншим радіусом.
+// ============================================================
+@include maxw($tablet - 1px) {
+	.room-about {
+		&__text {
+			h2 { font-size: rem(24); }
+
+			p {
+				font-size: rem(13);
+				line-height: 1.6;
+			}
+		}
+
+		&__specs {
+			gap: rem(20);
+			border-radius: rem(12);
+		}
+
+		&__specs-title { font-size: rem(18); }
+
+		&__row { min-height: rem(60); }
+
+		&__value { font-size: rem(16); }
+	}
+}
