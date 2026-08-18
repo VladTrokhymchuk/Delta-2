@@ -26,7 +26,7 @@
                             "label": "Фонове зображення",
                             "name": "hero_image",
                             "type": "image",
-                            "instructions": "Перший екран. Рекомендовано щонайменше 2560×1440, JPG\/WebP. Поверх зображення лягає темно-зелений шар 50%.",
+                            "instructions": "Перший екран. Рекомендовано щонайменше 2560×1440, JPG/WebP. Поверх зображення лягає темно-зелений шар 50%.",
                             "required": 0,
                             "return_format": "id",
                             "library": "all",
@@ -474,11 +474,17 @@
                                     "required": 0,
                                     "choices": {
                                         "wifi": "Wi-Fi",
-                                        "coffee": "Кава \/ ресторан",
-                                        "droplet": "Басейн \/ СПА",
-                                        "bed": "Ліжко",
-                                        "compass": "Гід \/ екскурсії",
-                                        "car": "Паркінг"
+                                        "coffee": "Кава / ресторан",
+                                        "droplet": "Басейн / СПА",
+                                        "bed-double": "Ліжко",
+                                        "compass": "Гід / екскурсії",
+                                        "car": "Паркінг",
+                                        "map-pin": "Локація / маршрут",
+                                        "clock": "Цілодобово",
+                                        "snowflake": "Кондиціонер",
+                                        "tv": "Телевізор",
+                                        "users": "Гості",
+                                        "phone": "Телефон"
                                     },
                                     "default_value": "wifi",
                                     "return_format": "value",
@@ -976,12 +982,60 @@
                             "instructions": "Google Maps → «Поділитися» → «Вбудувати карту» → скопіювати код. Можна вставити весь &lt;iframe&gt; або лише адресу з src — тема візьме звідти посилання й підставить власні розміри.",
                             "required": 0,
                             "default_value": "",
-                            "placeholder": "<iframe src=\"https:\/\/www.google.com\/maps\/embed?pb=…\"><\/iframe>",
+                            "placeholder": "<iframe src=\"https://www.google.com/maps/embed?pb=…\"></iframe>",
                             "maxlength": "",
                             "rows": 4,
                             "new_lines": ""
                         }
                     ]
+                },
+                "layout_text": {
+                    "key": "layout_text",
+                    "name": "text",
+                    "label": "Текстова сторінка",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_text_overline",
+                            "label": "Надзаголовок",
+                            "name": "text_overline",
+                            "type": "text",
+                            "instructions": "Дрібний рядок над заголовком. Порожньо — не виводиться.",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Документ",
+                            "maxlength": "",
+                            "parent_layout": "layout_text"
+                        },
+                        {
+                            "key": "field_text_title",
+                            "label": "Заголовок",
+                            "name": "text_title",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "default_value": "",
+                            "placeholder": "Правила користування",
+                            "maxlength": "",
+                            "parent_layout": "layout_text"
+                        },
+                        {
+                            "key": "field_text_content",
+                            "label": "Текст",
+                            "name": "text_content",
+                            "type": "wysiwyg",
+                            "instructions": "Довгий текст документа: заголовки, абзаци, списки. Форматування бере стилі теми.",
+                            "required": 0,
+                            "default_value": "",
+                            "tabs": "all",
+                            "toolbar": "full",
+                            "media_upload": 1,
+                            "delay": 0,
+                            "parent_layout": "layout_text"
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             }
         }
@@ -1006,5 +1060,5 @@
     "active": true,
     "description": "Секції сторінки. Нова секція = новий layout.",
     "show_in_rest": 0,
-    "modified": 1786881600
+    "modified": 1787011200
 }

@@ -5,7 +5,36 @@
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link rel="shortcut icon" type="image/svg+xml" href="<?= esc_url( get_template_directory_uri() . '/build/img/favicon.svg' ); ?>">
+	<?php
+	// Іконка вкладки — емблема готелю (src/img/favicon.png). SVG у списку
+	// першим на випадок, якщо колись з'явиться векторна версія: вона різкіша
+	// на будь-якому екрані. Кожен файл перевіряємо — посилання на відсутній
+	// давало б 404 на кожній сторінці сайту (саме так тут і було).
+	$icons = array(
+		'favicon.svg' => 'image/svg+xml',
+		'favicon.png' => 'image/png',
+		'logo.png'    => 'image/png',
+	);
+
+	$apple = '';
+
+	foreach ( $icons as $icon => $type ) {
+		$path = get_stylesheet_directory() . '/build/img/' . $icon;
+		if ( ! is_readable( $path ) ) continue;
+
+		$url = get_stylesheet_directory_uri() . '/build/img/' . $icon;
+
+		printf( '<link rel="icon" type="%s" href="%s">' . "\n", esc_attr( $type ), esc_url( $url ) );
+
+		// iOS ігнорує rel="icon" і бере окремий apple-touch-icon; SVG він теж
+		// не приймає, тож віддаємо перший растровий файл зі списку.
+		if ( ! $apple && $type === 'image/png' ) $apple = $url;
+	}
+
+	if ( $apple ) {
+		printf( '<link rel="apple-touch-icon" href="%s">' . "\n", esc_url( $apple ) );
+	}
+	?>
 
 	<?php wp_head(); ?>
 

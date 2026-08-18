@@ -13,6 +13,7 @@
 @forward 'reviews';
 @forward 'booking-cta';
 @forward 'location';
+@forward 'text';
 
 // Блоки сторінки номера (не конструктор — див. template-parts/room/).
 @forward 'room-about';

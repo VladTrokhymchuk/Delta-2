@@ -16,6 +16,7 @@ include_once 'functions-parts/_post-types-registration.php';
 include_once 'functions-parts/_taxonomies-registration.php';
 include_once 'functions-parts/_hooks.php';
 include_once 'functions-parts/_custom-functions.php';
+include_once 'functions-parts/_seo.php';
 include_once 'functions-parts/_seo-ai.php';
 include_once 'functions-parts/_ajax.php';
 

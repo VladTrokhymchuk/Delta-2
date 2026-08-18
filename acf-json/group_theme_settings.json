@@ -167,6 +167,28 @@
             "maxlength": ""
         },
         {
+            "key": "field_hotel_checkin",
+            "label": "Час заїзду",
+            "name": "hotel_checkin",
+            "type": "text",
+            "instructions": "Іде у структуровані дані готелю (schema.org). Має збігатися з тим, що написано на сторінці правил.",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "14:00",
+            "maxlength": ""
+        },
+        {
+            "key": "field_hotel_checkout",
+            "label": "Час виїзду",
+            "name": "hotel_checkout",
+            "type": "text",
+            "instructions": "Іде у структуровані дані готелю (schema.org).",
+            "required": 0,
+            "default_value": "",
+            "placeholder": "12:00",
+            "maxlength": ""
+        },
+        {
             "key": "field_footer_socials",
             "label": "Соцмережі",
             "name": "footer_socials",

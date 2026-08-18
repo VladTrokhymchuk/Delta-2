@@ -97,12 +97,14 @@ function delta_reviews_schema($ids) {
 
     $count = count($reviews);
 
+    // Ідентичність готелю (назва, адреса, телефон) описана один раз у графі
+    // Yoast — див. functions-parts/_seo.php. Тут лишається той самий @id і
+    // тільки оцінки: два вузли з однаковим @id читаються як один об'єкт, а
+    // повторювати назву й URL означало б ризик розійтися в даних.
     $schema = array(
         '@context'        => 'https://schema.org',
         '@type'           => 'Hotel',
-        '@id'             => home_url('/#hotel'),
-        'name'            => get_bloginfo('name'),
-        'url'             => home_url('/'),
+        '@id'             => delta_schema_hotel_id(),
         'aggregateRating' => array(
             '@type'       => 'AggregateRating',
             'ratingValue' => round($sum / $count, 1),

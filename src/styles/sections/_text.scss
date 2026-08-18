@@ -1,0 +1,99 @@
+@use '../core' as *;
+
+// ============================================================
+// TEXT — довгий текст документа (правила, політика, оферта).
+//
+// Колонка вужча за контейнер: рядок довжиною 1280px очима не читається,
+// комфортна межа — 70–80 символів, звідси 800px. Сама колонка стоїть
+// по центру сторінки, а текст усередині лишається по лівому краю: рівний
+// лівий край — це те, за що чіпляється око, читаючи довгий документ.
+// ============================================================
+
+.section--text {
+	padding-block: rem(56);
+	background-color: var(--bg);
+
+	@include minw($tablet) {
+		padding-block: rem(80);
+	}
+
+	@include minw($sm-pc) {
+		padding-block: rem(96);
+	}
+}
+
+.text {
+	&__head {
+		max-width: rem(800);
+		margin-inline: auto;
+		margin-bottom: rem(32);
+
+		@include minw($sm-pc) {
+			margin-bottom: rem(40);
+		}
+	}
+
+	&__title {
+		font-weight: 600;
+		font-size: rem(24);
+		line-height: 1.2;
+
+		@include minw($tablet) { font-size: rem(28); }
+		@include minw($sm-pc)  { font-size: rem(32); }
+	}
+
+	// --- Тіло документа -----------------------------------------------------
+	// Базові відступи й посилання приходять із .text__content (_typography.scss);
+	// тут — те, що потрібне саме довгому тексту: ширина, ритм заголовків і списків.
+	&__body {
+		max-width: rem(800);
+		margin-inline: auto;
+		font-size: rem(14);
+		line-height: 1.7;
+		color: var(--text);
+
+		@include minw($sm-pc) {
+			font-size: rem(15);
+		}
+
+		h3 {
+			margin-top: rem(40);
+			font-size: rem(20);
+			line-height: 1.3;
+
+			@include minw($sm-pc) { font-size: rem(22); }
+		}
+
+		h4 {
+			margin-top: rem(32);
+			font-size: rem(16);
+		}
+
+		// Перший заголовок блоку відбивати зверху нема від чого.
+		> :first-child {
+			margin-top: 0;
+		}
+
+		ul, ol {
+			margin-top: rem(16);
+			padding-left: rem(24);
+		}
+
+		li + li {
+			margin-top: rem(8);
+		}
+
+		li {
+			font-size: inherit;
+			line-height: inherit;
+		}
+
+		// Кнопка з документом усередині тексту (PDF). Підкреслення знімаємо:
+		// у .text__content усі посилання підкреслені, а на кнопці це виглядає
+		// як помилка верстки.
+		.bttn {
+			margin-block: rem(8);
+			text-decoration: none;
+		}
+	}
+}
