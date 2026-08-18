@@ -99,9 +99,20 @@ function delta_build_llms_txt() {
     $desc = delta_llms_clean(get_bloginfo('description'));
 
     $out = '# ' . $name . "\n\n";
-    if ($desc !== '') {
-        $out .= '> ' . $desc . "\n\n";
+
+    // Блокцитата за llmstxt.org — стислий підсумок «що це і головні факти».
+    // Самого слогана мало: модель має одразу бачити адресу й діапазон цін,
+    // інакше по них доведеться йти на сторінки.
+    $summary = array_filter(array(
+        $desc,
+        delta_llms_clean((string) delta_opt('footer_address')),
+        function_exists('delta_schema_price_range') ? delta_llms_price_note() : '',
+    ));
+
+    if ($summary) {
+        $out .= '> ' . implode('. ', $summary) . ".\n\n";
     }
+
     $out .= 'Сайт: ' . home_url('/') . "\n\n";
 
     // --- Верхньорівневі опубліковані сторінки (лендінги конструктора) --------
@@ -120,12 +131,13 @@ function delta_build_llms_txt() {
     // --- CPT: змістовний контент (порядок = пріоритет для LLM) ---------------
     $cpts = apply_filters('delta_llms_post_types', array());
     foreach ($cpts as $type => $label) {
+        // Порядок = пріоритет для моделі, тож беремо той, який виставив
+        // менеджер («Порядок» / page-attributes), і лише потім дату.
         $items = get_posts(array(
             'post_type'      => $type,
             'post_status'    => 'publish',
             'posts_per_page' => 100,
-            'orderby'        => 'date',
-            'order'          => 'DESC',
+            'orderby'        => array('menu_order' => 'ASC', 'date' => 'DESC'),
         ));
         $out .= delta_llms_section($label, $items);
     }
@@ -134,6 +146,21 @@ function delta_build_llms_txt() {
     $out .= delta_llms_contacts();
 
     return rtrim($out) . "\n";
+}
+
+/**
+ * Рядок про ціни для підсумку: «Номери від 850 до 1550 грн за добу».
+ * Рахується з тих самих полів, що й schema.org — див. functions-parts/_seo.php.
+ */
+function delta_llms_price_note() {
+    $range = delta_schema_price_range();
+    if ($range === '') return '';
+
+    $range = str_replace(' UAH', '', $range);
+
+    return strpos($range, '–') === false
+        ? sprintf('Номери по %s грн за добу', $range)
+        : vsprintf('Номери від %s до %s грн за добу', explode('–', $range));
 }
 
 /**
@@ -146,13 +173,17 @@ function delta_llms_section($label, $posts) {
         if (delta_llms_skip($p)) continue;
         $lines .= delta_llms_line($p);
     }
+
+    // Гачок для рядків, яким не відповідає жоден запис (напр. архів CPT).
+    $lines = apply_filters('delta_llms_section_lines', $lines, $label);
+
     return $lines === '' ? '' : "## {$label}\n{$lines}\n";
 }
 
 /**
  * Чи запис позначений noindex у SEO-плагіні.
- * На проєкті стоїть Rank Math (мета `rank_math_robots` — масив), але лишаємо
- * і перевірку Yoast, щоб зміна плагіна не зламала фільтрацію мовчки.
+ * На проєкті стоїть Yoast (`_yoast_wpseo_meta-robots-noindex`), але лишаємо
+ * і перевірку Rank Math, щоб зміна плагіна не зламала фільтрацію мовчки.
  */
 function delta_llms_is_noindex($post_id) {
     $rank_math = get_post_meta($post_id, 'rank_math_robots', true);
@@ -191,8 +222,14 @@ function delta_llms_contacts() {
     $addr  = delta_llms_clean((string) get_field('footer_address', 'options'));
 
     $lines = '';
-    if ($phone !== '') $lines .= '- Телефон: ' . $phone . "\n";
-    if ($email !== '') $lines .= '- Email: ' . $email . "\n";
+
+    // Формат llms.txt чекає рядки виду "- [назва](url)", тож телефон і пошту
+    // віддаємо посиланнями (tel:/mailto:) — так агент може ними скористатись,
+    // а не лише прочитати. Адреса URL не має, тому лишається текстом.
+    if ($phone !== '') {
+        $lines .= '- [Телефон ' . $phone . '](tel:' . preg_replace('/[^\d+]/', '', $phone) . ")\n";
+    }
+    if ($email !== '') $lines .= '- [Email ' . $email . '](mailto:' . $email . ")\n";
     if ($addr  !== '') $lines .= '- Адреса: ' . $addr . "\n";
 
     $socials = get_field('footer_socials', 'options');
@@ -200,7 +237,7 @@ function delta_llms_contacts() {
         foreach ($socials as $s) {
             if (empty($s['url'])) continue;
             $label  = !empty($s['network']) ? ucfirst($s['network']) : 'Соцмережа';
-            $lines .= "- {$label}: " . esc_url_raw($s['url']) . "\n";
+            $lines .= "- [{$label}](" . esc_url_raw($s['url']) . ")\n";
         }
     }
 

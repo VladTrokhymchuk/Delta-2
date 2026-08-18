@@ -63,6 +63,9 @@ if (!$images && !$title) return;
 					// у вкладці. На сторінці лишається 'large'.
 					$full = wp_get_attachment_image_url($image_id, 'full');
 					if (!$full) continue;
+
+					/* translators: 1: назва сторінки, 2: номер фото */
+					$alt = delta_image_alt($image_id, sprintf(__('%1$s — фото %2$d', 'delta'), get_the_title(), $i + 1));
 					?>
 					<li class="gallery__item">
 						<?php // Підпис для скрінрідера: alt у галерейних фото порожній
@@ -75,6 +78,7 @@ if (!$images && !$title) return;
 								'loading'  => 'lazy',
 								'decoding' => 'async',
 								'sizes'    => '(min-width: 992px) 50vw, 100vw',
+								'alt'      => $alt,
 							)); ?>
 						</a>
 					</li>

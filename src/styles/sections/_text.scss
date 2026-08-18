@@ -23,10 +23,13 @@
 }
 
 .text {
+	// Шапка по центру, текст документа — по лівому краю: заголовок працює як
+	// обкладинка розділу, а рівний лівий край потрібен саме довгому тексту.
 	&__head {
 		max-width: rem(800);
 		margin-inline: auto;
 		margin-bottom: rem(32);
+		text-align: center;
 
 		@include minw($sm-pc) {
 			margin-bottom: rem(40);

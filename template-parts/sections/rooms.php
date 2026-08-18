@@ -116,7 +116,7 @@ if (!$ids && !$title) return;
 										'class'    => 'room-card__img',
 										'loading'  => 'lazy',
 										'decoding' => 'async',
-										'alt'      => '',
+										'alt'      => delta_image_alt(get_post_thumbnail_id($room_id), get_the_title($room_id)),
 									)); ?>
 								</div>
 							<?php endif; ?>

@@ -21,6 +21,22 @@ function delta_opt($field, $default = '') {
 	return ($value === null || $value === '' || $value === false) ? $default : $value;
 }
 
+/**
+ * Alt зображення: те, що вписали в медіатеці, а якщо порожньо — фолбек.
+ *
+ * Потрібен, бо шаблони передають alt явно, і порожній рядок перекриває навіть
+ * заповнений у медіатеці. Змістовні зображення без alt — це і втрачений трафік
+ * із пошуку по картинках, і мовчазна картинка для скрінрідера.
+ *
+ * @param int    $id       ID вкладення.
+ * @param string $fallback Опис на випадок порожнього alt у медіатеці.
+ */
+function delta_image_alt($id, $fallback = '') {
+    $alt = trim((string) get_post_meta($id, '_wp_attachment_image_alt', true));
+
+    return $alt !== '' ? $alt : $fallback;
+}
+
 # --- Карти -------------------------------------------------------------------
 
 /**

@@ -154,3 +154,28 @@ function delta_schema_room($room_id) {
 
     return $node;
 }
+
+/**
+ * Номери — у карту llms.txt. Без цього фільтра карта показує лише сторінки,
+ * і модель не бачить головного контенту сайту (див. functions-parts/_seo-ai.php).
+ */
+add_filter('delta_llms_post_types', 'delta_llms_rooms');
+function delta_llms_rooms($types) {
+    $types['room'] = 'Номери';
+
+    return $types;
+}
+
+/**
+ * Архів номерів у карті llms.txt: сторінки йому не відповідає жоден запис,
+ * тож окремим рядком у розділ «Номери».
+ */
+add_filter('delta_llms_section_lines', 'delta_llms_rooms_archive', 10, 2);
+function delta_llms_rooms_archive($lines, $label) {
+    if ($label !== 'Номери') return $lines;
+
+    $archive = get_post_type_archive_link('room');
+    if (!$archive) return $lines;
+
+    return '- [Усі номери та ціни](' . $archive . "): Повний список номерів готелю з цінами та зручностями.\n" . $lines;
+}

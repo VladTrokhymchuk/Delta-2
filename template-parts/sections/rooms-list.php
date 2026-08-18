@@ -100,7 +100,7 @@ $book         = delta_rooms_book_link($book_link);
 							'loading'  => $i === 0 ? 'eager' : 'lazy',
 							'decoding' => 'async',
 							'sizes'    => '(min-width: 992px) 50vw, 100vw',
-							'alt'      => '',
+							'alt'      => delta_image_alt(get_post_thumbnail_id($room_id), get_the_title($room_id)),
 						)); ?>
 					</div>
 				<?php endif; ?>
