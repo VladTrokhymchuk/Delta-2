@@ -23,7 +23,7 @@ if (!$title && !$lead && !$image) return;
 
 $modifier = $position === 'left' ? ' section--media-text-reverse' : '';
 ?>
-<section class="section section--media-text<?= esc_attr($modifier); ?>" data-section="media-text">
+<section class="section section--media-text<?= esc_attr($modifier); ?>" data-section="media-text"<?= delta_section_id_attr('media-text'); ?>>
 	<div class="container media-text__inner">
 
 		<div class="media-text__content">

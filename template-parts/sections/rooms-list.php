@@ -59,7 +59,7 @@ $detail_label = $detail_label ?: delta_opt('rooms_page_detail_label', __('Дет
 $book_label   = $book_label   ?: delta_opt('rooms_page_book_label', __('Забронювати', 'delta'));
 $book         = delta_rooms_book_link($book_link);
 ?>
-<section class="section section--rooms-list" data-section="rooms-list">
+<section class="section section--rooms-list" data-section="rooms-list"<?= delta_section_id_attr('rooms-list'); ?>>
 
 	<?php if ($overline || $title || $subtitle) : ?>
 		<div class="container">

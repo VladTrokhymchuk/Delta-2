@@ -70,6 +70,14 @@ $cta        = delta_opt('header_button');
 $cta_url    = !empty($cta['url'])    ? $cta['url']    : '#';
 $cta_title  = !empty($cta['title'])  ? $cta['title']  : __('Забронювати номер', 'delta');
 $cta_target = !empty($cta['target']) ? $cta['target'] : '';
+
+// Сторінка номера й архів мають власну форму бронювання, тож кнопка веде до
+// неї, а не на головну: інакше з відкритого «Люкса» гість їхав би бронювати
+// абстрактний номер. Підміняємо тільки якір #booking — довільне посилання
+// з налаштувань лишається як є.
+if ( ( is_singular( 'room' ) || is_post_type_archive( 'room' ) ) && str_contains( $cta_url, '#booking' ) ) {
+	$cta_url = '#booking';
+}
 ?>
 <header class="header" id="header">
 	<div class="container header__inner">

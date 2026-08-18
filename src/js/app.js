@@ -17,7 +17,9 @@
 import { initHeader } from '@js/modules/_header.js';
 import { initSliders } from '@js/modules/_slider.js';
 import { initGallery } from '@js/sections/_gallery.js';
+import { initAnchorFix } from '@js/modules/_anchor.js';
 
 initHeader();
 initSliders();
 initGallery();
+initAnchorFix();

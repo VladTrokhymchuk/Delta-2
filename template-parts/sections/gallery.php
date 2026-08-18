@@ -35,7 +35,7 @@ $modifier = $args['modifier'] ?? '';
 
 if (!$images && !$title) return;
 ?>
-<section class="<?= esc_attr(trim('section section--gallery ' . $modifier)); ?>" data-section="gallery">
+<section class="<?= esc_attr(trim('section section--gallery ' . $modifier)); ?>" data-section="gallery"<?= delta_section_id_attr('gallery'); ?>>
 	<div class="container">
 
 		<?php if ($overline || $title || $subtitle) : ?>

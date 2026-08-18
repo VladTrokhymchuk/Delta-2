@@ -15,7 +15,7 @@ $text     = get_sub_field('intro_text');
 
 if (!$title && !$lead) return; // порожню секцію не рендеримо
 ?>
-<section class="section section--intro" data-section="intro">
+<section class="section section--intro" data-section="intro"<?= delta_section_id_attr('intro'); ?>>
 	<div class="container intro__inner">
 
 		<?php if ($overline) : ?>

@@ -58,7 +58,7 @@ $gap_desktop      = (int) ($args['gap_desktop'] ?? 32);
 $ids = array_filter(array_map('intval', $ids));
 if (!$ids && !$title) return;
 ?>
-<section class="<?= esc_attr(trim('section section--rooms ' . $modifier)); ?>" data-section="rooms">
+<section class="<?= esc_attr(trim('section section--rooms ' . $modifier)); ?>" data-section="rooms"<?= delta_section_id_attr('rooms'); ?>>
 	<div class="container">
 
 		<?php if ($overline || $title || $subtitle) : ?>

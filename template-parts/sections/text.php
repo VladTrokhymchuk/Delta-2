@@ -19,7 +19,7 @@ $content  = get_sub_field('text_content');
 
 if (!$title && !$content) return;
 ?>
-<section class="section section--text" data-section="text">
+<section class="section section--text" data-section="text"<?= delta_section_id_attr('text'); ?>>
 	<div class="container">
 
 		<?php if ($overline || $title) : ?>

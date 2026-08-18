@@ -47,7 +47,7 @@ if ($email) {
 
 if (!$title && !$text && !$map_src) return;
 ?>
-<section class="section section--location" data-section="location">
+<section class="section section--location" data-section="location"<?= delta_section_id_attr('location'); ?>>
 	<div class="container location__inner">
 
 		<div class="location__content">

@@ -71,6 +71,62 @@ function delta_sections_main_class($post_id = null) {
 }
 
 /**
+ * Якір секції для посилань із меню: id першої секції такого типу на сторінці.
+ *
+ * Повертає порожній рядок для повторів — два однакові id зробили б розмітку
+ * невалідною, а браузер усе одно стрибав би на перший.
+ *
+ * Аліаси, а не назви layout'ів: у меню й адресному рядку користувач бачить
+ * «/#contacts», а не «/#location». Якщо перейменувати ключ — зламаються
+ * посилання в меню, тож правити тут і одразу в меню.
+ *
+ * Виняток — «media-text»: секція універсальна, і її аліас описує те, що в
+ * рядку зараз (СПА-послуги). Змінили вміст — змініть і аліас із пунктом меню.
+ *
+ * @param string $layout Назва layout ACF Flexible Content.
+ * @return string id для атрибута або '' — якщо секція на сторінці не перша.
+ */
+function delta_section_anchor($layout) {
+    $aliases = array(
+        'hero'        => 'hero',
+        'intro'       => 'about',
+        'rooms'       => 'rooms',
+        'rooms-list'  => 'rooms',
+        'amenities'   => 'services',
+        'media-text'  => 'spa',
+        'gallery'     => 'gallery',
+        'reviews'     => 'reviews',
+        'booking-cta' => 'booking',
+        'location'    => 'contacts',
+        'text'        => 'text',
+    );
+
+    $anchor = $aliases[$layout] ?? $layout;
+
+    // Прапорець у $GLOBALS, а не static: секції підключаються то з
+    // render_sections(), то з get_template_part(), тобто щоразу в іншій
+    // області видимості, і static лічив би кожну з них окремо.
+    if (!isset($GLOBALS['delta_section_anchors'])) {
+        $GLOBALS['delta_section_anchors'] = array();
+    }
+
+    if (isset($GLOBALS['delta_section_anchors'][$anchor])) return '';
+
+    $GLOBALS['delta_section_anchors'][$anchor] = true;
+
+    return $anchor;
+}
+
+/**
+ * Готовий атрибут id="" для тега секції (порожньо — якщо якір уже зайнятий).
+ */
+function delta_section_id_attr($layout) {
+    $anchor = delta_section_anchor($layout);
+
+    return $anchor ? ' id="' . esc_attr($anchor) . '"' : '';
+}
+
+/**
  * Сторінкам вмикаємо «Уривок» — типово post type `page` його не підтримує,
  * а секції-переліки (картки зі сторінок) беруть із нього короткий опис.
  */

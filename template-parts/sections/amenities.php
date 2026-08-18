@@ -35,7 +35,7 @@ $modifier = $args['modifier'] ?? '';
 
 if (!$title && !$items) return;
 ?>
-<section class="<?= esc_attr(trim('section section--amenities ' . $modifier)); ?>" data-section="amenities">
+<section class="<?= esc_attr(trim('section section--amenities ' . $modifier)); ?>" data-section="amenities"<?= delta_section_id_attr('amenities'); ?>>
 	<div class="container">
 
 		<?php if ($overline || $title || $subtitle) : ?>

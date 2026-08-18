@@ -5,35 +5,72 @@
 // Вмикається на сітці галереї (див. src/js/sections/_gallery.js); сам скрипт
 // бібліотеки підключається лише там, де галерея є (functions-parts/_assets.php).
 // !important — щоб перекрити інлайнові стилі бібліотеки.
+//
+// ВАЖЛИВО про блокування фону: правити треба ТІЛЬКИ overflow. Тут раніше
+// стояло `.fslightbox-open { overflow: visible; height: auto }` на <html> —
+// і на мобільному контейнер лайтбокса (position: fixed, height: 100%) починав
+// рахувати висоту від усього документа, а не від екрана. Фото центрувалось
+// у трьохтисячному боксі, тобто далеко під видимою частиною, а кнопки
+// закриття їхали за правий край. На десктопі це не було помітно, бо там
+// сторінка коротша за контейнер лише трохи.
 // ============================================================
 
 .fslightbox {
-  &-source {
-    border-radius: rem(4);
-    background: #fbfbfe;
+	&-source {
+		border-radius: rem(4);
+		background: #fbfbfe;
 
-    @include minw($sm-pc) {
-      border-radius: rem(12);
-    }
-  }
+		@include minw($sm-pc) {
+			border-radius: rem(12);
+		}
+	}
 
-  &-slide-btn {
-    background: rgba(255, 255, 255, 0.1) !important;
-    box-shadow: 0 0 12px rgba(60, 63, 74, 0.1);
-    border-radius: 50%;
+	&-slide-btn {
+		background: rgba(255, 255, 255, 0.1) !important;
+		box-shadow: 0 0 rem(12) rgba(60, 63, 74, 0.1);
+		border-radius: 50%;
 
-    @include minw($sm-pc) {
-      padding: rem(15) !important;
-    }
-  }
+		@include minw($sm-pc) {
+			padding: rem(15) !important;
+		}
+	}
 
-  &-open {
-    overflow: visible !important;
-    height: auto !important;
+	// Фон не скролиться, поки відкрито фото. Висоту й позиціонування
+	// лишаємо бібліотеці — див. коментар у шапці файлу.
+	&-open {
+		overflow: hidden;
+	}
+}
 
-    body {
-      overflow: hidden;
-      height: 100vh;
-    }
-  }
+// ============================================================
+// МОБІЛЬНИЙ.
+// ------------------------------------------------------------
+// Панель керування й лічильник притиснуті до країв екрана, а на iPhone туди
+// потрапляє «чубчик» і смуга жестів — звідси env(safe-area-inset-*).
+// Стрілки притискаємо до країв: між ними й фото на 390 лишається ~8px.
+// ============================================================
+@include maxw($tablet - 1px) {
+	.fslightbox {
+		&-toolbar {
+			padding-top: env(safe-area-inset-top, 0);
+			padding-right: env(safe-area-inset-right, 0);
+		}
+
+		&-slide-number-container {
+			padding-top: env(safe-area-inset-top, 0);
+			padding-left: env(safe-area-inset-left, 0);
+			// Лічильник «1 / 8» у бібліотеці дрібний і напівпрозорий —
+			// на телефоні його майже не видно.
+			font-size: rem(13) !important;
+		}
+
+		&-slide-btn-container {
+			padding-left: rem(4) !important;
+			padding-right: rem(4) !important;
+		}
+
+		&-slide-btn {
+			padding: rem(10) !important;
+		}
+	}
 }

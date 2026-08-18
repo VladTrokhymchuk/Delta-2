@@ -40,7 +40,7 @@ $modifier = $args['modifier'] ?? '';
 
 if (!$title && !$image) return; // порожню секцію не рендеримо
 ?>
-<section class="<?= esc_attr(trim('section section--hero ' . $modifier)); ?>" data-section="hero" id="hero">
+<section class="<?= esc_attr(trim('section section--hero ' . $modifier)); ?>" data-section="hero"<?= delta_section_id_attr('hero'); ?>>
 
 	<?php if ($image) : ?>
 		<div class="hero__media">

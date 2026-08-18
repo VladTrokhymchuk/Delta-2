@@ -20,6 +20,46 @@ function remove_menus(){
 	// remove_menu_page('options-general.php');        //Налаштування
 }
 
+/**
+ * Пункти-якорі не підсвічуємо як активні.
+ *
+ * WP вважає custom-посилання поточним, якщо його URL збігається з адресою
+ * сторінки, а хеш при порівнянні відкидає. Через це на головній підсвічувались
+ * ОДРАЗУ ВСІ пункти з «/#...» — і «Про нас», і «Послуги», і «Контакти».
+ *
+ * Прибираємо клас лише в посилань із хешем: справжні сторінки («Номери» →
+ * /rooms/, «Правила») підсвічуються як раніше. Підсвітка активної секції під
+ * час скролу — це вже scroll spy, окрема задача.
+ */
+add_filter('nav_menu_css_class', 'delta_menu_anchor_not_current', 10, 2);
+function delta_menu_anchor_not_current($classes, $item) {
+	if (strpos((string) $item->url, '#') === false) return $classes;
+
+	$current = array(
+		'current-menu-item',
+		'current_page_item',
+		'current-menu-parent',
+		'current-menu-ancestor',
+		'current_page_parent',
+		'current_page_ancestor',
+	);
+
+	return array_values(array_diff((array) $classes, $current));
+}
+
+/**
+ * Те саме для aria-current: WP ставить його тим самим пунктам, і скрінрідер
+ * оголошував би «поточна сторінка» на дев'ятьох посиланнях одразу.
+ */
+add_filter('nav_menu_link_attributes', 'delta_menu_anchor_not_current_aria', 10, 2);
+function delta_menu_anchor_not_current_aria($atts, $item) {
+	if (strpos((string) $item->url, '#') !== false) {
+		unset($atts['aria-current']);
+	}
+
+	return $atts;
+}
+
 add_theme_support('menus');
 
 add_action( 'after_setup_theme', function(){

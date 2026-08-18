@@ -84,20 +84,13 @@ if (!$from_room) {
 // Relationship повертає масив ID — беремо перший (max = 1).
 $form_id = (int) reset($form_ids);
 
-// Якір для кнопок «Забронювати» зі списку номерів — лише на першій CTA
-// сторінки: два однакові id зробили б розмітку невалідною. Прапорець у
-// $GLOBALS, а не static: файл підключається то з render_sections(), то з
-// get_template_part(), тобто щоразу в іншій області видимості.
-$anchor = empty($GLOBALS['delta_booking_anchor']) ? 'booking' : '';
-$GLOBALS['delta_booking_anchor'] = true;
-
 $form = ($form_id && class_exists('WPCF7_ContactForm'))
 	? WPCF7_ContactForm::get_instance($form_id)
 	: null;
 
 if (!$title && !$text && !$form) return;
 ?>
-<section class="section section--booking-cta" data-section="booking-cta"<?= $anchor ? ' id="' . esc_attr($anchor) . '"' : ''; ?>>
+<section class="section section--booking-cta" data-section="booking-cta"<?= delta_section_id_attr('booking-cta'); ?>>
 	<div class="container">
 		<div class="booking-cta__panel">
 

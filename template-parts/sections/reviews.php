@@ -33,7 +33,7 @@ if ($source === 'manual') {
 $ids = array_filter(array_map('intval', $ids));
 if (!$ids && !$title) return;
 ?>
-<section class="section section--reviews" data-section="reviews">
+<section class="section section--reviews" data-section="reviews"<?= delta_section_id_attr('reviews'); ?>>
 	<div class="container">
 
 		<?php if ($overline || $title || $subtitle) : ?>
