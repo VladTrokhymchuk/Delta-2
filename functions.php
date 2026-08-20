@@ -32,6 +32,7 @@ include_once 'functions-parts/parts/icons.php';
 include_once 'functions-parts/parts/buttons.php';
 include_once 'functions-parts/parts/reviews.php';
 include_once 'functions-parts/parts/redirects.php';
+include_once 'functions-parts/parts/sitemap.php';
 include_once 'functions-parts/parts/comments.php';
 include_once 'functions-parts/parts/classic-editor.php';
 include_once 'functions-parts/parts/admin_style.php';
